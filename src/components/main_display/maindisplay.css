@@ -1,0 +1,5 @@
+.mainDisplay{
+    flex: 1;
+    padding-left: .1rem;
+    background-color: grey;
+}
