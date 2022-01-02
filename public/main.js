@@ -1,4 +1,6 @@
 const {app, BrowserWindow} = require('electron');
+const isDev = require('electron-is-dev');
+const path = require('path');
 require('@electron/remote/main').initialize(); // used for IPC
 
 
@@ -12,7 +14,8 @@ function createWindow(){
         }
     });
 
-    win.loadURL('http://localhost:3000');
+    // Where window is loaded from.
+    win.loadURL(isDev ? 'http://localhost:3000' :`file://${path.join(__dirname, '../build/index.html')}`);
 }
 
 app.on('ready', createWindow);
