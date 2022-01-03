@@ -1,7 +1,7 @@
-import './navigation.css'
+import './Navigation.css'
 function NavigationBar() {
     return (
-      <div className='navigationBar d-flex flex-column flex-shrink-0 bg-light border-right'>
+      <div className='navigationBar d-flex flex-column flex-shrink-0 border-right shadow-sm bg-body rounded'>
         <ul class="nav nav-pills nav-flush flex-column mb-auto text-center ">
 
           <li class="nav-item">

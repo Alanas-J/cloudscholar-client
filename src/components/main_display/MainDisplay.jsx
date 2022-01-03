@@ -1,9 +1,11 @@
 import Home from './home/Home';
-import './maindisplay.css';
+import NavigationBar from './navigation/NavigationBar';
+import './MainDisplay.css';
 
 function MainDisplay() {
     return (
-        <div className='mainDisplay border border-top-0 border-bottom-0 border-right-0'>
+        <div className='mainDisplay d-flex' >
+            <NavigationBar/>
             <Home></Home>
         </div>
     
