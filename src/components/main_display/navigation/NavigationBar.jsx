@@ -1,25 +1,30 @@
 import './Navigation.css';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { decrement, increment } from './counterSlice';
+import { setDisplay } from '../../../state/slices/appDisplay';
 
 function NavigationBar() {
 
   const appDisplay = useSelector(state => state.appDisplay.value);
   const dispatch = useDispatch();
 
+    const navButtonStyle = "nav-link py-3 border-bottom";
 
     return (
       <div className='navigationBar d-flex flex-column flex-shrink-0 border-right shadow-sm bg-body rounded'>
         <ul class="nav nav-pills nav-flush flex-column mb-auto text-center ">
 
           <li class="nav-item">
-            <a href="#" class="nav-link {active py-3 border-bottom" aria-current="page" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+            <a href="#" className={appDisplay == "home" ? "active "+navButtonStyle : navButtonStyle} 
+            onClick={() => dispatch(setDisplay("home"))}>
               Home
             </a>
-            <a href="#" class="nav-link py-3 border-bottom " aria-current="page" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+
+            <a href="#" className={appDisplay == "timetable" ? "active "+navButtonStyle : navButtonStyle} 
+            onClick={() => dispatch(setDisplay("timetable"))}>
               Timetable
             </a>
+
             <a href="#" class="nav-link py-3 border-bottom" aria-current="page" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
               Notes
             </a>

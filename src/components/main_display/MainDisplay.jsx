@@ -2,6 +2,8 @@ import Home from './home/Home';
 import NavigationBar from './navigation/NavigationBar';
 import './MainDisplay.css';
 
+import { useSelector, useDispatch } from 'react-redux';
+
 function MainDisplay() {
     const display = useSelector(state => state.appDisplay.value);
     const dispatch = useDispatch();
@@ -10,7 +12,7 @@ function MainDisplay() {
     return (
         <div className='mainDisplay d-flex' >
             <NavigationBar/>
-            {this.renderSwitch(display)}
+            {renderSwitch(display)}
         </div>
     
     ); 
@@ -28,7 +30,7 @@ function renderSwitch(display){
             return <Home/>;
         
         default:
-            return <LoginDisplay/>;
+            return <Home/>;
     }
   
   }
