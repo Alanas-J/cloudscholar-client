@@ -1,4 +1,4 @@
-import './home.css'
+import './Home.css'
 function Home() {
     return (
       <div className='home rounded-left d-flex flex-fill justify-content-between'>

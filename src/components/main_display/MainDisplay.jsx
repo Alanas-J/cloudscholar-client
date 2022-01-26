@@ -1,4 +1,5 @@
 import Home from './home/Home';
+import Timetable from './timetable/Timetable';
 import NavigationBar from './navigation/NavigationBar';
 import './MainDisplay.css';
 
@@ -27,7 +28,7 @@ function renderSwitch(display){
             return <Home/>;
         
         case 'timetable':
-            return <Home/>;
+            return <Timetable/>;
         
         default:
             return <Home/>;
