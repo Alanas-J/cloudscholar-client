@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export const appDisplay = createSlice({
   name: 'appDisplay',
   initialState: {
-    value: "start"
+    value: "home"
   },
   reducers: {
     setDisplay: (state, action) => {
