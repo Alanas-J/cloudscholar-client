@@ -7,12 +7,32 @@ function Timetable() {
         <h1 className='border-bottom p-3'>Timetable</h1>
 
 
+        <Timetable 
+          events={{
+            monday: [
+              {
+                id: 1,
+                name: "Custom Event 1",
+                type: "custom",
+                startTime: new Date("2018-02-23T11:30:00"),
+                endTime: new Date("2018-02-23T13:30:00"),
+              },
+            ],
+            tuesday: [],
+            wednesday: [],
+            thursday: [],
+            friday: [],
+          }}
+        />
       
         </section>
 
         <section className='shortcuts p-4 border border-top-0'>
+         dsfgsdfg
 
         </section>
+
+        sadfsdf
 
           
       </div>
