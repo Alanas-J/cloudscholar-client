@@ -11,7 +11,7 @@ function Home() {
 
 
     return (
-      <div className={styles.home+" container-fluid border"}>
+      <div className={styles.home+" container-fluid border-start border-end"}>
         
         {/* Main row*/} 
         <div className='row h-100'>
@@ -22,11 +22,11 @@ function Home() {
 
 
               {/* Today's Classes Col*/} 
-              <div className="col-6 pt-2 mw-30 border-end">
+              <div className="col-6 pt-4 mw-30 border-end">
                 <div className='scheduleComponent mx-4'>
 
-                  <div className="row border-bottom">
-                    <div className="col-12 d-flex justify-content-between">
+                  <div className="row border-bottom mb-2">
+                    <div className="col-12 d-flex justify-content-between pb-1">
                       <h3 className='p-1 '>Today's Classes</h3>
                       <button type="button" class="btn btn-primary" onClick={handleShowAddClassModal}>+</button>
                     </div>
@@ -39,10 +39,10 @@ function Home() {
               </div>
 
               {/* Upcoming Tasks Col*/} 
-              <div className="col-6 pt-2 border-left">
+              <div className="col-6 pt-4 border-left">
                 <div className='scheduleComponent mx-4'>
-                  <div className="row border-bottom">
-                    <div className="col-12 d-flex justify-content-between">
+                  <div className="row border-bottom mb-2">
+                    <div className="col-12 d-flex justify-content-between pb-1">
                       <h3 className='p-1 '>Upcoming Tasks</h3>
                       <button type="button" class="btn btn-primary">+</button>
                     </div>
@@ -58,11 +58,11 @@ function Home() {
           </div>
 
           {/* Quick Shortcuts */} 
-          <div className={styles.shortcuts+" border-start"}>
+          <div className={styles.shortcuts+" border-start pt-2 "}>
             <div className="row">
               <div className="col">
 
-                <div className="d-flex border-bottom justify-content-start">
+                <div className="d-flex border-bottom mb-2 justify-content-start pb-1 mb-2">
                 <h5 className='col'>Quick Shortcut URLs</h5>
                 <button type="button" class="col-1 p-1 btn btn-secondary">+</button>
                 </div>
