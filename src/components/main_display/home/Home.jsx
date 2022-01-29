@@ -1,11 +1,11 @@
 import './Home.css'
 function Home() {
     return (
-      <div className='home rounded-left d-flex flex-fill justify-content-between'>
+      <div className='home rounded-left d-flex flex-fill'>
       
-        <section className='flex-fill'>
+        <section className='flex-fill h-100'>
 
-        <div className='row pt-2'>
+        <div className='row  h-100 p-0 pt-2'>
           <div className="col">
             <div className='scheduleComponent mx-4'>
               <div className="row border-bottom">
