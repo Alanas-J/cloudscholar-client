@@ -1,6 +1,14 @@
 import styles from './Home.module.css'
+import {Modal, Button} from 'react-bootstrap';
+import React, {useState} from "react";
 
 function Home() {
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+
+
     return (
       <div className={styles.home+" container-fluid border"}>
         
@@ -19,7 +27,7 @@ function Home() {
                   <div className="row border-bottom">
                     <div className="col-12 d-flex justify-content-between">
                       <h3 className='p-1 '>Today's Classes</h3>
-                      <button type="button" class="btn btn-primary">+</button>
+                      <button type="button" class="btn btn-primary" onClick={handleShow}>+</button>
                     </div>
                   </div>
 
@@ -65,8 +73,23 @@ function Home() {
 
 
         </div>
-      </div>
 
+        <Modal show={show} onHide={handleClose} >
+          <Modal.Header closeButton >
+            <Modal.Title>Add Classes</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>This is where add classes logic will go</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleClose}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+      </div>
     ); 
   }
   export default Home;
