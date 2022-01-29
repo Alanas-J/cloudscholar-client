@@ -18,7 +18,7 @@ function Home() {
 
                   <div className="row border-bottom">
                     <div className="col-12 d-flex justify-content-between">
-                      <h2 className='p-1 '>Today's Classes</h2>
+                      <h3 className='p-1 '>Today's Classes</h3>
                       <button type="button" class="btn btn-primary">+</button>
                     </div>
                   </div>
@@ -34,7 +34,7 @@ function Home() {
                 <div className='scheduleComponent mx-4'>
                   <div className="row border-bottom">
                     <div className="col-12 d-flex justify-content-between">
-                      <h2 className='p-1 '>Upcoming Tasks</h2>
+                      <h3 className='p-1 '>Upcoming Tasks</h3>
                       <button type="button" class="btn btn-primary">+</button>
                     </div>
                   </div>
@@ -52,7 +52,12 @@ function Home() {
           <div className={styles.shortcuts+" border-start"}>
             <div className="row">
               <div className="col">
-                <h4 className='border-bottom'>Quick Shortcut URLs</h4>
+
+                <div className="d-flex border-bottom justify-content-start">
+                <h5 className='col'>Quick Shortcut URLs</h5>
+                <button type="button" class="col-1 p-1 btn btn-secondary">+</button>
+                </div>
+                
                 <a href="" className='link-secondary'>Add new url...</a>
               </div>
             </div>
