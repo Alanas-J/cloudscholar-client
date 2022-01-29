@@ -1,11 +1,12 @@
 import styles from './Home.module.css'
-import {Modal, Button} from 'react-bootstrap';
+import AddClassModal from '../../modals/AddClassModal';
 import React, {useState} from "react";
 
 function Home() {
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    // Will need multiple of these for each modal to be displayed.
+    const [showAddClassModal, setShowAddClassModal] = useState(false);
+    const handleCloseAddClassModal = () => setShowAddClassModal(false);
+    const handleShowAddClassModal = () => setShowAddClassModal(true);
 
 
 
@@ -27,7 +28,7 @@ function Home() {
                   <div className="row border-bottom">
                     <div className="col-12 d-flex justify-content-between">
                       <h3 className='p-1 '>Today's Classes</h3>
-                      <button type="button" class="btn btn-primary" onClick={handleShow}>+</button>
+                      <button type="button" class="btn btn-primary" onClick={handleShowAddClassModal}>+</button>
                     </div>
                   </div>
 
@@ -74,20 +75,8 @@ function Home() {
 
         </div>
 
-        <Modal show={show} onHide={handleClose} >
-          <Modal.Header closeButton >
-            <Modal.Title>Add Classes</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>This is where add classes logic will go</Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={handleClose}>
-              Save Changes
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        {/* ALL OF THE HOMEPAGE MODALS ========================== */} 
+        <AddClassModal show={showAddClassModal} handleClose={handleCloseAddClassModal}/>
 
       </div>
     ); 
