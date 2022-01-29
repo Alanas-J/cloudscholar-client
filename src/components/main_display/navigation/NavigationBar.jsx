@@ -11,7 +11,7 @@ function NavigationBar() {
     const navButtonStyle = "nav-link py-3 border-bottom";
 
     return (
-      <div className='navigationBar d-flex flex-column flex-shrink-0 border-right shadow-sm bg-body rounded'>
+      <div className='navigationBar d-flex flex-column flex-shrink-0 border-right shadow-sm  rounded'>
         <ul class="nav nav-pills nav-flush flex-column mb-auto text-center ">
 
           <li class="nav-item">
