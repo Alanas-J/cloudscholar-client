@@ -1,10 +1,16 @@
 import {Modal, Button} from 'react-bootstrap';
 
+// Redux state
+import {useDispatch} from 'react-redux';
+import {openModal} from '../../../state/slices/modalState'
+
 function AddClassModal({show, handleClose}) {
+    const dispatch = useDispatch();
+
     return (
         <Modal show={show} onHide={handleClose} centered>
             <Modal.Header closeButton>
-                <Modal.Title>Add Classes</Modal.Title>
+                <Modal.Title>Add a Class</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 
@@ -19,7 +25,9 @@ function AddClassModal({show, handleClose}) {
                         <option>4</option>
                         </select>
                         <div className="row px-3">
-                            <a href="" className='link-primary'>Add new subjects here +</a>
+                            <a className='link-primary' onClick={() => dispatch(openModal('AddSubject'))}>
+                                Add new subjects here +
+                            </a>
                         </div>
                     </div>
 
