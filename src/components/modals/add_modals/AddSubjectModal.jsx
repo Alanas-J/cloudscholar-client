@@ -16,7 +16,7 @@ function AddSubjectModal({show, handleClose}) {
 
                     <div class="form-group py-2">
                         <label for="exampleFormControlInput1">Pick a Colour for this Subject</label>
-                        <input type="color" value="#0063a5" class="form-control" id="exampleFormControlInput1"/>
+                        <input type="color" defaultValue="#0063a5" class="form-control" id="exampleFormControlInput1"/>
                     </div>
 
 

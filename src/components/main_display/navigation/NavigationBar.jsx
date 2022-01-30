@@ -34,7 +34,7 @@ function NavigationBar() {
           </li>
         </ul>
 
-        <div className="dropdown border-top">
+        <div className="dropdown ">
         </div>
 
 
