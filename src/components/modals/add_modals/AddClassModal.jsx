@@ -18,8 +18,8 @@ function AddClassModal({show, handleClose}) {
                 <form>
                     <div className="form-group py-2">
                         <label htmlFor="exampleFormControlSelect1">What Subject is this class for?</label>
-                        <select className="form-control" id="exampleFormControlSelect1">
-                        <option></option>
+                        <select className="form-control form-select" id="exampleFormControlSelect1">
+                        <option disabled selected>-Select Subject-</option>
                         <option>Sample module 1</option>
                         <option>2</option>
                         <option>3</option>
@@ -34,7 +34,8 @@ function AddClassModal({show, handleClose}) {
 
                     <div className="form-group pt-2">
                         <label htmlFor="exampleFormControlSelect1">When is the class?</label>
-                        <select className="form-control" id="exampleFormControlSelect1">
+                        <select className="form-control form-select" id="exampleFormControlSelect1">
+                        <option disabled selected>-Select Day-</option>
                         <option>Monday</option>
                         <option>Tuesday</option>
                         <option>Wednesday</option>

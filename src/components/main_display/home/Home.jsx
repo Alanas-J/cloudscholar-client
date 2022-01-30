@@ -23,7 +23,7 @@ function Home() {
 
               {/* Today's Classes Col*/} 
               <div className="col-6 mw-30 border-end">
-                <div className='scheduleComponent pt-4 mx-4 h-100'>
+                <div className='scheduleComponent pt-4 mx-2 h-100'>
 
                   <div className="row border-bottom border-secondary mb-2">
                     <div className="col-12 d-flex justify-content-between pb-1">
@@ -40,7 +40,7 @@ function Home() {
 
               {/* Upcoming Tasks Col*/} 
               <div className="col-6 border-left">
-                <div className='scheduleComponent pt-4 mx-4 h-100'>
+                <div className='scheduleComponent pt-4 mx-2 h-100'>
                   <div className="row border-bottom border-secondary mb-2">
                     <div className="col-12 d-flex justify-content-between pb-1">
                       <h3 className='p-1 '>Upcoming Tasks</h3>
