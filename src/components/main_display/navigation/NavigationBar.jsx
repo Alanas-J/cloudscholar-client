@@ -11,10 +11,10 @@ function NavigationBar() {
     const navButtonStyle = "nav-link py-3 border-bottom";
 
     return (
-      <div className='navigationBar d-flex flex-column flex-shrink-0 border-right shadow-sm  rounded'>
+      <div className='navigationBar d-flex flex-column flex-shrink-0  bg-light'>
         <ul className="nav nav-pills nav-flush flex-column mb-auto text-center ">
 
-          <li className="nav-item">
+          <li className="nav-item my-2">
             <a href="#" className={appDisplay == "home" ? "active "+navButtonStyle : navButtonStyle} 
             onClick={() => dispatch(setDisplay("home"))}>
               Home

@@ -9,7 +9,7 @@ function MainDisplay() {
     const display = useSelector(state => state.appDisplay.value);
 
     return (
-        <div className='mainDisplay d-flex' >
+        <div className='mainDisplay d-flex'>
             <NavigationBar/>
             {renderSwitch(display)}
         </div>
