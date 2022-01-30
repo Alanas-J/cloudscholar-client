@@ -1,4 +1,5 @@
 import {Modal, Button} from 'react-bootstrap';
+import styles from '../Modal.module.css';
 
 // Redux state
 import {useDispatch} from 'react-redux';
@@ -25,7 +26,7 @@ function AddClassModal({show, handleClose}) {
                         <option>4</option>
                         </select>
                         <div className="row px-3">
-                            <a className='link-primary' onClick={() => dispatch(openModal('AddSubject'))}>
+                            <a className={styles.pointable +" link-primary"} onClick={() => dispatch(openModal('AddSubject'))}>
                                 Add new subjects here +
                             </a>
                         </div>

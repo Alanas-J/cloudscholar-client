@@ -16,12 +16,12 @@ function AddSubjectModal({show, handleClose}) {
 
                     <div class="form-group py-2">
                         <label for="exampleFormControlInput1">Pick a Colour for this Subject</label>
-                        <input type="color" class="form-control" id="exampleFormControlInput1"/>
+                        <input type="color" value="#0063a5" class="form-control" id="exampleFormControlInput1"/>
                     </div>
 
 
                     <div className="form-group py-2">
-                        <label htmlFor="exampleFormControlSelect1">What is the duration of this subject?</label>
+                        <label htmlFor="exampleFormControlSelect1">What is the duration of this Subject?</label>
                         <div className="row">
                             <div className="col">
                                 <input type="text" class="form-control" placeholder="Start Date"/>
