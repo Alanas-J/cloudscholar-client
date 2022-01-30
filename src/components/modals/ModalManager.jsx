@@ -1,6 +1,7 @@
 import AddClassModal from './add_modals/AddClassModal';
 import AddSubjectModal from './add_modals/AddSubjectModal';
 import AddTaskModal from './add_modals/AddTaskModal';
+import AddQuickShortcutModal from './add_modals/AddQuickShortcutModal';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { closeModal } from '../../state/slices/modalState';
@@ -33,7 +34,7 @@ function modalSwitch(display, closeModal){
             return <AddTaskModal show={display=='AddTask'} handleClose={closeModal}/>;
             
         case 'AddQuickShortcut':
-            return null;
+            return <AddQuickShortcutModal show={display=='AddQuickShortcut'} handleClose={closeModal}/>;
         
         case 'AddModule':
             return null;
