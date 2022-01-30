@@ -16,9 +16,9 @@ function AddClassModal({show, handleClose}) {
             <Modal.Body>
                 
                 <form>
-                    <div class="form-group py-2">
+                    <div className="form-group py-2">
                         <label htmlFor="exampleFormControlSelect1">What Subject is this class for?</label>
-                        <select class="form-control" id="exampleFormControlSelect1">
+                        <select className="form-control" id="exampleFormControlSelect1">
                         <option></option>
                         <option>Sample module 1</option>
                         <option>2</option>
@@ -32,9 +32,9 @@ function AddClassModal({show, handleClose}) {
                         </div>
                     </div>
 
-                    <div class="form-group pt-2">
+                    <div className="form-group pt-2">
                         <label htmlFor="exampleFormControlSelect1">When is the class?</label>
-                        <select class="form-control" id="exampleFormControlSelect1">
+                        <select className="form-control" id="exampleFormControlSelect1">
                         <option>Monday</option>
                         <option>Tuesday</option>
                         <option>Wednesday</option>
@@ -47,16 +47,16 @@ function AddClassModal({show, handleClose}) {
 
                         <div className="row">
                             <div className="col">
-                                <input type="text" class="form-control" placeholder="Start Time"/>
+                                <input type="text" className="form-control" placeholder="Start Time"/>
                             </div>
 
                             <div className="col">
-                            <input type="text" class="form-control" placeholder="End Time"/>
+                            <input type="text" className="form-control" placeholder="End Time"/>
                             </div>
                         </div>
-                            <div class="form-group pt-4 pb-2">
-                            <label for="exampleFormControlTextarea1">Description</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Add class location, class type into here..."></textarea>
+                            <div className="form-group pt-4 pb-2">
+                            <label htmlFor="exampleFormControlTextarea1">Description</label>
+                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Add class location, class type into here..."></textarea>
                         </div>
                     </div>
     

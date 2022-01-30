@@ -20,7 +20,7 @@ function LoginDisplay({setLoggedIn}) {
 
             <div className="checkbox mb-3">
               <label>
-                <input type="checkbox" value="remember-me"/> Remember me
+                <input type="checkbox" value="remember-me"/> Keep me signed in
               </label>
             </div>
             <button className="w-100 btn btn-lg btn-primary" onClick={() => setLoggedIn(true)}>Sign in</button>

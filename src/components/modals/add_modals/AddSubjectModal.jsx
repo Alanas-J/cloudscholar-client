@@ -9,14 +9,14 @@ function AddSubjectModal({show, handleClose}) {
             <Modal.Body>
                 
                 <form>
-                    <div class="form-group py-2">
-                        <label for="exampleFormControlInput1">Name of Subject</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="eg. 1st Year Maths"/>
+                    <div className="form-group py-2">
+                        <label htmlFor="exampleFormControlInput1">Name of Subject</label>
+                        <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="eg. 1st Year Maths"/>
                     </div>
 
-                    <div class="form-group py-2">
-                        <label for="exampleFormControlInput1">Pick a Colour for this Subject</label>
-                        <input type="color" defaultValue="#0063a5" class="form-control" id="exampleFormControlInput1"/>
+                    <div className="form-group py-2">
+                        <label htmlFor="exampleFormControlInput1">Pick a Colour for this Subject</label>
+                        <input type="color" defaultValue="#0063a5" className="form-control" id="exampleFormControlInput1"/>
                     </div>
 
 
@@ -24,11 +24,11 @@ function AddSubjectModal({show, handleClose}) {
                         <label htmlFor="exampleFormControlSelect1">What is the duration of this Subject?</label>
                         <div className="row">
                             <div className="col">
-                                <input type="text" class="form-control" placeholder="Start Date"/>
+                                <input type="text" className="form-control" placeholder="Start Date"/>
                             </div>
 
                             <div className="col">
-                            <input type="text" class="form-control" placeholder="End Date"/>
+                            <input type="text" className="form-control" placeholder="End Date"/>
                             </div>
                         </div>
                     </div>

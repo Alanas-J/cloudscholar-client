@@ -44,7 +44,7 @@ function Home() {
                   <div className="row border-bottom border-secondary mb-2">
                     <div className="col-12 d-flex justify-content-between pb-1">
                       <h3 className='p-1 '>Upcoming Tasks</h3>
-                      <button type="button" className="btn btn-primary">+</button>
+                      <button type="button" className="btn btn-primary" onClick={() => dispatch(openModal('AddTask'))}>+</button>
                     </div>
                   </div>
 
