@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import MainDisplay from './main_display/MainDisplay';
 import LoginDisplay from './login_display/LoginDisplay';
+import ModalManager from './modals/ModalManager';
 import './App.css';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -17,6 +18,8 @@ function App() {
   return (
     <div className="App">
       {loggedIn? <MainDisplay/> : <LoginDisplay setLoggedIn={setLoggedIn}/>} 
+      <ModalManager/>
+      
     </div>
   );
 }

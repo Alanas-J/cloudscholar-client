@@ -3,12 +3,10 @@ import Timetable from './timetable/Timetable';
 import NavigationBar from './navigation/NavigationBar';
 import './MainDisplay.css';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector} from 'react-redux';
 
 function MainDisplay() {
     const display = useSelector(state => state.appDisplay.value);
-    const dispatch = useDispatch();
-
 
     return (
         <div className='mainDisplay d-flex' >

@@ -1,13 +1,11 @@
 import styles from './Home.module.css'
-import AddClassModal from '../../modals/AddClassModal';
-import React, {useState} from "react";
+
+// Redux state
+import {useDispatch} from 'react-redux';
+import {openModal} from '../../../state/slices/modalState'
 
 function Home() {
-    // Will need multiple of these for each modal to be displayed.
-    const [showAddClassModal, setShowAddClassModal] = useState(false);
-    const handleCloseAddClassModal = () => setShowAddClassModal(false);
-    const handleShowAddClassModal = () => setShowAddClassModal(true);
-
+    const dispatch = useDispatch();
 
 
     return (
@@ -28,7 +26,7 @@ function Home() {
                   <div className="row border-bottom mb-2">
                     <div className="col-12 d-flex justify-content-between pb-1">
                       <h3 className='p-1 '>Today's Classes</h3>
-                      <button type="button" class="btn btn-primary" onClick={handleShowAddClassModal}>+</button>
+                      <button type="button" className="btn btn-primary" onClick={() => dispatch(openModal('AddClass'))}>+</button>
                     </div>
                   </div>
 
@@ -44,7 +42,7 @@ function Home() {
                   <div className="row border-bottom mb-2">
                     <div className="col-12 d-flex justify-content-between pb-1">
                       <h3 className='p-1 '>Upcoming Tasks</h3>
-                      <button type="button" class="btn btn-primary">+</button>
+                      <button type="button" className="btn btn-primary">+</button>
                     </div>
                   </div>
 
@@ -64,7 +62,7 @@ function Home() {
 
                 <div className="d-flex border-bottom mb-2 justify-content-start pb-1 mb-2">
                 <h5 className='col'>Quick Shortcut URLs</h5>
-                <button type="button" class="col-1 p-1 btn btn-secondary">+</button>
+                <button type="button" className="col-1 p-1 btn btn-secondary">+</button>
                 </div>
                 
                 <a href="" className='link-secondary'>Add new url...</a>
@@ -74,10 +72,6 @@ function Home() {
 
 
         </div>
-
-        {/* ALL OF THE HOMEPAGE MODALS ========================== */} 
-        <AddClassModal show={showAddClassModal} handleClose={handleCloseAddClassModal}/>
-
       </div>
     ); 
   }

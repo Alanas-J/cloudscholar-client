@@ -12,9 +12,9 @@ function NavigationBar() {
 
     return (
       <div className='navigationBar d-flex flex-column flex-shrink-0 border-right shadow-sm  rounded'>
-        <ul class="nav nav-pills nav-flush flex-column mb-auto text-center ">
+        <ul className="nav nav-pills nav-flush flex-column mb-auto text-center ">
 
-          <li class="nav-item">
+          <li className="nav-item">
             <a href="#" className={appDisplay == "home" ? "active "+navButtonStyle : navButtonStyle} 
             onClick={() => dispatch(setDisplay("home"))}>
               Home
@@ -25,16 +25,16 @@ function NavigationBar() {
               Timetable
             </a>
 
-            <a href="#" class="nav-link py-3 border-bottom" aria-current="page" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+            <a href="#" className="nav-link py-3 border-bottom" aria-current="page" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
               Notes
             </a>
-            <a href="#" class="nav-link  py-3 border-bottom" aria-current="page" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+            <a href="#" className="nav-link  py-3 border-bottom" aria-current="page" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
               Grade Calculator
             </a>
           </li>
         </ul>
 
-        <div class="dropdown border-top">
+        <div className="dropdown border-top">
         </div>
 
 
