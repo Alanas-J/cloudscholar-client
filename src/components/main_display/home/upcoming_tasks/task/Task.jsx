@@ -2,7 +2,7 @@ import styles from './Task.module.css'
 
 function Task() {
     return (
-        <div className={styles.colour +" "+ styles.taskHover+" border m-1 rounded-start d-flex "}>
+        <div className={styles.colour +" "+ styles.task+" border m-1 rounded-start d-flex "}>
             <div className={"rounded-start me-2"} style={{width:'.3rem', backgroundColor:'light-green'}}>
                 
             </div>

@@ -18,6 +18,9 @@
     background-color: rgb(17, 187, 116);
 }
 
-.taskHover:hover{
+.task:hover{
     background-color: rgba(24, 24, 24, 0.062);
+}
+.task{
+    cursor: pointer;
 }
