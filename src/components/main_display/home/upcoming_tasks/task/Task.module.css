@@ -1,0 +1,23 @@
+.textOverflow{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.taskTitleWidth{
+    width: calc(100% - 4rem);
+}
+
+.taskContent{
+    width: calc(100% - .9rem);
+}
+
+.colour::before{
+    content: " ";
+    min-width: .3rem;
+    background-color: rgb(17, 187, 116);
+}
+
+.taskHover:hover{
+    background-color: rgba(24, 24, 24, 0.062);
+}
