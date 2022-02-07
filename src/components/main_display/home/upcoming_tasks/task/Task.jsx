@@ -10,7 +10,7 @@ function Task() {
             <div className={styles.taskContent}>
                 <div className="d-flex justify-content-between">
                     <div className={styles.taskTitleWidth+" pt-1"}>
-                        <h5 className={styles.textOverflow + " border-bottom p-1"}>Software Engineering 5: Assignment 2</h5>
+                        <h5 className={styles.textOverflow + " border-bottom p-1"}>Assignment 2</h5>
                     </div>
                     <div className="me-3 ">[*]</div>
                 </div>
@@ -18,7 +18,7 @@ function Task() {
                 <div className="w-100">
                     <div>
                         <p className={styles.textOverflow + " m-0"}>
-                        Due **/**/** - One line description. Adding more words afasdfasgas</p>
+                        Due **/**/** - Software Engineering 5</p>
                     </div>
                     
                 </div>
