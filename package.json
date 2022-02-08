@@ -26,7 +26,7 @@
     "electron": "^16.0.5",
     "electron-builder": "^22.14.5"
   },
-  "main": "public/main.js",
+  "main": "electron/main.js",
   "homepage": "./",
   "scripts": {
     "start": "react-scripts start",

@@ -7,6 +7,36 @@
     margin-left: 1rem;
 }
 
-.height83{
-    height: 83%;
+.display{
+    height: calc(100vh - 8rem);
+
+    overflow-y: auto;
 }
+
+/*=============== TODO SCROLLBAR EASE IN appearance on hober ============================= */
+/* width */
+.display::-webkit-scrollbar {
+    width: 10px;
+    padding-top: 10px;
+}
+  
+/* Track 
+.display::-webkit-scrollbar-track {
+
+}*/
+/* Handle */
+.display::-webkit-scrollbar-thumb{
+    transition: color 2s !important;
+    background-color: rgb(99, 99, 99); 
+}
+
+
+.display:hover::-webkit-scrollbar-thumb {
+    transition: color 2s ;
+    background-color: rgb(99, 99, 99); 
+}
+  
+ /* Handle on hover 
+ .display::-webkit-scrollbar-thumb:hover {
+ 
+}*/
