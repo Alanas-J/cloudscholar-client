@@ -19,6 +19,7 @@ function LoginDisplay({setLoggedIn}) {
 
     console.log(displayState);
 
+    
     if(displayState.invalidEmail && validateEmail(email)){
         displayState.invalidEmail = false;
         setDisplayState(displayState);
@@ -26,15 +27,15 @@ function LoginDisplay({setLoggedIn}) {
 
     function handleSubmit(event){
         event.preventDefault();
+        const state = {...displayState};
 
-        displayState.invalidEmail = !validateEmail(email);
+        state.invalidEmail = !validateEmail(email);
 
-        if(!displayState.invalidEmail){
-            displayState.loginButtonEnabled = false;
-            authenticate(email, password, keepUserSigned, displayState, setDisplayState);
+        if(!state.invalidEmail){
+            state.loginButtonEnabled = false;
+            authenticate(email, password, keepUserSigned, state, setDisplayState);
         }
-
-        setDisplayState(displayState);
+        setDisplayState(state);
     }
 
     return (
