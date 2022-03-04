@@ -1,12 +1,13 @@
 import { useState } from 'react';
+import { isEqual } from 'lodash';
 import styles from  './LoginDisplay.module.css'
 
 function LoginDisplay({setLoggedIn}) {
 
     const [displayState, setDisplayState] = useState({
         loginButtonEnabled: true,
-        error: true,
-        invalidEmail: true,
+        error: false,
+        invalidEmail: false,
         errorMessage: "Auth failure error goes here.",
         submitted: false
     });
@@ -14,23 +15,9 @@ function LoginDisplay({setLoggedIn}) {
     const [email, setEmail] = useState("");
     const [keepUserSigned, setKeepUserSigned] = useState(false);
 
+    console.log(displayState);
 
-    // State machine.
-    if(displayState.submitted){
-
-        if(validateEmail(email, displayState, setDisplayState)){
-
-            if(authenticate(email, password, setDisplayState)){
-
-                if(keepUserSigned){
-                    
-                    // Save login details
-                }
-
-                // Swap view
-            }
-        }
-    }
+    handleLoginState(displayState, setDisplayState, email, password, keepUserSigned);
 
     return (
         <div className={styles.loginDisplay+' '}>
@@ -53,7 +40,7 @@ function LoginDisplay({setLoggedIn}) {
 
                     <div className="login-inputs">
                         <div className="form-floating my-1">
-                            <input type="email" className={(displayState.invalidEmail && 'is-invalid')+' form-control'} id="floatingInput" placeholder="name@example.com" onChange={e => setEmail(e.target.value)}/>
+                            <input disabled={!displayState.loginButtonEnabled} type="email" className={(displayState.invalidEmail && 'is-invalid')+' form-control'} id="floatingInput" placeholder="name@example.com" onChange={e => setEmail(e.target.value)}/>
                             <label htmlFor="floatingInput">Email address</label>
                             
                             {displayState.invalidEmail &&
@@ -65,12 +52,12 @@ function LoginDisplay({setLoggedIn}) {
 
                         
                         <div className="form-floating my-1">
-                            <input type="password" className="form-control" id="floatingPassword" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
+                            <input disabled={!displayState.loginButtonEnabled} type="password" className="form-control" id="floatingPassword" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
                             <label htmlFor="floatingPassword">Password</label>
                         </div>
                         <div className="checkbox mb-3 text-center">
                         <label >
-                            <input className='form-check-input' role="button" type="checkbox" onChange={e => setKeepUserSigned(e.target.checked)}/> Keep me signed in
+                            <input disabled={!displayState.loginButtonEnabled} className='form-check-input' role="button" type="checkbox" onChange={e => setKeepUserSigned(e.target.checked)}/> Keep me signed in
                         </label>
                         </div>
                         <button disabled={!displayState.loginButtonEnabled} className="w-100 btn btn-lg btn-primary" 
@@ -88,12 +75,41 @@ function LoginDisplay({setLoggedIn}) {
         </div>); 
 }
 export default LoginDisplay;
+
+async function handleLoginState(displayState, setDisplayState, email, password, keepUserSigned){
+    const state = {...displayState};
+
+    // Validation trigger
+    if (state.submitted || state.invalidEmail){
+        state.invalidEmail = !validateEmail(email);
+    }
+
+    // Lock loginbutton
+    if (state.submitted && !state.invalidEmail){
+        state.loginButtonEnabled = false;
+    }
+
+    // Authentication
+    if(!state.submitted &&!state.loginButtonEnabled){
+        await authenticate(email, password, keepUserSigned);
+    }
+
+    state.submitted = false;
+
+    if(!isEqual(state, displayState))
+        setDisplayState(state);
+}
   
-function validateEmail(email, displayState, setDisplayState){
-    return false;
+function validateEmail(email){
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
+
+        return true;
+    } else {
+        return false;
+    }
 }
 
-function authenticate(){
+async function authenticate(){
 
 }
 
