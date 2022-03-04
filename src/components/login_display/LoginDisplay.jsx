@@ -6,6 +6,7 @@ function LoginDisplay({setLoggedIn}) {
     const [displayState, setDisplayState] = useState({
         loginButtonEnabled: true,
         error: true,
+        invalidEmail: true,
         errorMessage: "Auth failure error goes here.",
         submitted: false
     });
@@ -40,22 +41,26 @@ function LoginDisplay({setLoggedIn}) {
                         <img className="mb-4 text-center" src={require('./logo192.png')} alt="" width="72" height="57"/>
                     </div>
                     
-                    <h1 className="h3 mb-3 fw-normal text-center">CloudScholar</h1>
+                    <h1 className="display-5 mb-3 fw-normal text-center">CloudScholar</h1>
 
-                    <div className="auth-error-div">
-                        <div class="alert alert-danger mb-1" role="alert">
-                            {displayState.errorMessage}
+                    {displayState.error &&
+                        <div className="auth-error-div">
+                            <div class="alert alert-danger mb-1" role="alert">
+                                {displayState.errorMessage}
+                            </div>
                         </div>
-                    </div>
+                    }
 
                     <div className="login-inputs">
                         <div className="form-floating my-1">
-                            <input type="email" className="form-control is-invalid" id="floatingInput" placeholder="name@example.com" onChange={e => setEmail(e.target.value)}/>
+                            <input type="email" className={(displayState.invalidEmail && 'is-invalid')+' form-control'} id="floatingInput" placeholder="name@example.com" onChange={e => setEmail(e.target.value)}/>
                             <label htmlFor="floatingInput">Email address</label>
-                            <div id="validationServerUsernameFeedback" className="text-left invalid-feedback mb-2 ms-2">
-                                Please enter valid email. Eg. 'person@mail.com'.
-                            </div>
                             
+                            {displayState.invalidEmail &&
+                                <div id="validationServerUsernameFeedback" className="text-left invalid-feedback mb-2 ms-2">
+                                    Please enter valid email. Eg. 'person@mail.com'.
+                                </div>
+                            }  
                         </div>
 
                         
@@ -65,7 +70,7 @@ function LoginDisplay({setLoggedIn}) {
                         </div>
                         <div className="checkbox mb-3 text-center">
                         <label >
-                            <input type="checkbox" onChange={e => setKeepUserSigned(e.target.checked)}/> Keep me signed in
+                            <input className='form-check-input' role="button" type="checkbox" onChange={e => setKeepUserSigned(e.target.checked)}/> Keep me signed in
                         </label>
                         </div>
                         <button disabled={!displayState.loginButtonEnabled} className="w-100 btn btn-lg btn-primary" 
@@ -73,7 +78,7 @@ function LoginDisplay({setLoggedIn}) {
                             {displayState.loginButtonEnabled? "Sign in" : "Signing in..."}
                         </button>
                         <div className='text-center'>
-                            <a>Don't have an account? Register Here</a>
+                            <a className={styles.link} onClick={() => openRegistration()}>Don't have an account? Register Here</a>
                         </div>
                         
                     </div>
@@ -89,5 +94,9 @@ function validateEmail(email, displayState, setDisplayState){
 }
 
 function authenticate(){
+
+}
+
+function openRegistration(){
 
 }

@@ -8,5 +8,14 @@
     padding: 15px;
     height: 100vh;
     margin: auto;
-    
+}
+
+.link{
+    cursor: pointer;
+    color: rgb(70, 70, 70);
+}
+
+.link:hover {
+    cursor: pointer;
+    color: rgb(90, 90, 90);
 }
