@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { isEqual } from 'lodash';
+import axios from 'axios';
 import styles from  './LoginDisplay.module.css'
 
 function LoginDisplay({setLoggedIn}) {
@@ -82,16 +83,21 @@ async function handleLoginState(displayState, setDisplayState, email, password, 
     // Validation trigger
     if (state.submitted || state.invalidEmail){
         state.invalidEmail = !validateEmail(email);
+
+        console.log("validation trigger.")
     }
 
-    // Lock loginbutton
+    // Lock loginbutton 
     if (state.submitted && !state.invalidEmail){
+        console.log("login lock trigger.")
         state.loginButtonEnabled = false;
     }
 
-    // Authentication
-    if(!state.submitted &&!state.loginButtonEnabled){
+    // Authentication after login button is locked on display
+    if(!state.submitted && !state.loginButtonEnabled){
+        console.log("authentication trigger.")
         await authenticate(email, password, keepUserSigned);
+        state.loginButtonEnabled = true;
     }
 
     state.submitted = false;
@@ -109,7 +115,24 @@ function validateEmail(email){
     }
 }
 
-async function authenticate(){
+async function authenticate(email, password, keepUserSigned){
+
+    try {
+        const response = await axios.post('http://localhost:8086/login', {
+            email: email,
+            password: password
+        });
+
+        
+        console.log(response);
+
+    } catch (error) {
+        console.log({
+            message: 'Failed to post login',
+            error: error
+        })
+    }
+
 
 }
 
