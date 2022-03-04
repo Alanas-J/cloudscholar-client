@@ -19,12 +19,23 @@ function LoginDisplay({setLoggedIn}) {
 
     console.log(displayState);
 
-    handleLoginState(displayState, setDisplayState, email, password, keepUserSigned);
-    useEffect(() => {
-        if(!displayState.loginButtonEnabled)
-            authenticate(email, password, keepUserSigned, displayState, setDisplayState);
-    });
+    if(displayState.invalidEmail && validateEmail(email)){
+        displayState.invalidEmail = false;
+        setDisplayState(displayState);
+    }
 
+    function handleSubmit(event){
+        event.preventDefault();
+
+        displayState.invalidEmail = !validateEmail(email);
+
+        if(!displayState.invalidEmail){
+            displayState.loginButtonEnabled = false;
+            authenticate(email, password, keepUserSigned, displayState, setDisplayState);
+        }
+
+        setDisplayState(displayState);
+    }
 
     return (
         <div className={styles.loginDisplay+' '}>
@@ -68,7 +79,7 @@ function LoginDisplay({setLoggedIn}) {
                         </label>
                         </div>
                         <button disabled={!displayState.loginButtonEnabled} className="w-100 btn btn-lg btn-primary" 
-                            onClick={(e) => {setDisplayState({...displayState, submitted: true}); e.preventDefault();}}>
+                            onClick={handleSubmit}>
                             {displayState.loginButtonEnabled? "Sign in" : "Signing in..."}
                         </button>
                         <div className='text-center'>
@@ -83,37 +94,6 @@ function LoginDisplay({setLoggedIn}) {
 }
 export default LoginDisplay;
 
-async function handleLoginState(displayState, setDisplayState, email, password, keepUserSigned){
-    const state = {...displayState};
-
-    // Validation trigger
-    if (state.submitted || state.invalidEmail){
-        state.invalidEmail = !validateEmail(email);
-
-        console.log("validation trigger.")
-    }
-
-    // Lock loginbutton 
-    if (state.submitted && !state.invalidEmail){
-        console.log("login lock trigger.")
-        state.loginButtonEnabled = false;
-    }
-
-    // Authentication after login button is locked on display
-    if(!state.submitted && !state.loginButtonEnabled){
-        console.log("authentication trigger.")
-        //useEffect(authenticate(email, password, keepUserSigned, state, setDisplayState));
-        return;
-    }
-
-    state.submitted = false;
-
-    
-    if(!isEqual(state, displayState)){
-        setDisplayState(state);
-    }   
-        
-}
   
 function validateEmail(email){
     if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)){
