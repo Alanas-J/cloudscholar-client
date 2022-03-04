@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { isEqual } from 'lodash';
 import axios from 'axios';
 import styles from  './LoginDisplay.module.css'
@@ -16,9 +16,15 @@ function LoginDisplay({setLoggedIn}) {
     const [email, setEmail] = useState("");
     const [keepUserSigned, setKeepUserSigned] = useState(false);
 
+
     console.log(displayState);
 
     handleLoginState(displayState, setDisplayState, email, password, keepUserSigned);
+    useEffect(() => {
+        if(!displayState.loginButtonEnabled)
+            authenticate(email, password, keepUserSigned, displayState, setDisplayState);
+    });
+
 
     return (
         <div className={styles.loginDisplay+' '}>
@@ -96,18 +102,21 @@ async function handleLoginState(displayState, setDisplayState, email, password, 
     // Authentication after login button is locked on display
     if(!state.submitted && !state.loginButtonEnabled){
         console.log("authentication trigger.")
-        await authenticate(email, password, keepUserSigned);
-        state.loginButtonEnabled = true;
+        //useEffect(authenticate(email, password, keepUserSigned, state, setDisplayState));
+        return;
     }
 
     state.submitted = false;
 
-    if(!isEqual(state, displayState))
+    
+    if(!isEqual(state, displayState)){
         setDisplayState(state);
+    }   
+        
 }
   
 function validateEmail(email){
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
+    if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)){
 
         return true;
     } else {
@@ -115,8 +124,9 @@ function validateEmail(email){
     }
 }
 
-async function authenticate(email, password, keepUserSigned){
-
+async function authenticate(email, password, keepUserSigned, state, setDisplayState){
+    console.log('auth call');
+ 
     try {
         const response = await axios.post('http://localhost:8086/login', {
             email: email,
@@ -132,8 +142,7 @@ async function authenticate(email, password, keepUserSigned){
             error: error
         })
     }
-
-
+    
 }
 
 function openRegistration(){
