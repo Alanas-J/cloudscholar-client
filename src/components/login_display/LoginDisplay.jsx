@@ -7,7 +7,7 @@ function LoginDisplay({setLoggedIn}) {
 
     const [displayState, setDisplayState] = useState({
         loginButtonEnabled: true,
-        error: false,
+        error: true,
         invalidEmail: false,
         errorMessage: "Auth failure error goes here.",
         submitted: false
@@ -34,8 +34,9 @@ function LoginDisplay({setLoggedIn}) {
         if(!state.invalidEmail){
             state.loginButtonEnabled = false;
             authenticate(email, password, keepUserSigned, state, setDisplayState);
+        } else {
+            setDisplayState(state);
         }
-        setDisplayState(state);
     }
 
     return (
@@ -51,7 +52,7 @@ function LoginDisplay({setLoggedIn}) {
 
                     {displayState.error &&
                         <div className="auth-error-div">
-                            <div class="alert alert-danger mb-1" role="alert">
+                            <div className="alert alert-danger mb-1 py-2" role="alert">
                                 {displayState.errorMessage}
                             </div>
                         </div>
@@ -118,12 +119,11 @@ async function authenticate(email, password, keepUserSigned, state, setDisplaySt
         console.log(response);
 
     } catch (error) {
-        console.log({
-            message: 'Failed to post login',
-            error: error
-        })
+        state.error = true;
+        state.errorMessage = error.response.data.message;
     }
-    
+    state.loginButtonEnabled = true;
+    setDisplayState(state)
 }
 
 function openRegistration(){
