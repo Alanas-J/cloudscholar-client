@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from  './LoginDisplay.module.css';
 import {useDispatch} from 'react-redux';
-import {updateState} from '../../state/slices/userData';
+import {updateUserState} from '../../state/slices/userState';
 
 function LoginDisplay({setLoggedIn}) {
     const [displayState, setDisplayState] = useState({
@@ -119,7 +119,7 @@ async function authenticate(email, password, keepUserSigned, state, setDisplaySt
         });
 
         // Will need to fetch userdata before logging in.
-        dispatch(updateState({
+        dispatch(updateUserState({
             loggedIn: true,
         }));
 
@@ -136,22 +136,7 @@ async function authenticate(email, password, keepUserSigned, state, setDisplaySt
         } else{
             error.message = 'An unknown error has occured.'
         }
-
-        // 400/500 Response
-
-        // if connection error
         console.log({error: error});
-        
-        
-        /*
-        // If server error
-        state.error = true;
-        state.errorMessage = error.response.data.message;
-
-        state.formSubmitted = false;;
-        setDisplayState(state);
-        */
-        
     }
     state.formSubmitted = false;
     setDisplayState(state);

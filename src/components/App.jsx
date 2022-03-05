@@ -6,7 +6,7 @@ import './App.css';
 import {useSelector} from 'react-redux';
 
 function App() {
-  const loginState = useSelector(state => state.userData.value.loggedIn);
+  const loginState = useSelector(state => state.userState.value.loggedIn);
 
   return (
     <div className="App">

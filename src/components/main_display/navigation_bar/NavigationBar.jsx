@@ -2,6 +2,7 @@ import styles from './NavigationBar.module.css';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setDisplay } from '../../../state/slices/appDisplay';
+import { updateUserState } from '../../../state/slices/userState';
 
 function NavigationBar() {
     // Global State
@@ -18,7 +19,6 @@ function NavigationBar() {
         document.getElementById("root").onclick = null;
     }
 
-    
     const navButtonStyle = "nav-link py-3 border-bottom";
     // Need to remove this jank^
 
@@ -46,8 +46,8 @@ function NavigationBar() {
                 </li>
             </ul>
 
-            <div className="dropdown border-top">
-                <button onClick={() => dropdownClick(showSettingsDropdown, setShowSettingsDropdown)} className="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle" >
+            <div className="dropdown border-top nav-item nav-pills">
+                <button onClick={() => dropdownClick(showSettingsDropdown, setShowSettingsDropdown)} className="d-flex py-4 nav-link bg-light align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle" >
                     Settings
                 </button>
                 {showSettingsDropdown && 
@@ -55,7 +55,7 @@ function NavigationBar() {
                     <li><button className="dropdown-item">Profile(Placeholder)</button></li>
                     <li><button className="dropdown-item">Settings(Placeholder)</button></li>
                     <li><hr className="dropdown-divider"/></li>
-                    <li><button className="dropdown-item">Sign out</button></li>
+                    <li><button className="dropdown-item" onClick={() => signout(dispatch)}>Sign out</button></li>
                 </ul>}
             
             </div>
@@ -65,5 +65,9 @@ function NavigationBar() {
 
   function dropdownClick(showSettingsDropdown, setShowSettingsDropdown){
     setShowSettingsDropdown(!showSettingsDropdown);
+  }
+
+  function signout(dispatch){
+    dispatch(updateUserState({loggedIn: false}));
   }
   

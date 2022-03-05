@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 // Will store userdata and login status.
 //=========================================================
-export const userData = createSlice({
-  name: 'userData',
+export const userState = createSlice({
+  name: 'userState',
   initialState: {
     value: { 
       loggedIn: false,
@@ -11,13 +11,13 @@ export const userData = createSlice({
     }
   },
   reducers: {
-    updateState: (state, action) => {
+    updateUserState: (state, action) => {
       state.value = action.payload;
     }
   }
 })
 
 // Action creators are generated for each case reducer function
-export const { updateState } = userData.actions;
+export const { updateUserState } = userState.actions;
 
-export default userData.reducer;
+export default userState.reducer;
