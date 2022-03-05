@@ -1,0 +1,14 @@
+.navigationBar{
+    width: 6.5rem;
+    height: 100vh;
+}
+.navigationBar button{
+    width: 100%;
+}
+
+
+
+.dropdownList{
+    left: 100%;
+    bottom: 0;
+}

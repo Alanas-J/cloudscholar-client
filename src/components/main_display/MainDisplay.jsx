@@ -1,6 +1,6 @@
 import Home from './home/Home';
 import Timetable from './timetable/Timetable';
-import NavigationBar from './navigation/NavigationBar';
+import NavigationBar from './navigation_bar/NavigationBar';
 import './MainDisplay.css';
 
 import { useSelector} from 'react-redux';
