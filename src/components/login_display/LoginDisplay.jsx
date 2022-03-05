@@ -118,7 +118,8 @@ async function authenticate(email, password, keepUserSigned, state, setDisplaySt
             password: password
         });
 
-        fetchUserData(response.data.token, dispatch);
+        window.sessionStorage.setItem('token', response.data.token);
+        fetchUserData(dispatch);
 
         console.log(response);
         return;

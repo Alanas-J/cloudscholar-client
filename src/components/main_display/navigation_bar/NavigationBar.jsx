@@ -61,13 +61,14 @@ function NavigationBar() {
             </div>
         </div>); 
   }
-  export default NavigationBar;
+export default NavigationBar;
 
-  function dropdownClick(showSettingsDropdown, setShowSettingsDropdown){
+function dropdownClick(showSettingsDropdown, setShowSettingsDropdown){
     setShowSettingsDropdown(!showSettingsDropdown);
-  }
+}
 
-  function signout(dispatch){
+function signout(dispatch){
+    window.sessionStorage.clear();
     dispatch(updateUserState({loggedIn: false}));
-  }
+}
   

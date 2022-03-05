@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { updateUserState } from '../slices/userState'
 
-async function fetchUserData(token, dispatch){
+async function fetchUserData(dispatch){
+
+    const token = window.sessionStorage.getItem('token');
 
     const config = {
         headers: { Authorization: `Bearer ${token}` }
