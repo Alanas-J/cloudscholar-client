@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from  './LoginDisplay.module.css';
 import {useDispatch} from 'react-redux';
-import {updateUserState} from '../../state/slices/userState';
+import fetchUserData from '../../state/actions/fetchUserData';
 
 function LoginDisplay({setLoggedIn}) {
     const [displayState, setDisplayState] = useState({
@@ -118,10 +118,7 @@ async function authenticate(email, password, keepUserSigned, state, setDisplaySt
             password: password
         });
 
-        // Will need to fetch userdata before logging in.
-        dispatch(updateUserState({
-            loggedIn: true,
-        }));
+        fetchUserData(response.data.token, dispatch);
 
         console.log(response);
         return;
