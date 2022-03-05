@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from  './LoginDisplay.module.css';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {updateState} from '../../state/slices/userData';
 
 function LoginDisplay({setLoggedIn}) {
     const [displayState, setDisplayState] = useState({
-        loginButtonEnabled: true,
-        error: true,
+        formSubmitted: false,
+        error: false,
         invalidEmail: false,
         errorMessage: "Auth failure error goes here.",
         submitted: false,
@@ -15,7 +15,6 @@ function LoginDisplay({setLoggedIn}) {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [keepUserSigned, setKeepUserSigned] = useState(false);
-
 
     console.log(displayState);
 
@@ -32,14 +31,15 @@ function LoginDisplay({setLoggedIn}) {
         event.preventDefault();
         const state = {...displayState};
 
+        state.error = false;
         state.invalidEmail = !validateEmail(email);
 
         if(!state.invalidEmail){
-            state.loginButtonEnabled = false;
-            authenticate(email, password, keepUserSigned, state, setDisplayState, dispatch);
-        } else {
-            setDisplayState(state);
+            state.formSubmitted = true;
+            authenticate(email, password, keepUserSigned, displayState, setDisplayState, dispatch);
         }
+        console.log(state); 
+        setDisplayState(state);
     }
 
     return (
@@ -63,7 +63,7 @@ function LoginDisplay({setLoggedIn}) {
 
                     <div className="login-inputs">
                         <div className="form-floating my-1">
-                            <input disabled={!displayState.loginButtonEnabled} type="email" className={(displayState.invalidEmail && 'is-invalid')+' form-control'} id="floatingInput" placeholder="name@example.com" onChange={e => setEmail(e.target.value)}/>
+                            <input disabled={displayState.formSubmitted} type="email" className={(displayState.invalidEmail && 'is-invalid')+' form-control'} id="floatingInput" placeholder="name@example.com" onChange={e => setEmail(e.target.value)}/>
                             <label htmlFor="floatingInput">Email address</label>
                             
                             {displayState.invalidEmail &&
@@ -75,17 +75,17 @@ function LoginDisplay({setLoggedIn}) {
 
                         
                         <div className="form-floating my-1">
-                            <input disabled={!displayState.loginButtonEnabled} type="password" className="form-control" id="floatingPassword" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
+                            <input disabled={displayState.formSubmitted} type="password" className="form-control" id="floatingPassword" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
                             <label htmlFor="floatingPassword">Password</label>
                         </div>
                         <div className="checkbox mb-3 text-center">
                         <label >
-                            <input disabled={!displayState.loginButtonEnabled} className='form-check-input' role="button" type="checkbox" onChange={e => setKeepUserSigned(e.target.checked)}/> Keep me signed in
+                            <input disabled={displayState.formSubmitted} className='form-check-input' role="button" type="checkbox" onChange={e => setKeepUserSigned(e.target.checked)}/> Keep me signed in
                         </label>
                         </div>
-                        <button disabled={!displayState.loginButtonEnabled} className="w-100 btn btn-lg btn-primary" 
+                        <button disabled={displayState.formSubmitted} className="w-100 btn btn-lg btn-primary" 
                             onClick={handleSubmit}>
-                            {displayState.loginButtonEnabled? "Sign in" : "Signing in..."}
+                            {!displayState.formSubmitted? "Sign in" : "Signing in..."}
                         </button>
                         <div className='text-center'>
                             <a className={styles.link} onClick={() => openRegistration()}>Don't have an account? Register Here</a>
@@ -118,17 +118,42 @@ async function authenticate(email, password, keepUserSigned, state, setDisplaySt
             password: password
         });
 
+        // Will need to fetch userdata before logging in.
         dispatch(updateState({
             loggedIn: true,
         }));
 
         console.log(response);
-
+        return;
     } catch (error) {
         state.error = true;
+
+        // Actual error
+        if(error.message == 'Network Error'){
+            state.errorMessage = "Connection to the login server failed..."
+        } else if (error.response.data.message){
+            state.errorMessage = error.response.data.message;
+        } else{
+            error.message = 'An unknown error has occured.'
+        }
+
+        // 400/500 Response
+
+        // if connection error
+        console.log({error: error});
+        
+        
+        /*
+        // If server error
+        state.error = true;
         state.errorMessage = error.response.data.message;
+
+        state.formSubmitted = false;;
+        setDisplayState(state);
+        */
+        
     }
-    state.loginButtonEnabled = true;
+    state.formSubmitted = false;
     setDisplayState(state);
 }
 
