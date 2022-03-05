@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
-import { isEqual } from 'lodash';
 import axios from 'axios';
-import styles from  './LoginDisplay.module.css'
+import styles from  './LoginDisplay.module.css';
+import {useSelector, useDispatch} from 'react-redux';
+import {updateState} from '../../state/slices/userData';
 
 function LoginDisplay({setLoggedIn}) {
-
     const [displayState, setDisplayState] = useState({
         loginButtonEnabled: true,
         error: true,
         invalidEmail: false,
         errorMessage: "Auth failure error goes here.",
-        submitted: false
+        submitted: false,
     });
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
@@ -19,7 +19,10 @@ function LoginDisplay({setLoggedIn}) {
 
     console.log(displayState);
 
+    // Redux State
+    const dispatch = useDispatch();
     
+    // Component State    
     if(displayState.invalidEmail && validateEmail(email)){
         displayState.invalidEmail = false;
         setDisplayState(displayState);
@@ -33,7 +36,7 @@ function LoginDisplay({setLoggedIn}) {
 
         if(!state.invalidEmail){
             state.loginButtonEnabled = false;
-            authenticate(email, password, keepUserSigned, state, setDisplayState);
+            authenticate(email, password, keepUserSigned, state, setDisplayState, dispatch);
         } else {
             setDisplayState(state);
         }
@@ -106,7 +109,7 @@ function validateEmail(email){
     }
 }
 
-async function authenticate(email, password, keepUserSigned, state, setDisplayState){
+async function authenticate(email, password, keepUserSigned, state, setDisplayState, dispatch){
     console.log('auth call');
  
     try {
@@ -115,7 +118,10 @@ async function authenticate(email, password, keepUserSigned, state, setDisplaySt
             password: password
         });
 
-        
+        dispatch(updateState({
+            loggedIn: true,
+        }));
+
         console.log(response);
 
     } catch (error) {
@@ -123,7 +129,7 @@ async function authenticate(email, password, keepUserSigned, state, setDisplaySt
         state.errorMessage = error.response.data.message;
     }
     state.loginButtonEnabled = true;
-    setDisplayState(state)
+    setDisplayState(state);
 }
 
 function openRegistration(){
