@@ -118,7 +118,11 @@ async function authenticate(email, password, keepUserSigned, state, setDisplaySt
             password: password
         });
 
+        // Store cookie
+        document.cookie = `Set-Cookie: tokeb=${response.token}; ${ keepUserSigned && 'tokenExpires=Thu, 21 Oct 2021 07:28:00 GMT;'} HttpOnly`;
         window.sessionStorage.setItem('token', response.data.token);
+
+
         fetchUserData(dispatch);
 
         console.log(response);
