@@ -12,8 +12,15 @@ function App() {
    const dispatch = useDispatch();
 
    // If user is already logged in
-   if(window.sessionStorage.getItem("token") && !loginState){
-      fetchUserData(dispatch);
+   if(!loginState){
+      if(window.sessionStorage.getItem("token")){
+         fetchUserData(dispatch);
+
+      } else if(window.localStorage.getItem("token")){
+         window.sessionStorage.setItem('token', window.localStorage.getItem("token"));
+         fetchUserData(dispatch);
+
+      }
    }
 
    return (
