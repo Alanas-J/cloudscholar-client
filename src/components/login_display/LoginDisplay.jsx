@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import styles from  './LoginDisplay.module.css';
 import {useDispatch} from 'react-redux';
@@ -15,8 +15,6 @@ function LoginDisplay({setLoggedIn}) {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [keepUserSigned, setKeepUserSigned] = useState(false);
-
-    console.log(displayState);
 
     // Redux State
     const dispatch = useDispatch();
@@ -38,7 +36,6 @@ function LoginDisplay({setLoggedIn}) {
             state.formSubmitted = true;
             authenticate(email, password, keepUserSigned, displayState, setDisplayState, dispatch);
         }
-        console.log(state); 
         setDisplayState(state);
     }
 
@@ -88,7 +85,7 @@ function LoginDisplay({setLoggedIn}) {
                             {!displayState.formSubmitted? "Sign in" : "Signing in..."}
                         </button>
                         <div className='text-center'>
-                            <a className={styles.link} onClick={() => openRegistration()}>Don't have an account? Register Here</a>
+                            <p className={styles.link} onClick={() => openRegistration()}>Don't have an account? Register Here</p>
                         </div>
                         
                     </div>
@@ -110,29 +107,28 @@ function validateEmail(email){
 }
 
 async function authenticate(email, password, keepUserSigned, state, setDisplayState, dispatch){
-    console.log('auth call');
  
     try {
         const response = await axios.post('http://localhost:8086/login', {
             email: email,
-            password: password
+            password: password,
         });
 
-        // Store cookie
-        document.cookie = `Set-Cookie: tokeb=${response.token}; ${ keepUserSigned && 'tokenExpires=Thu, 21 Oct 2021 07:28:00 GMT;'} HttpOnly`;
+        // Store token 
+        if(keepUserSigned){
+            window.localStorage.setItem('token', response.data.token);
+        }
         window.sessionStorage.setItem('token', response.data.token);
 
+        await fetchUserData(dispatch);
 
-        fetchUserData(dispatch);
-
-        console.log(response);
         return;
     } catch (error) {
         state.error = true;
 
         // Actual error
-        if(error.message == 'Network Error'){
-            state.errorMessage = "Connection to the login server failed..."
+        if(error.message === 'Network Error'){
+            state.errorMessage = "Connection to the login server failed...";
         } else if (error.response.data.message){
             state.errorMessage = error.response.data.message;
         } else{

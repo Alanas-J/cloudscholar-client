@@ -69,6 +69,7 @@ function dropdownClick(showSettingsDropdown, setShowSettingsDropdown){
 
 function signout(dispatch){
     window.sessionStorage.clear();
+    window.localStorage.clear();
     dispatch(updateUserState({loggedIn: false}));
 }
   
