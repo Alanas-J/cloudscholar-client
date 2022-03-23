@@ -7,7 +7,7 @@ function UpcomingTasksDisplay() {
 
     const userData = useSelector(state => state.userState.value.userData);
     const tasks = getTasks(userData);
-    console.log(tasks);
+    // console.log(tasks);
 
 
     return (
