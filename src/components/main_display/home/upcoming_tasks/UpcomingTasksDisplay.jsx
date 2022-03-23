@@ -1,6 +1,7 @@
 import styles from '../Home.module.css'
 import Task from './task/Task'
-import { useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
+import {v4 as uuidv4} from 'uuid';
 
 function UpcomingTasksDisplay() {
 
@@ -11,12 +12,13 @@ function UpcomingTasksDisplay() {
 
     return (
         <div className={styles.display + " mt-4 border bg-light border-secondary"}>
-                {tasks.length !== 0? tasks.map(task => {return <Task task={task}/>}) : <div className='h5 h-100 p-3 m-0 '> You're currently clear of any tasks! Do you have any to add? </div>}
+                {tasks.length !== 0? tasks.map(task => {return <Task key={uuidv4()} task={task}/>}) : <div className='h5 h-100 p-3 m-0 '> You're currently clear of any tasks! Do you have any to add? </div>}
         </div>
     );
 }   
 export default UpcomingTasksDisplay;
 
+// TODO: This will prob be moved into its own file
 function getTasks(userData) {
 
     // Many subjects have many tasks

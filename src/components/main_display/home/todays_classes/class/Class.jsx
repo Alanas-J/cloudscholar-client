@@ -11,7 +11,7 @@ function Class({colour, classType, time, subject}) {
                     <div className={styles.taskTitleWidth+" pt-1"}>
                         <h5 className={styles.textOverflow + " border-bottom border-secondary p-1"}>{classType} | {subject}</h5>
                     </div>
-                    <div className="me-3 ">[*]</div>
+                    <div className="me-3 "></div>
                 </div>
                 
                 <div className="w-100">

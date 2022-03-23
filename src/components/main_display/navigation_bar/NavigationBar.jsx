@@ -36,11 +36,11 @@ function NavigationBar() {
                         Timetable
                     </button>
 
-                    <button className="nav-link py-3 border-bottom">
+                    <button disabled className="nav-link py-3 border-bottom">
                         Notes
                     </button>
 
-                    <button href="#" className="nav-link py-3 border-bottom">
+                    <button disabled href="#" className="nav-link py-3 border-bottom">
                         Grade Calculator
                     </button>
                 </li>
