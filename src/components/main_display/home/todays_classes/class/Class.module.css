@@ -12,12 +12,6 @@
     width: calc(100% - .9rem);
 }
 
-.colour::before{
-    content: " ";
-    min-width: .3rem;
-    background-color: rgb(17, 187, 116);
-}
-
 .task:hover{
     background-color: rgba(24, 24, 24, 0.062);
 }

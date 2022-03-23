@@ -1,4 +1,4 @@
-import {DateTime, Duration, Interval} from 'luxon';
+import {DateTime, Interval} from 'luxon';
 
 function getClassesForWeekday(userData, intWeekday) {
 
@@ -35,7 +35,8 @@ function getClassesForWeekday(userData, intWeekday) {
                         subjectName: subject.name,
                         description: _class.description
                     }
-                    standaloneClass.duration = Duration.fromMillis(standaloneClass.end_time.toMillis() - standaloneClass.start_time.toMillis());
+                    //standaloneClass.duration_until = Duration.fromMillis(standaloneClass.start_time.toMillis() - DateTime.now().toMillis());
+                    standaloneClass.duration_until = standaloneClass.start_time.diffNow(['hours', 'minutes']);
 
                     classes.push(standaloneClass);
                 }
