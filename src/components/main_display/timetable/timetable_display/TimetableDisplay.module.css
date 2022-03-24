@@ -1,0 +1,39 @@
+
+.display{
+    overflow-y: scroll;
+    min-height: calc(90vh - 5rem);
+    max-height: calc(90vh - 5rem);
+}
+
+.timeblock{
+    min-height: 3em;
+    margin: 0;
+}
+
+
+/* width */
+.display::-webkit-scrollbar {
+    width: 10px;
+    padding-top: 10px;
+}
+  
+/* Track 
+.display::-webkit-scrollbar-track {
+
+}*/
+/* Handle */
+.display::-webkit-scrollbar-thumb{
+    transition: color 2s !important;
+    background-color: rgb(99, 99, 99); 
+}
+
+
+.display:hover::-webkit-scrollbar-thumb {
+    transition: color 2s ;
+    background-color: rgb(99, 99, 99); 
+}
+  
+ /* Handle on hover 
+ .display::-webkit-scrollbar-thumb:hover {
+ 
+}*/
