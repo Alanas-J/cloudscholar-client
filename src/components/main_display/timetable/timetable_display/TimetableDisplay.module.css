@@ -1,8 +1,8 @@
 
 .display{
     overflow-y: scroll;
-    min-height: calc(90vh - 5rem);
-    max-height: calc(90vh - 5rem);
+    min-height: calc(90vh - 9rem);
+    max-height: calc(90vh - 9rem);
 }
 
 .timeblock{

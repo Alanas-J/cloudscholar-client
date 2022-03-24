@@ -6,7 +6,7 @@ function Timetable() {
       <div className='home rounded-left d-flex flex-fill justify-content-between'>
       
         <section className='flex-fill'>
-          <h2 className='border-bottom p-3'>Timetable</h2>
+          <h3 className='border-bottom border-dark p-3 mx-4'>Timetable</h3>
 
 
 			<div className="p-4 pt-2">

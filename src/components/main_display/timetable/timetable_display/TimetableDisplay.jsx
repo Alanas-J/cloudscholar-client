@@ -1,11 +1,19 @@
 import styles from "./TimetableDisplay.module.css"
 
 function TimetableDisplay() {
+
+    //Defaults
+    let earliestHour = 9;
+	let latestHour = 16;
+
+
+    //TODO: Get the week'
+
     return (
         
         <div className={styles.timetableDisplay}>
 
-            <div className=" row justify-content-center mb-3">
+            <div className=" row  mb-3">
 
                 <div className="col-4 bg-light mx-a border">
                     <div className="row text-center">
@@ -16,7 +24,7 @@ function TimetableDisplay() {
 
 
                         <div className="col align-items-center">
-                            <h5 className="m-0 ">
+                            <h5 className="m-0 p-1 mt-1">
                                 25th - 31st, March 2022
                             </h5>
                         </div>
