@@ -72,6 +72,10 @@ function TimetableDisplay() {
                     {generateTimelist(earliestHour, latestHour)}
                 </div>
                 <div className="col border p-0">
+                    <div className={styles.timeOffset}>
+                            <div className={styles.test}>
+                                test</div>
+                    </div>
                     {generateTimeblocks(latestHour-earliestHour+1)}   
                 </div>
                 <div className="col border p-0">
