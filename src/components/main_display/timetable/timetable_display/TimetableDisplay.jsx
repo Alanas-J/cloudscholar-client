@@ -69,26 +69,7 @@ function TimetableDisplay() {
             </div>
             <div className={styles.display + " row text-center border-dark border-start border-bottom border-end bg-light"}>
                 <div className="col border p-0">
-                    <div className={styles.timeblock+ " border-bottom"}>9</div>
-                    <div className={styles.timeblock+ " border-bottom"}>10</div>
-                    <div className={styles.timeblock+ " border-bottom"}>11</div>
-                    <div className={styles.timeblock+ " border-bottom"}>12</div>
-                    <div className={styles.timeblock+ " border-bottom"}>13</div>
-                    <div className={styles.timeblock+ " border-bottom"}>14</div>
-                    <div className={styles.timeblock+ " border-bottom"}>15</div>
-                    <div className={styles.timeblock+ " border-bottom"}>16</div>
-                    <div className={styles.timeblock+ " border-bottom"}>17</div>
-                    <div className={styles.timeblock+ " border-bottom"}>18</div>
-                    <div className={styles.timeblock+ " border-bottom"}>19</div>
-                    <div className={styles.timeblock+ " border-bottom"}>20</div>
-                    <div className={styles.timeblock+ " border-bottom"}>21</div>
-                    <div className={styles.timeblock+ " border-bottom"}>22</div>
-                    <div className={styles.timeblock+ " border-bottom"}>23</div>
-                    <div className={styles.timeblock+ " border-bottom"}>24</div>
-                    <div className={styles.timeblock+ " border-bottom"}></div>
-                    <div className={styles.timeblock+ " border-bottom"}></div>
-                    <div className={styles.timeblock+ " border-bottom"}></div>
-                    <div className={styles.timeblock+ " border-bottom"}></div>
+                    {generateTimelist(earliestHour, latestHour)}
                 </div>
                 <div className="col border p-0">
                     {generateTimeblocks(latestHour-earliestHour+1)}   
@@ -134,8 +115,10 @@ function generateTimeblocks(noOfBlocks){
 function generateTimelist(earliestHour, latestHour){
     const timelist = [];
     
-    for(let i = 0; i <= earliestHour-latestHour; i++){
-        timelist.push(<div className={styles.timeblock+ " border-bottom"}></div>);
+    for(let i = 0; i <= latestHour-earliestHour; i++){
+        timelist.push(<div className={styles.timeblock+ " border-bottom text-end p-0 pe-1"}>
+            {earliestHour + i + ':00'}
+        </div>);
     }
 
     return timelist;
