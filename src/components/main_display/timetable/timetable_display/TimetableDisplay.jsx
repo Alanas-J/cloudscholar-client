@@ -1,12 +1,11 @@
 import styles from './TimetableDisplay.module.css'
 import {useState, useRef, useEffect} from 'react';
-import {DateTime, Interval} from 'luxon';
+import {DateTime} from 'luxon';
 import {v4 as uuidv4} from 'uuid';
 
 function TimetableDisplay() {
-
-    const [date, setDate] = useState(DateTime.now());
     const [currentWeekOffset, setCurrentWeekOffset] = useState(0);
+    const date = DateTime.now().plus({weeks: currentWeekOffset});
 
     const startOfTheWeek = date.minus({days: date.weekday-1});
     const endOfTheWeek = date.plus({days: 7-date.weekday});
@@ -47,15 +46,15 @@ function TimetableDisplay() {
                  <div className="d-inline-flex bg-light rounded border">
 
                     <div className="p-0 border">
-                        <button type="button border" className="btn btn-primary m-0">&lt;</button>
+                        <button type="button border" onClick={() => setCurrentWeekOffset(currentWeekOffset-1)} className="btn btn-primary m-0">&lt;</button>
                     </div>
                     <div className="p-0 border">
-                        <button type="button" className="btn btn-primary">&gt;</button>
+                        <button type="button" onClick={() => setCurrentWeekOffset(currentWeekOffset+1)} className="btn btn-primary">&gt;</button>
                     </div>
 
                     <div className="align-items-center">
                         <h5 className="m-0 p-1 mt-1  px-3 ">
-                            {startOfTheWeek.day} {startOfTheWeek.monthShort} - {endOfTheWeek.day} {endOfTheWeek.monthShort}, {endOfTheWeek.year}
+                            {startOfTheWeek.day} {startOfTheWeek.monthShort} - {endOfTheWeek.day} {endOfTheWeek.monthShort}, {endOfTheWeek.year} {currentWeekOffset == 0 && ' (Current Week)'}
                         </h5>
                     </div>
                 </div>
