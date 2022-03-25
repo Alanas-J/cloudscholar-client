@@ -6,7 +6,7 @@ import {v4 as uuidv4} from 'uuid';
 function TimetableDisplay() {
 
     const [date, setDate] = useState(DateTime.now());
-    const [isCurrentWeek, setIsCurrentWeek] = useState(true);
+    const [currentWeekOffset, setCurrentWeekOffset] = useState(0);
 
     const startOfTheWeek = date.minus({days: date.weekday-1});
     const endOfTheWeek = date.plus({days: 7-date.weekday});
@@ -52,11 +52,9 @@ function TimetableDisplay() {
 
                         <div className="align-items-center">
                             <h5 className="m-0 p-1 mt-1  px-3 ">
-                                25th - 31st, March 2022
+                                {startOfTheWeek.day} {startOfTheWeek.monthShort} - {endOfTheWeek.day} {endOfTheWeek.monthShort}, {endOfTheWeek.year}
                             </h5>
                         </div>
-
-                        
 
                     </div>
             
