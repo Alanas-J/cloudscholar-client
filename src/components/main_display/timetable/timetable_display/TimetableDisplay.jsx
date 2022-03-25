@@ -4,12 +4,21 @@ function TimetableDisplay() {
 
     //Defaults
     let earliestHour = 9;
-	let latestHour = 16;
+	let latestHour = 18;
 
     // 9 16
 
 
-    //TODO: Get the week'
+    //TODO: Get the current week and monday and sunday dates within.
+    // add functionality to change
+    // Refetch table data based on this (date will be a usestate)
+
+    // each timetable element will most likely be created from an object.
+
+    // need to figure a out a system for intersecting timetable objects.
+
+    // current time indicator.
+
 
     return (
         
