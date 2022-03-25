@@ -37,11 +37,7 @@ function NavigationBar() {
                     </button>
 
                     <button disabled className="nav-link py-3 border-bottom">
-                        Notes
-                    </button>
-
-                    <button disabled href="#" className="nav-link py-3 border-bottom">
-                        Grade Calculator
+                        ...
                     </button>
                 </li>
             </ul>
