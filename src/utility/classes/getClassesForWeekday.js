@@ -9,12 +9,6 @@ function getClassesForWeekday(userData, intWeekday) {
     // - Reduct all classes to one list
     // - Sort all classes by starting time.
 
-    const date = DateTime.fromISO("12:46");
-
-
-    // console.log(date);
-    
-
     if (userData.subjects){
         const classList = userData.subjects.reduce((classes, subject) => {
             
