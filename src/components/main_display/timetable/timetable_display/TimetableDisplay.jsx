@@ -37,33 +37,27 @@ function TimetableDisplay() {
     return (
         
         <div className={styles.timetableDisplay}>
-
             <div className="mb-3">
-
                  <div className="d-inline-flex bg-light rounded border">
 
-                        <div className="p-0 border">
-                            <button type="button border" className="btn btn-primary m-0">&lt;</button>
-                        </div>
-                        <div className="p-0 border">
-                            <button type="button" className="btn btn-primary">&gt;</button>
-                        </div>
-
-
-                        <div className="align-items-center">
-                            <h5 className="m-0 p-1 mt-1  px-3 ">
-                                {startOfTheWeek.day} {startOfTheWeek.monthShort} - {endOfTheWeek.day} {endOfTheWeek.monthShort}, {endOfTheWeek.year}
-                            </h5>
-                        </div>
-
+                    <div className="p-0 border">
+                        <button type="button border" className="btn btn-primary m-0">&lt;</button>
                     </div>
-            
+                    <div className="p-0 border">
+                        <button type="button" className="btn btn-primary">&gt;</button>
+                    </div>
+
+                    <div className="align-items-center">
+                        <h5 className="m-0 p-1 mt-1  px-3 ">
+                            {startOfTheWeek.day} {startOfTheWeek.monthShort} - {endOfTheWeek.day} {endOfTheWeek.monthShort}, {endOfTheWeek.year}
+                        </h5>
+                    </div>
+                </div>
             </div>
 
 
             <div className="row rounded-top text-center border bg-primary text-white">
                 <div className={styles.timeCol+" col"}>
-
                 </div>
                 <div className="col">
                     <div>Moday</div>
@@ -87,33 +81,51 @@ function TimetableDisplay() {
                     <div>Sunday</div>
                 </div>
             </div>
+
             <div className={styles.display + " row text-center border-start border-bottom border-end bg-light"}>
                 <div className={styles.timeCol+" col border p-0"}>
                     {generateTimelist(earliestHour, latestHour)}
                 </div>
                 <div className="col border p-0">
                     <div className={styles.timeOffset}>
-                            <div className={styles.test}>
-                                test</div>
+                        {(date.weekday === 1 && currentWeekOffset === 0 && date.hour >= earliestHour && date.hour < latestHour) && renderCurrentTime(date, earliestHour)}
                     </div>
                     {generateTimeblocks(latestHour-earliestHour+1)}   
                 </div>
                 <div className="col border p-0">
+                    <div className={styles.timeOffset}>
+                        {(date.weekday === 2 && currentWeekOffset === 0 && date.hour >= earliestHour && date.hour < latestHour) && renderCurrentTime(date, earliestHour)}
+                    </div>
                     {generateTimeblocks(latestHour-earliestHour+1)}
                 </div>
                 <div className="col border p-0">
+                    <div className={styles.timeOffset}>
+                        {(date.weekday === 3 && currentWeekOffset === 0 && date.hour >= earliestHour && date.hour < latestHour) && renderCurrentTime(date, earliestHour)}
+                    </div>
                     {generateTimeblocks(latestHour-earliestHour+1)}
                 </div>
                 <div className="col border p-0">
+                    <div className={styles.timeOffset}>
+                        {(date.weekday === 4 && currentWeekOffset === 0 && date.hour >= earliestHour && date.hour < latestHour) && renderCurrentTime(date, earliestHour)}
+                    </div>
                     {generateTimeblocks(latestHour-earliestHour+1)}
                 </div>
                 <div className="col border p-0">
+                    <div className={styles.timeOffset}>
+                        {(date.weekday === 5 && currentWeekOffset === 0 && date.hour >= earliestHour && date.hour < latestHour) && renderCurrentTime(date, earliestHour)}
+                    </div>
                     {generateTimeblocks(latestHour-earliestHour+1)}  
                 </div>
                 <div className="col border p-0">
+                    <div className={styles.timeOffset}>
+                        {(date.weekday === 6 && currentWeekOffset === 0 && date.hour >= earliestHour && date.hour < latestHour) && renderCurrentTime(date, earliestHour)}
+                    </div>
                     {generateTimeblocks(latestHour-earliestHour+1)}
                 </div>
                 <div className="col border p-0">
+                    <div className={styles.timeOffset}>
+                        {(date.weekday === 7 && currentWeekOffset === 0 && date.hour >= earliestHour && date.hour < latestHour) && renderCurrentTime(date, earliestHour)}
+                    </div>
                     {generateTimeblocks(latestHour-earliestHour+1)}
                 </div>
             </div>
@@ -125,6 +137,19 @@ function TimetableDisplay() {
   }
   export default TimetableDisplay;
   
+
+function renderCurrentTime(date, earliestHour){
+
+
+    const offset = date.hour + date.minute/60 - earliestHour;
+
+    return (
+        <div className={styles.currentTimeIndicator+' bg-primary border-primary'} style={{top: offset*5+"rem"}}>
+            <div className={styles.currentTimeIndicatorLabel+' bg-primary text-light rounded px-1'}>{date.toLocaleString(DateTime.TIME_24_SIMPLE)}</div>
+        </div>
+    );
+
+}
 
 function generateTimeblocks(noOfBlocks){
     const timeblocks = [];

@@ -18,12 +18,23 @@
     max-width: 6rem;
 }
 
+.currentTimeIndicator{
+    position: absolute;
+    right: -5%;
+    width: 115%;
+    border: 1px solid;
+}
+.currentTimeIndicatorLabel{
+    position: absolute;
+    right: 100%;
+    bottom: -.5rem;
+    font-size: .7rem;
+}
+
 .test{
     position: absolute;
     top: 5rem;
-
     background-color: aquamarine;
-
     height: 1rem;
 }
 
