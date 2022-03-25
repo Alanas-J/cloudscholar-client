@@ -8,7 +8,7 @@ function getTimetableDataForWeek(userData, date) {
         timetableData[i] = [];
     }    
     if (!userData.subjects)
-        return timetableData;
+        return null;
 
 
     for(const subject in userData.subjects){
@@ -35,38 +35,44 @@ function getTimetableDataForWeek(userData, date) {
                 description: _class.description
             });
         }
-
     
         // Task parsing
         const taskInterval = Interval.fromDateTimes(date, date.plus({days: 6}));
 
         for(const task in subject.tasks) {
 
-            ift
+            const taskTime = DateTime.fromISO(task.due_datetime);
 
-            // Add and parse class to the correct day bin
-            timetableData[_class.day-1].push({
-                objectType: "task",
-                colour: subject.colour,
-                type: _class.type,
-                location: _class.location,
-                start_time: DateTime.fromISO(_class.start_time),
-                end_time: DateTime.fromISO(_class.end_time),
-                subjectName: subject.name,
-                description: _class.description
-            });
+            if(taskInterval.contains(taskTime)){
+
+                 // Add and parse class to the correct day bin
+                timetableData[taskTime.weekday-1].push({
+                    objectType: "task",
+                    colour: subject.colour,
+                    name: task.name,
+                    due_time: taskTime,
+                    subjectName: subject.name,
+                    description: task.description
+                });
+            }
         }
-
-
 
     }
 
-
-
-
-    
-
-    
-
+    return processTimetableData(timetableData);
 }
 export default getClassesForWeekday;
+
+
+// function for resolving timetable data collisions.
+// Primative for now, not dealing with edge cases.
+function processTimetableData(timetableData){
+    for(const day in timetableData){
+
+        for(scheduleObject in day){
+
+
+
+        }
+    }
+}
