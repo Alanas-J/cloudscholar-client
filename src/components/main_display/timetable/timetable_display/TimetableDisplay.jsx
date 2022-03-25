@@ -24,34 +24,33 @@ function TimetableDisplay() {
         
         <div className={styles.timetableDisplay}>
 
-            <div className=" row  mb-3">
+            <div className="mb-3">
 
-                <div className="col-4 bg-light mx-a border">
-                    <div className="row text-center">
+                 <div className="d-inline-flex bg-light rounded border">
 
-                        <div className="col-1 p-0">
-                            <button type="button" className="btn btn-primary m-0">&lt;</button>
+                        <div className="p-0 border">
+                            <button type="button border" className="btn btn-primary m-0">&lt;</button>
+                        </div>
+                        <div className="p-0 border">
+                            <button type="button" className="btn btn-primary">&gt;</button>
                         </div>
 
 
-                        <div className="col align-items-center">
-                            <h5 className="m-0 p-1 mt-1">
+                        <div className="align-items-center">
+                            <h5 className="m-0 p-1 mt-1  px-3 ">
                                 25th - 31st, March 2022
                             </h5>
                         </div>
 
-                        <div className="col-1 p-0">
-                            <button type="button" className="btn btn-primary">&gt;</button>
-                        </div>
+                        
 
                     </div>
-                </div>
             
             </div>
 
 
-            <div className="row rounded-top text-center border-dark border bg-primary text-white">
-                <div className="col">
+            <div className="row rounded-top text-center border bg-primary text-white">
+                <div className={styles.timeCol+" col"}>
 
                 </div>
                 <div className="col">
@@ -76,8 +75,8 @@ function TimetableDisplay() {
                     <div>Sunday</div>
                 </div>
             </div>
-            <div className={styles.display + " row text-center border-dark border-start border-bottom border-end bg-light"}>
-                <div className="col border p-0">
+            <div className={styles.display + " row text-center border-start border-bottom border-end bg-light"}>
+                <div className={styles.timeCol+" col border p-0"}>
                     {generateTimelist(earliestHour, latestHour)}
                 </div>
                 <div className="col border p-0">
