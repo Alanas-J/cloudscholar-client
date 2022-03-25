@@ -10,9 +10,9 @@ function TimetableDisplay() {
     const startOfTheWeek = date.minus({days: date.weekday-1});
     const endOfTheWeek = date.plus({days: 7-date.weekday});
 
-    console.log(date);
-    console.log("date.weekday");
-    console.log(date.weekday);
+    // console.log(date);
+    // console.log("date.weekday");
+    // console.log(date.weekday);
 
 
     //Defaults
@@ -54,7 +54,7 @@ function TimetableDisplay() {
 
                     <div className="align-items-center">
                         <h5 className="m-0 p-1 mt-1  px-3 ">
-                            {startOfTheWeek.day} {startOfTheWeek.monthShort} - {endOfTheWeek.day} {endOfTheWeek.monthShort}, {endOfTheWeek.year} {currentWeekOffset == 0 && ' (Current Week)'}
+                            {startOfTheWeek.day} {startOfTheWeek.monthShort} - {endOfTheWeek.day} {endOfTheWeek.monthShort}, {endOfTheWeek.year} {currentWeekOffset === 0 && ' (Current Week)'}
                         </h5>
                     </div>
                 </div>
