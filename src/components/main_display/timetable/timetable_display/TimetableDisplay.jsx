@@ -41,29 +41,29 @@ function TimetableDisplay() {
             </div>
 
 
-            <div className="row rounded-top text-center border-dark border bg-light">
-                <div className="col border">
+            <div className="row rounded-top text-center border-dark border bg-primary text-white">
+                <div className="col">
 
                 </div>
-                <div className="col border">
+                <div className="col">
                     <div>Moday</div>
                 </div>
-                <div className="col border">
+                <div className="col">
                     <div>Tuesday</div>
                 </div>
-                <div className="col border">
+                <div className="col">
                     <div>Wednesday</div>
                 </div>
-                <div className="col border">
+                <div className="col">
                     <div>Thursday</div>
                 </div>
-                <div className="col border">
+                <div className="col">
                     <div>Friday</div>
                 </div>
-                <div className="col border">
+                <div className="col">
                     <div>Saturday</div>
                 </div>
-                <div className="col border">
+                <div className="col me-2">
                     <div>Sunday</div>
                 </div>
             </div>

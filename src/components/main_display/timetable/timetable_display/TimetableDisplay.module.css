@@ -1,7 +1,6 @@
 
 .display{
     overflow-y: scroll;
-    min-height: calc(90vh - 9rem);
     max-height: calc(90vh - 9rem);
 }
 
@@ -11,11 +10,12 @@
 }
 
 .timeOffset{
-    position:absolute;
+    position: relative;
+    width: 100%;
 }
 
 .test{
-    position:absolute;
+    position: absolute;
     top: 3rem;
 
     background-color: aquamarine;
