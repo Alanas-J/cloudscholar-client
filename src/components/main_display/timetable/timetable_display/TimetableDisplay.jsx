@@ -6,6 +6,8 @@ function TimetableDisplay() {
     let earliestHour = 9;
 	let latestHour = 16;
 
+    // 9 16
+
 
     //TODO: Get the week'
 
@@ -89,26 +91,25 @@ function TimetableDisplay() {
                     <div className={styles.timeblock+ " border-bottom"}></div>
                 </div>
                 <div className="col border p-0">
-                    
-
+                    {generateTimeblocks(latestHour-earliestHour+1)}   
                 </div>
                 <div className="col border p-0">
-                  
+                    {generateTimeblocks(latestHour-earliestHour+1)}
                 </div>
                 <div className="col border p-0">
-                   
+                    {generateTimeblocks(latestHour-earliestHour+1)}
                 </div>
                 <div className="col border p-0">
-                 
+                    {generateTimeblocks(latestHour-earliestHour+1)}
                 </div>
                 <div className="col border p-0">
-                  
+                    {generateTimeblocks(latestHour-earliestHour+1)}  
                 </div>
                 <div className="col border p-0">
-              
+                    {generateTimeblocks(latestHour-earliestHour+1)}
                 </div>
                 <div className="col border p-0">
-             
+                    {generateTimeblocks(latestHour-earliestHour+1)}
                 </div>
             </div>
         </div>
@@ -119,3 +120,23 @@ function TimetableDisplay() {
   }
   export default TimetableDisplay;
   
+
+function generateTimeblocks(noOfBlocks){
+    const timeblocks = [];
+    
+    for(let i = 0; i < noOfBlocks; i++){
+        timeblocks.push(<div className={styles.timeblock+ " border-bottom"}></div>);
+    }
+
+    return timeblocks;
+}
+
+function generateTimelist(earliestHour, latestHour){
+    const timelist = [];
+    
+    for(let i = 0; i <= earliestHour-latestHour; i++){
+        timelist.push(<div className={styles.timeblock+ " border-bottom"}></div>);
+    }
+
+    return timelist;
+}
