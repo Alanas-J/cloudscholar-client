@@ -1,6 +1,20 @@
-import styles from "./TimetableDisplay.module.css"
+import styles from './TimetableDisplay.module.css'
+import {useState} from 'react';
+import {DateTime, Interval} from 'luxon';
+import {v4 as uuidv4} from 'uuid';
 
 function TimetableDisplay() {
+
+    const [date, setDate] = useState(DateTime.now());
+    const [isCurrentWeek, setIsCurrentWeek] = useState(true);
+
+    const startOfTheWeek = date.minus({days: date.weekday-1});
+    const endOfTheWeek = date.plus({days: 7-date.weekday});
+
+    console.log(date);
+    console.log("date.weekday");
+    console.log(date.weekday);
+
 
     //Defaults
     let earliestHour = 9;
@@ -118,7 +132,7 @@ function generateTimeblocks(noOfBlocks){
     const timeblocks = [];
     
     for(let i = 0; i < noOfBlocks; i++){
-        timeblocks.push(<div className={styles.timeblock+ " border-bottom"}></div>);
+        timeblocks.push(<div key={uuidv4()} className={styles.timeblock+ " border-bottom"}></div>);
     }
 
     return timeblocks;
@@ -128,7 +142,7 @@ function generateTimelist(earliestHour, latestHour){
     const timelist = [];
     
     for(let i = 0; i <= latestHour-earliestHour; i++){
-        timelist.push(<div className={styles.timeblock+ " border-bottom text-end p-0 pe-1"}>
+        timelist.push(<div key={uuidv4()} className={styles.timeblock+ " border-bottom text-end p-0 pe-1"}>
             {earliestHour + i + ':00'}
         </div>);
     }

@@ -12,7 +12,7 @@ function getClassesForWeekday(userData, intWeekday) {
     const date = DateTime.fromISO("12:46");
 
 
-    console.log(date);
+    // console.log(date);
     
 
     if (userData.subjects){

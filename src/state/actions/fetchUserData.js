@@ -17,7 +17,7 @@ async function fetchUserData(dispatch){
         userData: response.data
     }));
     
-    console.log(response);
+    // console.log(response);
 }
 
 export default fetchUserData;
