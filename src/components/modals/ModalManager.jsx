@@ -25,20 +25,16 @@ function modalSwitch(display, closeModal){
     switch(display) {
       
         case 'AddClass':
-            return <AddClassModal show={display=='AddClass'} handleClose={closeModal}/>;
+            return <AddClassModal show={true} handleClose={closeModal}/>;
 
         case 'AddSubject':
-            return <AddSubjectModal show={display=='AddSubject'} handleClose={closeModal}/>;
+            return <AddSubjectModal show={true} handleClose={closeModal}/>;
             
         case 'AddTask':
-            return <AddTaskModal show={display=='AddTask'} handleClose={closeModal}/>;
+            return <AddTaskModal show={true} handleClose={closeModal}/>;
             
         case 'AddQuickShortcut':
-            return <AddQuickShortcutModal show={display=='AddQuickShortcut'} handleClose={closeModal}/>;
-        
-        case 'AddModule':
-            return null;
-        
+            return <AddQuickShortcutModal show={true} handleClose={closeModal}/>;
         default:
             return null;
     }

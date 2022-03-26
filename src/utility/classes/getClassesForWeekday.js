@@ -35,7 +35,8 @@ function getClassesForWeekday(userData, intWeekday) {
                     //standaloneClass.duration_until = Duration.fromMillis(standaloneClass.start_time.toMillis() - DateTime.now().toMillis());
                     standaloneClass.duration_until = standaloneClass.start_time.diffNow(['hours', 'minutes']);
 
-                    classes.push(standaloneClass);
+                    if(standaloneClass.duration_until.minutes >= 0)
+                        classes.push(standaloneClass);
                 }
             }
             return classes;

@@ -64,11 +64,11 @@ function Home() {
               <div className="col">
 
                 <div className="d-flex border-bottom border-secondary mb-2 justify-content-start pb-1 mb-2">
-                <h5 className='col'>Quick Shortcut URLs</h5>
-                <button type="button" className="col-1 p-1 btn btn-secondary" onClick={() => dispatch(openModal('AddQuickShortcut'))}>+</button>
+                  <h5 className='col'>Quick Shortcut URLs</h5>
+                  <button type="button" className="col-1 p-1 btn btn-secondary" onClick={() => dispatch(openModal('AddQuickShortcut'))}>+</button>
                 </div>
                 
-                <a href="" className='link-secondary'>Add new url...</a>
+                <p className='link-secondary'>Add new url...</p>
               </div>
             </div>
           </div>
