@@ -1,4 +1,5 @@
 import {Modal, Button} from 'react-bootstrap';
+import {useState} from 'react';
 import styles from '../Modal.module.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {openModal} from '../../../state/slices/modalState'
@@ -15,6 +16,21 @@ function AddClassModal({show, handleClose}) {
 
     const userData = userState.userData;
 
+    // Form inputs
+    const [subject, setSubject] = useState(null);
+    const [day, setDay] = useState(null);
+    const [startTime, setStartTime] = useState("");
+    const [endTime, setEndTime] = useState("");
+    const [type, setType] = useState("");
+    const [location, setLocation] = useState("");
+    const [description, setDescription] = useState("");
+
+    const [submissionAttempted, setSubmissionAttempted] = useState(false);
+
+    const subjectSelected = !!subject;
+    const daySelected = !!day
+    const {validStartTime, validEndTime} = validateTimes(startTime, endTime);
+
 
     return (
         <Modal show={show} onHide={handleClose} centered>
@@ -26,12 +42,14 @@ function AddClassModal({show, handleClose}) {
                 <form>
                     <div className="form-group pt-2">
                         <label htmlFor="exampleFormControlSelect1">What Subject is this class for?</label>
-                        <select defaultValue="-Select Subject-" className="form-control form-select" id="exampleFormControlSelect1">
+                        <select defaultValue="-Select Subject-" className="form-control form-select is-invalid" id="exampleFormControlSelect1">
                             <option disabled>-Select Subject-</option>
                             {userData.subjects && userData.subjects.map(subject => {
                                 return (<option>{subject.name}</option>)})}
-                            
                         </select>
+                        <div className="text-left invalid-feedback  ms-2">
+                            Please select a subject.
+                        </div>
                         <div className="row px-3">
                             <p className={styles.pointable +" link-primary"} onClick={() => dispatch(openModal('AddSubject'))}>
                                 Add new subjects here +
@@ -41,7 +59,7 @@ function AddClassModal({show, handleClose}) {
 
                     <div className="form-group pt-2">
                         <label htmlFor="exampleFormControlSelect1">When is the class?</label>
-                        <select className="form-control form-select" id="exampleFormControlSelect1">
+                        <select className="form-control form-select is-invalid" id="exampleFormControlSelect1">
                         <option disabled selected>-Select Day-</option>
                             <option>Monday</option>
                             <option>Tuesday</option>
@@ -51,14 +69,23 @@ function AddClassModal({show, handleClose}) {
                             <option>Saturday</option>
                             <option>Sunday</option>
                         </select>
+                        <div className="text-left invalid-feedback  ms-2">
+                            Please select a day.
+                        </div>
 
                         <div className="row pt-2">
                             <div className="col">
-                                <input type="text" className="form-control" placeholder="Start Time. eg. 12:00"/>
+                                <input type="text" className="form-control is-invalid" placeholder="Start Time. eg. 12:00"/>
+                                <div className="text-left invalid-feedback  ms-2">
+                                    Expecting 'HH:MM'. eg '13:00'.
+                                </div>
                             </div>
-
+                            
                             <div className="col">
-                            <input type="text" className="form-control" placeholder="End Time eg. 13:00"/>
+                                <input type="text" className="form-control is-invalid" placeholder="End Time eg. 13:00"/>
+                                <div className="text-left invalid-feedback  ms-2">
+                                    Expecting 'HH:MM'. eg '13:00'.
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -66,7 +93,7 @@ function AddClassModal({show, handleClose}) {
                     <div className="form-group pt-2 mt-2">
                         <label htmlFor="exampleFormControlSelect1">Class Type</label>
                         <select className="form-control form-select" id="exampleFormControlSelect1">
-                        <option disabled selected>-Select a type-</option>
+                        <option disabled selected>-Select a type- (Optional)</option>
                             <option>Class</option>
                             <option>Lab</option>
                             <option>Lecture</option>
@@ -83,8 +110,6 @@ function AddClassModal({show, handleClose}) {
 
 
                     <div className="form-group py-2">
-
-                        
                             <div className="form-group pt-4 pb-2">
                             <label htmlFor="exampleFormControlTextarea1">Description</label>
                             <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Any additional information... (Optional)"></textarea>
@@ -106,3 +131,11 @@ function AddClassModal({show, handleClose}) {
   }
   export default AddClassModal;
   
+
+function validateTimes(startTime, endTime){
+
+    return {
+        startTime: startTime,
+        endTime: endTime
+    }
+}
