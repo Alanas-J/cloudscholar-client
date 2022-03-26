@@ -4,6 +4,8 @@ import {useState, useRef, useEffect} from 'react';
 import {DateTime} from 'luxon';
 import {useSelector} from 'react-redux';
 import {v4 as uuidv4} from 'uuid';
+import TimetableElement from './timetable_element/TimetableElement';
+import { map } from 'lodash';
 
 function TimetableDisplay() {
     const [currentWeekOffset, setCurrentWeekOffset] = useState(0);
@@ -12,16 +14,6 @@ function TimetableDisplay() {
     const startOfTheWeek = date.minus({days: date.weekday-1});
     const endOfTheWeek = date.plus({days: 7-date.weekday});
 
-    // console.log(date);
-    // console.log("date.weekday");
-    // console.log(date.weekday);
-
-
-    //Defaults
-    let earliestHour = 9;
-	let latestHour = 18;
-
-    // 9 16
     const timeIndicatorRef = useRef();
     useEffect(() => {
         if(timeIndicatorRef.current)
@@ -30,7 +22,13 @@ function TimetableDisplay() {
     
     
     const userData = useSelector(state => state.userState.value.userData);
-    console.log(getTimetableDataForWeek(userData, startOfTheWeek));
+    const timetableData = getTimetableDataForWeek(userData, startOfTheWeek);
+
+    const earliestHour = timetableData.earliestHour || 9;
+    const latestHour = timetableData.latestHour || 18;
+
+    console.log(timetableData);
+    console.log(userData)
 
 
     return (
@@ -81,49 +79,56 @@ function TimetableDisplay() {
                 </div>
             </div>
 
-            <div className={styles.display + " row mx-1 text-center border-start border-bottom border-end bg-light"}>
+            <div className={styles.display + " row mx-1 border-start border-bottom border-end bg-light"}>
                 <div className={styles.timeCol+" col border p-0"}>
                     {generateTimelist(earliestHour, latestHour)}
                 </div>
                 <div className="col border p-0">
                     <div className={styles.timeOffset}>
                         {(date.weekday === 1 && currentWeekOffset === 0 && date.hour >= earliestHour && date.hour < latestHour) && renderTimeIndicator(date, earliestHour, timeIndicatorRef)}
+                        {timetableData.dayData[0].map((elementData) => <TimetableElement key={uuidv4()} timetableElement={elementData} earliestHour={earliestHour}/>)}
                     </div>
                     {generateTimeblocks(latestHour-earliestHour+1)}   
                 </div>
                 <div className="col border p-0">
                     <div className={styles.timeOffset}>
                         {(date.weekday === 2 && currentWeekOffset === 0 && date.hour >= earliestHour && date.hour < latestHour) && renderTimeIndicator(date, earliestHour, timeIndicatorRef)}
+                        {timetableData.dayData[1].map((elementData) => <TimetableElement key={uuidv4()} timetableElement={elementData} earliestHour={earliestHour}/>)}
                     </div>
                     {generateTimeblocks(latestHour-earliestHour+1)}
                 </div>
                 <div className="col border p-0">
                     <div className={styles.timeOffset}>
                         {(date.weekday === 3 && currentWeekOffset === 0 && date.hour >= earliestHour && date.hour < latestHour) && renderTimeIndicator(date, earliestHour, timeIndicatorRef)}
+                        {timetableData.dayData[2].map((elementData) => <TimetableElement key={uuidv4()} timetableElement={elementData} earliestHour={earliestHour}/>)}
                     </div>
                     {generateTimeblocks(latestHour-earliestHour+1)}
                 </div>
                 <div className="col border p-0">
                     <div className={styles.timeOffset}>
                         {(date.weekday === 4 && currentWeekOffset === 0 && date.hour >= earliestHour && date.hour < latestHour) && renderTimeIndicator(date, earliestHour, timeIndicatorRef)}
+                        {timetableData.dayData[3].map((elementData) => <TimetableElement key={uuidv4()} timetableElement={elementData} earliestHour={earliestHour}/>)}
                     </div>
                     {generateTimeblocks(latestHour-earliestHour+1)}
                 </div>
                 <div className="col border p-0">
                     <div className={styles.timeOffset}>
                         {(date.weekday === 5 && currentWeekOffset === 0 && date.hour >= earliestHour && date.hour < latestHour) && renderTimeIndicator(date, earliestHour, timeIndicatorRef)}
+                        {timetableData.dayData[4].map((elementData) => <TimetableElement key={uuidv4()} timetableElement={elementData} earliestHour={earliestHour}/>)}
                     </div>
                     {generateTimeblocks(latestHour-earliestHour+1)}  
                 </div>
                 <div className="col border p-0">
                     <div className={styles.timeOffset}>
                         {(date.weekday === 6 && currentWeekOffset === 0 && date.hour >= earliestHour && date.hour < latestHour) && renderTimeIndicator(date, earliestHour, timeIndicatorRef)}
+                        {timetableData.dayData[5].map((elementData) => <TimetableElement key={uuidv4()} timetableElement={elementData} earliestHour={earliestHour}/>)}
                     </div>
                     {generateTimeblocks(latestHour-earliestHour+1)}
                 </div>
                 <div className="col border p-0">
                     <div className={styles.timeOffset}>
                         {(date.weekday === 7 && currentWeekOffset === 0 && date.hour >= earliestHour && date.hour < latestHour) && renderTimeIndicator(date, earliestHour, timeIndicatorRef)}
+                        {timetableData.dayData[6].map((elementData) => <TimetableElement key={uuidv4()} timetableElement={elementData} earliestHour={earliestHour}/>)}
                     </div>
                     {generateTimeblocks(latestHour-earliestHour+1)}
                 </div>

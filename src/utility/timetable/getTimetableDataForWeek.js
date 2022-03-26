@@ -68,8 +68,9 @@ export default getTimetableDataForWeek;
 
 
 // function for resolving timetable data collisions/ allocating timeblock spaces (adding attributes).
-// Primative for now, not dealing with edge cases (will only display up to 4 times in one collision).
 // future @TODO: Implement a timetable element type to group remaining collision elements and display eg. a '+5' timetable block that can be clicked on.
+
+// FIXME: for some edge cases collision detection doesn't work, will need future implementation
 function processTimetableData(dayData){
     // Timetable boundary calculation variables.
     let earliestHour = 9;
@@ -79,17 +80,17 @@ function processTimetableData(dayData){
     for(const day of dayData){
 
         for(const scheduleObject of day){
-
-            if(scheduleObject.hour)
-
-            // if already handled.
-            if(scheduleObject.position)
-                break;
-
-
             const objectInterval = getScheduleObjectInterval(scheduleObject);
             const collisionList = [];
 
+            // Timetable boundary calc
+            if(earliestHour > objectInterval.start.hour){
+                earliestHour = objectInterval.start.hour;
+            }
+            if(latestHour < objectInterval.end.hour){
+                latestHour = objectInterval.end.hour;
+            }
+           
             for(const peerScheduleObject of day){
                 const peerObjectInterval = getScheduleObjectInterval(peerScheduleObject);
                 
@@ -103,14 +104,6 @@ function processTimetableData(dayData){
             for(const [index, collision] of collisionList.entries()){
                 collisionList[index].position = index;
                 collisionList[index].noOfPositions = collisionList.length;
-            }
-
-            // Timetable boundary calc
-            if(earliestHour > objectInterval.start.hours){
-                earliestHour = objectInterval.start.hours;
-            }
-            if(latestHour < objectInterval.end.hours){
-                latestHour = objectInterval.start.hours;
             }
         }
     }
@@ -126,7 +119,6 @@ function processTimetableData(dayData){
 function getScheduleObjectInterval(scheduleObject){
 
     if(scheduleObject.objectType === 'task'){
-        console.log("hit2");
         return Interval.after(scheduleObject.due_time, {hours: taskDuration});
 
     } else {

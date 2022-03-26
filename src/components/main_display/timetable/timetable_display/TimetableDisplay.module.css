@@ -31,15 +31,6 @@
     font-size: .7rem;
 }
 
-.test{
-    position: absolute;
-    top: 5rem;
-    background-color: aquamarine;
-    height: 1rem;
-}
-
-
-
 .display::-webkit-scrollbar {
     width: 10px;
     padding-top: 10px;
