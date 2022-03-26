@@ -8,9 +8,9 @@ import TimetableElement from './timetable_element/TimetableElement';
 
 function TimetableDisplay() {
     const [currentWeekOffset, setCurrentWeekOffset] = useState(0);
-    const date = DateTime.now().set({hour: 0, minute: 0}).plus({weeks: currentWeekOffset});
-    const startOfTheWeek = date.minus({days: date.weekday-1});
-    const endOfTheWeek = date.plus({days: 7-date.weekday});
+    const date = DateTime.now().plus({weeks: currentWeekOffset});
+    const startOfTheWeek = date.set({hour: 0, minute: 0}).minus({days: date.weekday-1});
+    const endOfTheWeek = date.set({hour: 0, minute: 0}).plus({days: 7-date.weekday});
 
     const timeIndicatorRef = useRef();
     useEffect(() => {

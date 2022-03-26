@@ -69,7 +69,7 @@ export default getTimetableDataForWeek;
 // function for resolving timetable data collisions/ allocating timeblock spaces (adding attributes).
 // future @TODO: Implement a timetable element type to group remaining collision elements and display eg. a '+5' timetable block that can be clicked on.
 
-// FIXME: for some edge cases collision detection doesn't work, will need future implementation
+// FIXME: for some edge cases collision detection may not work, will need future implementation
 function processTimetableData(dayData){
     // Timetable boundary calculation variables.
     let earliestHour = 9;
@@ -99,7 +99,7 @@ function processTimetableData(dayData){
                 }
             } 
 
-            // Using advantage of pass by reference to adjust objects in the daydata array.
+            // Using advantage of pass by reference to adjust objects in the daydata array. // FIXME: the location where to fix.
             for(const [index] of collisionList.entries()){
                 collisionList[index].position = index;
                 collisionList[index].noOfPositions = collisionList.length;
