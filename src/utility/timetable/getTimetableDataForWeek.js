@@ -1,5 +1,8 @@
 import {DateTime, Interval} from 'luxon';
 
+// TODO: Hardcoded duration in hours (Tasks dont came with a duration) so a pseudo is given.
+const taskDuration = .5;
+
 function getTimetableDataForWeek(userData, date) {
 
     // 7 arrays for each day.
@@ -30,21 +33,21 @@ function getTimetableDataForWeek(userData, date) {
                 location: _class.location,
                 start_time: DateTime.fromISO(_class.start_time),
                 end_time: DateTime.fromISO(_class.end_time),
-                durationInH: DateTime.fromISO(_class.start_time).diff(DateTime.fromISO(_class.end_time), 'hours').hours,
+                durationInH: DateTime.fromISO(_class.end_time).diff(DateTime.fromISO(_class.start_time), 'hours').hours,
                 subjectName: subject.name,
                 description: _class.description
             });
         }
     
         // Task parsing
-        const taskInterval = Interval.fromDateTimes(date, date.plus({days: 6}));
+        const weekInterval = Interval.fromDateTimes(date, date.plus({days: 6}));
 
-        for(const task in subject.tasks) {
-
+        for(const task of subject.tasks) {
             const taskTime = DateTime.fromISO(task.due_datetime);
 
-            if(taskInterval.contains(taskTime)){
-
+            console.log(taskTime.toISO());
+            if(weekInterval.contains(taskTime)){
+              
                  // Add and parse class to the correct day bin
                 dayData[taskTime.weekday-1].push({
                     objectType: "task",
@@ -61,16 +64,13 @@ function getTimetableDataForWeek(userData, date) {
 
     return processTimetableData(dayData);
 }
-export default getClassesForWeekday;
+export default getTimetableDataForWeek;
 
 
 // function for resolving timetable data collisions/ allocating timeblock spaces (adding attributes).
 // Primative for now, not dealing with edge cases (will only display up to 4 times in one collision).
 // future @TODO: Implement a timetable element type to group remaining collision elements and display eg. a '+5' timetable block that can be clicked on.
 function processTimetableData(dayData){
-    // duration in hours (Tasks dont came with a duration) so a pseudo is given.
-    const taskDuration = .5;
-
     // Timetable boundary calculation variables.
     let earliestHour = 9;
     let latestHour = 18;
@@ -126,9 +126,10 @@ function processTimetableData(dayData){
 function getScheduleObjectInterval(scheduleObject){
 
     if(scheduleObject.objectType === 'task'){
-        return Interval.after(scheduleObject.due_datetime, {hours: taskDuration});
+        console.log("hit2");
+        return Interval.after(scheduleObject.due_time, {hours: taskDuration});
 
     } else {
-        return Interval.between(scheduleObject.start_time, scheduleObject.end_time);
+        return Interval.fromDateTimes(scheduleObject.start_time, scheduleObject.end_time);
     }
 }

@@ -1,6 +1,8 @@
 import styles from './TimetableDisplay.module.css'
+import getTimetableDataForWeek from '../../../../utility/timetable/getTimetableDataForWeek';
 import {useState, useRef, useEffect} from 'react';
 import {DateTime} from 'luxon';
+import {useSelector} from 'react-redux';
 import {v4 as uuidv4} from 'uuid';
 
 function TimetableDisplay() {
@@ -27,16 +29,8 @@ function TimetableDisplay() {
     });
     
     
-
-    //TODO: Get the current week and monday and sunday dates within.
-    // add functionality to change
-    // Refetch table data based on this (date will be a usestate)
-
-    // each timetable element will most likely be created from an object.
-
-    // need to figure a out a system for intersecting timetable objects.
-
-    // current time indicator.
+    const userData = useSelector(state => state.userState.value.userData);
+    console.log(getTimetableDataForWeek(userData, startOfTheWeek));
 
 
     return (
