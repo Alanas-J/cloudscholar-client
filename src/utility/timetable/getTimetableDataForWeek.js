@@ -3,15 +3,15 @@ import {DateTime, Interval} from 'luxon';
 function getTimetableDataForWeek(userData, date) {
 
     // 7 arrays for each day.
-    const timetableData = [];
+    const dayData = [];
     for(let i = 0; i < 7; i++){
-        timetableData[i] = [];
+        dayData[i] = [];
     }    
     if (!userData.subjects)
         return null;
 
 
-    for(const subject in userData.subjects){
+    for(const subject of userData.subjects){
 
         // See if subject's interval is valid.
         const subjectInterval = Interval.fromDateTimes(DateTime.fromISO(subject.start_date), DateTime.fromISO(subject.end_date));
@@ -23,7 +23,7 @@ function getTimetableDataForWeek(userData, date) {
         for(const _class in subject.classes) {
 
             // Add and parse class to the correct day bin
-            timetableData[_class.day-1].push({
+            dayData[_class.day-1].push({
                 objectType: "class",
                 colour: subject.colour,
                 type: _class.type,
@@ -46,7 +46,7 @@ function getTimetableDataForWeek(userData, date) {
             if(taskInterval.contains(taskTime)){
 
                  // Add and parse class to the correct day bin
-                timetableData[taskTime.weekday-1].push({
+                dayData[taskTime.weekday-1].push({
                     objectType: "task",
                     colour: subject.colour,
                     name: task.name,
@@ -59,20 +59,54 @@ function getTimetableDataForWeek(userData, date) {
 
     }
 
-    return processTimetableData(timetableData);
+    return processTimetableData(dayData);
 }
 export default getClassesForWeekday;
 
 
-// function for resolving timetable data collisions.
-// Primative for now, not dealing with edge cases.
-function processTimetableData(timetableData){
-    for(const day in timetableData){
+// function for resolving timetable data collisions/ allocating timeblock spaces (adding attributes).
+// Primative for now, not dealing with edge cases (will only display up to 4 times in one collision).
+// future @TODO: Implement a timetable element type to group remaining collision elements and display eg. a '+5' timetable block that can be clicked on.
+function processTimetableData(dayData){
+    const taskDuration = .5; // hardcoded hours length (Tasks dont came with a duration).
 
-        for(scheduleObject in day){
+    for(const day of dayData){
+
+        for(scheduleObject of day){
+            // if already handled.
+            if(scheduleObject.position)
+                break;
 
 
+            const objectInterval = getScheduleObjectInterval(scheduleObject);
+            const collisionList = [];
+
+            for(peerScheduleObject of day){
+                const peerObjectInterval = getScheduleObjectInterval(peerScheduleObject);
+                
+                // Purposely overlaps with itself to add it to this list.
+                if(objectInterval.overlaps(peerObjectInterval)){
+                    collisionList.push(peerScheduleObject);
+                }
+            } 
+
+            // Using advantage of pass by reference to adjust objects in the daydata array.
+            for(const [index, collision] of collisionList.entries()){
+                collisionList[index].position = index;
+                collisionList[index].noOfPositions = collisionList.length;
+            }
 
         }
+    }
+}
+
+
+function getScheduleObjectInterval(scheduleObject){
+
+    if(scheduleObject.objectType === 'task'){
+        return Interval.after(scheduleObject.due_datetime, {hours: taskDuration});
+
+    } else {
+        return Interval.between(scheduleObject.start_time, scheduleObject.end_time);
     }
 }
