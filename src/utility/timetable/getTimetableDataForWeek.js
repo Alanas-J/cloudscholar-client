@@ -40,12 +40,11 @@ function getTimetableDataForWeek(userData, date) {
         }
     
         // Task parsing
-        const weekInterval = Interval.fromDateTimes(date, date.plus({days: 6}));
+        const weekInterval = Interval.fromDateTimes(date, date.plus({days: 7}));
 
         for(const task of subject.tasks) {
             const taskTime = DateTime.fromISO(task.due_datetime);
 
-            console.log(taskTime.toISO());
             if(weekInterval.contains(taskTime)){
               
                  // Add and parse class to the correct day bin
@@ -101,7 +100,7 @@ function processTimetableData(dayData){
             } 
 
             // Using advantage of pass by reference to adjust objects in the daydata array.
-            for(const [index, collision] of collisionList.entries()){
+            for(const [index] of collisionList.entries()){
                 collisionList[index].position = index;
                 collisionList[index].noOfPositions = collisionList.length;
             }

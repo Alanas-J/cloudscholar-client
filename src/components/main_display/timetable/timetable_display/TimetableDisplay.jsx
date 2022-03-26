@@ -5,12 +5,10 @@ import {DateTime} from 'luxon';
 import {useSelector} from 'react-redux';
 import {v4 as uuidv4} from 'uuid';
 import TimetableElement from './timetable_element/TimetableElement';
-import { map } from 'lodash';
 
 function TimetableDisplay() {
     const [currentWeekOffset, setCurrentWeekOffset] = useState(0);
-    const date = DateTime.now().plus({weeks: currentWeekOffset});
-
+    const date = DateTime.now().set({hour: 0, minute: 0}).plus({weeks: currentWeekOffset});
     const startOfTheWeek = date.minus({days: date.weekday-1});
     const endOfTheWeek = date.plus({days: 7-date.weekday});
 
