@@ -9,7 +9,7 @@ function TodaysClassesDisplay() {
     const userData = useSelector(state => state.userState.value.userData);
     const classes = getClassesForWeekday(userData, 1); // TODO: change this to today's weekday.
 
-    console.log(classes);
+    // console.log(classes);
 
     return (
         <div className={styles.display + " mt-4 border border-secondary bg-light"}>

@@ -1,5 +1,5 @@
 import styles from './Class.module.css'
-import {DateTime, Duration, Formats} from 'luxon';
+import {DateTime} from 'luxon';
 
 function Class({_class}) {
 
