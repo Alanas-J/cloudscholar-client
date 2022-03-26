@@ -20,7 +20,7 @@ function getTimetableDataForWeek(userData, date) {
             break;
 
 
-        for(const _class in subject.classes) {
+        for(const _class of subject.classes) {
 
             // Add and parse class to the correct day bin
             dayData[_class.day-1].push({
@@ -68,11 +68,20 @@ export default getClassesForWeekday;
 // Primative for now, not dealing with edge cases (will only display up to 4 times in one collision).
 // future @TODO: Implement a timetable element type to group remaining collision elements and display eg. a '+5' timetable block that can be clicked on.
 function processTimetableData(dayData){
-    const taskDuration = .5; // hardcoded hours length (Tasks dont came with a duration).
+    // duration in hours (Tasks dont came with a duration) so a pseudo is given.
+    const taskDuration = .5;
+
+    // Timetable boundary calculation variables.
+    let earliestHour = 9;
+    let latestHour = 18;
+
 
     for(const day of dayData){
 
-        for(scheduleObject of day){
+        for(const scheduleObject of day){
+
+            if(scheduleObject.hour)
+
             // if already handled.
             if(scheduleObject.position)
                 break;
@@ -81,7 +90,7 @@ function processTimetableData(dayData){
             const objectInterval = getScheduleObjectInterval(scheduleObject);
             const collisionList = [];
 
-            for(peerScheduleObject of day){
+            for(const peerScheduleObject of day){
                 const peerObjectInterval = getScheduleObjectInterval(peerScheduleObject);
                 
                 // Purposely overlaps with itself to add it to this list.
@@ -96,7 +105,20 @@ function processTimetableData(dayData){
                 collisionList[index].noOfPositions = collisionList.length;
             }
 
+            // Timetable boundary calc
+            if(earliestHour > objectInterval.start.hours){
+                earliestHour = objectInterval.start.hours;
+            }
+            if(latestHour < objectInterval.end.hours){
+                latestHour = objectInterval.start.hours;
+            }
         }
+    }
+
+    return {
+        earliestHour: earliestHour,
+        latestHour: latestHour,
+        dayData: dayData
     }
 }
 
