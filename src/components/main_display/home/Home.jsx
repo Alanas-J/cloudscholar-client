@@ -59,7 +59,7 @@ function Home() {
           </div>
 
           {/* Quick Shortcuts */} 
-          <div className={styles.shortcuts+" border-start pt-2 bg-light "}>
+          <div className={styles.shortcuts+" border-start pt-2 bg-light shadow"}>
             <div className="row">
               <div className="col">
 

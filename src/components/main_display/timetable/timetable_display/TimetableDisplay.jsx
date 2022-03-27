@@ -31,9 +31,9 @@ function TimetableDisplay() {
 
     return (
         
-        <div className={styles.timetableDisplay}>
-            <div className=" ms-1 mb-3">
-                 <div className="d-inline-flex bg-light rounded border">
+        <div className={styles.timetableDisplay+" "}>
+            <div className=" ms-1 mb-3 ">
+                 <div className="d-inline-flex bg-light rounded border shadow">
 
                     <div className="p-0 border">
                         <button type="button border" onClick={() => setCurrentWeekOffset(currentWeekOffset-1)} className="btn btn-primary m-0">&lt;</button>
@@ -51,7 +51,7 @@ function TimetableDisplay() {
             </div>
 
 
-            <div className="row mx-1 p-2 rounded-top text-center border bg-primary text-white">
+            <div className="row mx-1 p-2 rounded-top text-center border bg-primary text-white shadow">
                 <div className={styles.timeCol+" col"}>
                 </div>
                 <div className="col">
@@ -77,7 +77,7 @@ function TimetableDisplay() {
                 </div>
             </div>
 
-            <div className={styles.display + " row mx-1 border-start border-bottom border-end bg-light"}>
+            <div className={styles.display + " row mx-1 border-start border-bottom border-end bg-light shadow"}>
                 <div className={styles.timeCol+" col border p-0"}>
                     {generateTimelist(earliestHour, latestHour)}
                 </div>

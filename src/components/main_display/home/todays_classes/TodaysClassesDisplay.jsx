@@ -11,7 +11,7 @@ function TodaysClassesDisplay() {
     const classes = getClassesForWeekday(userData, DateTime.now().weekday); 
 
     return (
-        <div className={styles.display + " mt-4 border border-secondary bg-light"}>
+        <div className={styles.display + " mt-4 border bg-light rounded shadow p-1"}>
             {classes.length !== 0? classes.map(_class => {return <Class key={uuidv4()} _class={_class}/>}) : <div className='h5 h-100 p-3 m-0 text-center'> No classes left today! </div>}
         </div>
     );

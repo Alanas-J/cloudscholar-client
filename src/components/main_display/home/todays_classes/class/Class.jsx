@@ -4,8 +4,8 @@ import {DateTime} from 'luxon';
 function Class({_class}) {
 
     return (
-        <div className={ styles.task+" border border-secondary m-1 rounded d-flex "}>
-            <div className={"rounded-start me-2"} style={{width:'.3rem', backgroundColor: _class.colour}}></div>
+        <div className={ styles.task+" m-1 rounded d-flex bg-light shadow"} style={{border: ".08rem solid " +_class.colour+"33"}}>
+            <div className={"rounded-start me-2"} style={{width:'.25rem', backgroundColor:_class.colour}}></div>
 
             <div className={styles.taskContent}>
                 <div className="d-flex justify-content-between">

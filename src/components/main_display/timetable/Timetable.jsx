@@ -19,7 +19,7 @@ function Timetable() {
 
 
 
-        <section className='shortcuts p-4 border border-top-0'>
+        <section className='shortcuts p-4 border border-top-0 shadow bg-white'>
 
         </section>
 
