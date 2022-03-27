@@ -2,7 +2,8 @@ import {Modal, Button} from 'react-bootstrap';
 import {useState} from 'react';
 import styles from '../Modal.module.css';
 import {useDispatch, useSelector} from 'react-redux';
-import {openModal} from '../../../state/slices/modalState'
+import {openModal} from '../../../state/slices/modalState';
+import {DateTime} from 'luxon';
 
 function AddClassModal({show, handleClose}) {
     const dispatch = useDispatch();
@@ -19,18 +20,26 @@ function AddClassModal({show, handleClose}) {
     // Form inputs
     const [subject, setSubject] = useState(null);
     const [day, setDay] = useState(null);
-    const [startTime, setStartTime] = useState("");
-    const [endTime, setEndTime] = useState("");
-    const [type, setType] = useState("");
-    const [location, setLocation] = useState("");
-    const [description, setDescription] = useState("");
+    const [startTime, setStartTime] = useState(null);
+    const [endTime, setEndTime] = useState(null);
+    const [type, setType] = useState(null);
+    const [location, setLocation] = useState(null);
+    const [description, setDescription] = useState(null);
 
-    const [submissionAttempted, setSubmissionAttempted] = useState(false);
+    const classObject = {day, startTime, endTime, type, location, description}
+
+    const [formState, setFormState] = useState({
+        submissionAttempted: true,
+        submitted: false,
+    });
+
+    
 
     const subjectSelected = !!subject;
     const daySelected = !!day
     const {validStartTime, validEndTime} = validateTimes(startTime, endTime);
 
+    console.log(!subjectSelected);
 
     return (
         <Modal show={show} onHide={handleClose} centered>
@@ -41,8 +50,8 @@ function AddClassModal({show, handleClose}) {
                 
                 <form>
                     <div className="form-group pt-2">
-                        <label htmlFor="exampleFormControlSelect1">What Subject is this class for?</label>
-                        <select defaultValue="-Select Subject-" className="form-control form-select is-invalid" id="exampleFormControlSelect1">
+                        <label>What Subject is this class for?</label>
+                        <select defaultValue="-Select Subject-" className={((!subjectSelected && formState.submissionAttempted) && "is-invalid") + " form-control form-select"}  onChange={e => setSubject(e.target.value)}>
                             <option disabled>-Select Subject-</option>
                             {userData.subjects && userData.subjects.map(subject => {
                                 return (<option>{subject.name}</option>)})}
@@ -58,8 +67,8 @@ function AddClassModal({show, handleClose}) {
                     </div>
 
                     <div className="form-group pt-2">
-                        <label htmlFor="exampleFormControlSelect1">When is the class?</label>
-                        <select className="form-control form-select is-invalid" id="exampleFormControlSelect1">
+                        <label>When is the class?</label>
+                        <select className={((!daySelected && formState.submissionAttempted) && "is-invalid") + " form-control form-select"}  onChange={e => setDay(e.target.value)}>
                         <option disabled selected>-Select Day-</option>
                             <option>Monday</option>
                             <option>Tuesday</option>
@@ -75,14 +84,14 @@ function AddClassModal({show, handleClose}) {
 
                         <div className="row pt-2">
                             <div className="col">
-                                <input type="text" className="form-control is-invalid" placeholder="Start Time. eg. 12:00"/>
+                                <input type="text" className={((!validStartTime && formState.submissionAttempted) && "is-invalid") + " form-control"} placeholder="Start Time. eg. 12:00" onChange={e => setStartTime(e.target.value)}/>
                                 <div className="text-left invalid-feedback  ms-2">
                                     Expecting 'HH:MM'. eg '13:00'.
                                 </div>
                             </div>
                             
                             <div className="col">
-                                <input type="text" className="form-control is-invalid" placeholder="End Time eg. 13:00"/>
+                                <input type="text" className={((!validEndTime && formState.submissionAttempted) && "is-invalid") + " form-control"} placeholder="End Time eg. 13:00" onChange={e => setEndTime(e.target.value)}/>
                                 <div className="text-left invalid-feedback  ms-2">
                                     Expecting 'HH:MM'. eg '13:00'.
                                 </div>
@@ -91,8 +100,8 @@ function AddClassModal({show, handleClose}) {
                     </div>
 
                     <div className="form-group pt-2 mt-2">
-                        <label htmlFor="exampleFormControlSelect1">Class Type</label>
-                        <select className="form-control form-select" id="exampleFormControlSelect1">
+                        <label>Class Type</label>
+                        <select className="form-control form-select" onChange={e => setType(e.target.value)}>
                         <option disabled selected>-Select a type- (Optional)</option>
                             <option>Class</option>
                             <option>Lab</option>
@@ -104,15 +113,14 @@ function AddClassModal({show, handleClose}) {
                     </div>
 
                     <div className="form-group pt-2 mt-2">
-                        <label htmlFor="exampleFormControlSelect1">Location</label>
-                        <input type="text" className="form-control" placeholder="Location eg. C-201 (Optional)"/>
+                        <label>Location</label>
+                        <input type="text" className="form-control" placeholder="Location eg. C-201 (Optional)"  onChange={e => setLocation(e.target.value)}/>
                     </div>
-
 
                     <div className="form-group py-2">
                             <div className="form-group pt-4 pb-2">
-                            <label htmlFor="exampleFormControlTextarea1">Description</label>
-                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Any additional information... (Optional)"></textarea>
+                            <label>Description</label>
+                            <textarea className="form-control" rows="3" placeholder="Any additional information... (Optional)"  onChange={e => setDescription(e.target.value)}></textarea>
                         </div>
                     </div>
     
@@ -122,7 +130,7 @@ function AddClassModal({show, handleClose}) {
                 <Button variant="secondary" onClick={handleClose}>
                 Close
                 </Button>
-                <Button variant="primary" onClick={handleClose}>
+                <Button variant="primary" onClick={() => handleSubmit(setFormState)}>
                 Add Class
                 </Button>
             </Modal.Footer>
@@ -134,8 +142,25 @@ function AddClassModal({show, handleClose}) {
 
 function validateTimes(startTime, endTime){
 
-    return {
-        startTime: startTime,
-        endTime: endTime
+    const validStartTime = /^([0-1]?\d|2[0-3])(?::([0-5]\d))$/.test(startTime);
+    const validEndTime = /^([0-1]?\d|2[0-3])(?::([0-5]\d))$/.test(endTime);
+
+    if(startTime && endTime){
+        console.log(DateTime.fromISO(startTime));
     }
+
+    return {
+        validStartTime: validStartTime,
+        validEndTime: validEndTime
+    }
+}
+
+function handleSubmit(setFormState){
+    // set the formstate
+
+    setFormState({
+        submissionAttempted: true,
+        submitted: true,
+    });
+
 }
