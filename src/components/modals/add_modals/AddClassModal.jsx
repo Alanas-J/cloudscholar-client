@@ -4,6 +4,7 @@ import styles from '../Modal.module.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {openModal} from '../../../state/slices/modalState';
 import {DateTime} from 'luxon';
+import addClassToSubject from '../../../utility/user_data/addClassToSubject';
 
 function AddClassModal({show, handleClose}) {
 
@@ -39,9 +40,10 @@ function AddClassModal({show, handleClose}) {
     const {validStartTime, validEndTime} = validateTimes(startTime, endTime);
     const inputsAreValid =  subjectSelected && daySelected && validStartTime && validEndTime;
 
+    console.log(classObject.day);
 
     if(formState.submitted){
-        addClass(classObject, setFormState);
+        handleClassAdd(subject, classObject, setFormState, userData);
     }
 
     return (
@@ -173,8 +175,15 @@ function handleSubmit(setFormState, inputsAreValid){
 }
 
 
-function addClass(classObject, setFormState){
+function handleClassAdd(subjectName, classObject, setFormState, userData){
 
-    
+    const newUserData = addClassToSubject(subjectName, classObject, userData);
+
+    console.log(newUserData);
+
+    setFormState({
+        submissionAttempted: false,
+        submitted: false
+    })
 
 }
