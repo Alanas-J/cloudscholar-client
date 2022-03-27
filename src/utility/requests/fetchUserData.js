@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { updateUserState } from '../../../state/slices/userState'
+import { updateUserState } from '../../state/slices/userState'
 
 async function fetchUserData(dispatch){
 
