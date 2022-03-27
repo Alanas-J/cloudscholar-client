@@ -19,7 +19,7 @@ function TimetableElement({timetableElement, earliestHour}) {
     const position = timetableElement.position * width;
 
     return (
-        <div className={styles.element+" bg-light"} style={{top: offset*5+"rem", left: position+"%", width: width+"%", height: height*5+"rem", borderColor: timetableElement.colour+"66"}}>
+        <div className={styles.element+" bg-light"} style={{top: offset*5+"rem", left: position+"%", width: width+"%", height: height*5+"rem", borderColor: timetableElement.colour+"44"}}>
             <div className={styles.elementColour} style={{backgroundColor: timetableElement.colour}}></div>
             {timetableElement.objectType === 'task'? renderTaskContent(timetableElement) : renderClassContent(timetableElement)}
         </div>
