@@ -29,7 +29,7 @@ function AddClassModal({show, handleClose}) {
     const classObject = {day, startTime, endTime, type, location, description}
 
     const [formState, setFormState] = useState({
-        submissionAttempted: true,
+        submissionAttempted: false,
         submitted: false,
     });
 
@@ -42,8 +42,8 @@ function AddClassModal({show, handleClose}) {
     console.log(!subjectSelected);
 
     return (
-        <Modal show={show} onHide={handleClose} centered>
-            <Modal.Header closeButton>
+        <Modal show={show} onHide={!formState.submitted? handleClose : undefined} centered>
+            <Modal.Header closeButton={!formState.formSubmitted}>
                 <Modal.Title>Add a Class</Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -86,14 +86,14 @@ function AddClassModal({show, handleClose}) {
                             <div className="col">
                                 <input type="text" className={((!validStartTime && formState.submissionAttempted) && "is-invalid") + " form-control"} placeholder="Start Time. eg. 12:00" onChange={e => setStartTime(e.target.value)}/>
                                 <div className="text-left invalid-feedback  ms-2">
-                                    Expecting 'HH:MM'. eg '13:00'.
+                                    Expecting 'hh:mm'. Must be less than the end time.
                                 </div>
                             </div>
                             
                             <div className="col">
                                 <input type="text" className={((!validEndTime && formState.submissionAttempted) && "is-invalid") + " form-control"} placeholder="End Time eg. 13:00" onChange={e => setEndTime(e.target.value)}/>
                                 <div className="text-left invalid-feedback  ms-2">
-                                    Expecting 'HH:MM'. eg '13:00'.
+                                    Expecting 'hh:mm'. Must be greater than the start time.
                                 </div>
                             </div>
                         </div>
@@ -123,14 +123,13 @@ function AddClassModal({show, handleClose}) {
                             <textarea className="form-control" rows="3" placeholder="Any additional information... (Optional)"  onChange={e => setDescription(e.target.value)}></textarea>
                         </div>
                     </div>
-    
                 </form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
+                <Button variant="secondary" onClick={!formState.submitted? handleClose : undefined}>
                 Close
                 </Button>
-                <Button variant="primary" onClick={() => handleSubmit(setFormState)}>
+                <Button variant="primary" disabled={formState.submitted} onClick={() => handleSubmit(setFormState)}>
                 Add Class
                 </Button>
             </Modal.Footer>
@@ -142,11 +141,17 @@ function AddClassModal({show, handleClose}) {
 
 function validateTimes(startTime, endTime){
 
-    const validStartTime = /^([0-1]?\d|2[0-3])(?::([0-5]\d))$/.test(startTime);
-    const validEndTime = /^([0-1]?\d|2[0-3])(?::([0-5]\d))$/.test(endTime);
+    let validStartTime = /^([0-1]?\d|2[0-3])(?::([0-5]\d))$/.test(startTime);
+    let validEndTime = /^([0-1]?\d|2[0-3])(?::([0-5]\d))$/.test(endTime);
 
-    if(startTime && endTime){
-        console.log(DateTime.fromISO(startTime));
+    if(validStartTime && validEndTime){
+        const diff = DateTime.fromISO(endTime).toMillis() - DateTime.fromISO(startTime).toMillis();
+
+        console.log(diff);
+        if(diff < 1){
+            validStartTime = false;
+            validEndTime = false;
+        }
     }
 
     return {
