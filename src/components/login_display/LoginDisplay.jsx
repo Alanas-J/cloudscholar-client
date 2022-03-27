@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import styles from  './LoginDisplay.module.css';
 import {useDispatch} from 'react-redux';
-import fetchUserData from '../../state/actions/fetchUserData';
+import fetchUserData from '../../utility/user_data/requests/fetchUserData';
 
 function LoginDisplay({setLoggedIn}) {
     const [displayState, setDisplayState] = useState({
