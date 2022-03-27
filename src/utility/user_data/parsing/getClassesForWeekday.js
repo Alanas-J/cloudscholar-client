@@ -38,8 +38,7 @@ function getClassesForWeekday(userData, intWeekday) {
 
         }, []);
 
-        return classList;
-        //return classList.sort((class_a, class_b) => class_a.start_time.getTime() > class_b.start_time.getTime());
+        return classList.sort((class_a, class_b) => class_a.start_time.toMillis() > class_b.start_time.toMillis());
 
 
     } else {
