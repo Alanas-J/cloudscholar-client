@@ -2,26 +2,20 @@ import {DateTime, Interval} from 'luxon';
 
 function getClassesForWeekday(userData, intWeekday) {
 
-    // Many subjects can have many classes on different days
-
-    // Only use subjects currently active.
-
-    // - Reduct all classes to one list
-    // - Sort all classes by starting time.
-
     if (userData.subjects){
+        
         const classList = userData.subjects.reduce((classes, subject) => {
-            
-            // Validate that each subject's interval is valud
+    
             const subjectInterval = Interval.fromDateTimes(DateTime.fromISO(subject.start_date), DateTime.fromISO(subject.end_date));
             if(!subjectInterval.contains(DateTime.now()))
                 return classes;
 
-            if(subject.classes && subjectInterval.contains(DateTime.fromJSDate(new Date()))){
-                for(let _class of subject.classes){
+            if(subject.classes){
+
+                subject.classes.forEach(_class => {
 
                     if(_class.day !== intWeekday)
-                        break;
+                        return;
 
                     const standaloneClass = {
                         type: _class.type,
@@ -32,18 +26,21 @@ function getClassesForWeekday(userData, intWeekday) {
                         description: _class.description,
                         location: _class.location,
                     }
-                    //standaloneClass.duration_until = Duration.fromMillis(standaloneClass.start_time.toMillis() - DateTime.now().toMillis());
-                    standaloneClass.duration_until = standaloneClass.start_time.diffNow(['hours', 'minutes']);
 
-                    classes.push(standaloneClass);
-                }
+                    standaloneClass.duration_until = standaloneClass.start_time.diffNow(['hours', 'minutes']);
+                    standaloneClass.duration_until_end = standaloneClass.end_time.diffNow(['hours', 'minutes']);
+
+                    if(standaloneClass.duration_until_end.minutes >= 0)
+                        classes.push(standaloneClass);
+                });
             }
+
             return classes;
 
         }, []);
 
-        return classList;
-        //return classList.sort((class_a, class_b) => class_a.start_time.getTime() > class_b.start_time.getTime());
+        return classList.sort((class_a, class_b) => class_a.start_time.toMillis() > class_b.start_time.toMillis());
+
 
     } else {
         return [];

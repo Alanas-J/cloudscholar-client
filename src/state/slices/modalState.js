@@ -24,7 +24,7 @@ export const modalState = createSlice({
       state.value.currState = state.value.prevState;
       state.value.prevState = null;
     }
-  }
+  } // TODO: Add a open viewmodal 
 })
 
 // Action creators are generated for each case reducer function

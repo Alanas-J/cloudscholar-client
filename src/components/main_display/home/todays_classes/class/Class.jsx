@@ -10,7 +10,7 @@ function Class({_class}) {
             <div className={styles.taskContent}>
                 <div className="d-flex justify-content-between">
                     <div className={styles.taskTitleWidth+" pt-1"}>
-                        <h5 className={styles.textOverflow + " border-bottom border-secondary p-1"}>{_class.type} | {_class.subjectName}</h5>
+                        <h5 className={styles.textOverflow + " border-bottom border-secondary p-1"}>{_class.type && _class.type+" |"} {_class.subjectName}</h5>
                     </div>
                     <div className="me-3 "></div>
                 </div>
@@ -18,7 +18,7 @@ function Class({_class}) {
                 <div className="w-100">
                     <div>
                         <p className={styles.textOverflow + " m-0"}>
-                            In {_class.duration_until.toHuman({listStyle: 'short', maximumFractionDigits: 0})} | {_class.start_time.toLocaleString(DateTime.TIME_SIMPLE)} to {_class.end_time.toLocaleString(DateTime.TIME_SIMPLE)}
+                             {_class.duration_until.toMillis > 0 ? "In "+_class.duration_until.toHuman({listStyle: 'short', maximumFractionDigits: 0}) : "Now"} | {_class.start_time.toLocaleString(DateTime.TIME_SIMPLE)} to {_class.end_time.toLocaleString(DateTime.TIME_SIMPLE)}
                         </p>
                     </div>
                     

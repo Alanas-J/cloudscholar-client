@@ -1,5 +1,5 @@
 import styles from './TimetableDisplay.module.css'
-import getTimetableDataForWeek from '../../../../utility/timetable/getTimetableDataForWeek';
+import getTimetableDataForWeek from '../../../../utility/user_data/parsing/getTimetableDataForWeek';
 import {useState, useRef, useEffect} from 'react';
 import {DateTime} from 'luxon';
 import {useSelector} from 'react-redux';

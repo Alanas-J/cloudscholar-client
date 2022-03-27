@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import styles from  './LoginDisplay.module.css';
 import {useDispatch} from 'react-redux';
-import fetchUserData from '../../state/actions/fetchUserData';
+import fetchUserData from '../../utility/requests/fetchUserData';
 
 function LoginDisplay({setLoggedIn}) {
     const [displayState, setDisplayState] = useState({
@@ -117,8 +117,10 @@ async function authenticate(email, password, keepUserSigned, state, setDisplaySt
         // Store token 
         if(keepUserSigned){
             window.localStorage.setItem('token', response.data.token);
+            window.sessionStorage.setItem('refresh_token', response.data.refresh_token);
         }
         window.sessionStorage.setItem('token', response.data.token);
+        window.localStorage.setItem('refresh_token', response.data.refresh_token);
 
         await fetchUserData(dispatch);
 
