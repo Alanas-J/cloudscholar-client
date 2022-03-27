@@ -44,7 +44,7 @@ function AddClassModal({show, handleClose}) {
                 submissionAttempted: false,
                 submitted: false
             });
-            
+
             handleClassAdd(subject, classObject, setFormState, userData, dispatch);
         
         }
@@ -203,10 +203,8 @@ async function handleClassAdd(subjectName, classObject, setFormState, userData, 
         formState.errorMessage = false;
         formState.clearInputs = true;
 
-
-        setFormState(formState);
     } catch (error) {
-        // Actual error
+
         if(error.message === 'Network Error'){
             formState.errorMessage = "Connection to the server failed, if problem persists, restart the application.";
         } else if (error.response.data.message){
@@ -216,8 +214,7 @@ async function handleClassAdd(subjectName, classObject, setFormState, userData, 
         }
         formState.success = false;
         console.log({error: error});
-        
-        setFormState(formState);
+
     }
-  
+    setFormState(formState);
 }
