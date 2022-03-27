@@ -46,7 +46,7 @@ function renderClassContent(timetableElement){
             <div className={styles.text+' mx-1'}>{timetableElement.location}</div>
             <div className={styles.text+' border-bottom mx-1 pb-1'}>{timetableElement.type}</div>
             <div className={styles.text+' mx-1'}>{timetableElement.start_time.toLocaleString(DateTime.TIME_24_SIMPLE) +' - '+ timetableElement.end_time.toLocaleString(DateTime.TIME_24_SIMPLE)}</div>
-            <div>{timetableElement.description}</div>
+            <div className={styles.text+' mx-1'}>{timetableElement.description}</div>
 
         </div>
     )

@@ -28,8 +28,9 @@ function getClassesForWeekday(userData, intWeekday) {
                     }
 
                     standaloneClass.duration_until = standaloneClass.start_time.diffNow(['hours', 'minutes']);
+                    standaloneClass.duration_until_end = standaloneClass.end_time.diffNow(['hours', 'minutes']);
 
-                    if(standaloneClass.duration_until.minutes >= 0)
+                    if(standaloneClass.duration_until_end.minutes >= 0)
                         classes.push(standaloneClass);
                 });
             }
