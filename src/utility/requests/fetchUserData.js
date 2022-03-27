@@ -28,7 +28,6 @@ async function fetchUserData(dispatch){
         }
     }
     
-    
     dispatch(updateUserState({
         loggedIn: true,
         userData: response.data

@@ -1,10 +1,13 @@
 import {Modal, Button} from 'react-bootstrap';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import styles from '../Modal.module.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {openModal} from '../../../state/slices/modalState';
 import {DateTime} from 'luxon';
+import {v4 as uuidv4} from 'uuid';
 import addClassToSubject from '../../../utility/user_data/addClassToSubject';
+import updateUserData from '../../../utility/requests/updateUserData';
+
 
 function AddClassModal({show, handleClose}) {
 
@@ -21,13 +24,12 @@ function AddClassModal({show, handleClose}) {
     // Form inputs
     const [subject, setSubject] = useState(null);
     const [day, setDay] = useState(null);
-    const [startTime, setStartTime] = useState(null);
-    const [endTime, setEndTime] = useState(null);
+    const [start_time, setStartTime] = useState(null);
+    const [end_time, setEndTime] = useState(null);
     const [type, setType] = useState(null);
     const [location, setLocation] = useState(null);
     const [description, setDescription] = useState(null);
 
-    const classObject = {day, startTime, endTime, type, location, description}
 
     const [formState, setFormState] = useState({
         submissionAttempted: false,
@@ -37,14 +39,17 @@ function AddClassModal({show, handleClose}) {
     // Validation
     const subjectSelected = !!subject;
     const daySelected = !!day
-    const {validStartTime, validEndTime} = validateTimes(startTime, endTime);
+    const {validStartTime, validEndTime} = validateTimes(start_time, end_time);
     const inputsAreValid =  subjectSelected && daySelected && validStartTime && validEndTime;
 
-    console.log(classObject.day);
+    useEffect(() => {
+        if(formState.submitted){
+            const classObject = {day, start_time, end_time, type, location, description};
+            handleClassAdd(subject, classObject, setFormState, userData, dispatch);
+        
+        }
+    }, [formState.submitted, subject, day, start_time, end_time, type, location, description, userData, dispatch]);
 
-    if(formState.submitted){
-        handleClassAdd(subject, classObject, setFormState, userData);
-    }
 
     return (
         <Modal show={show} onHide={!formState.submitted? handleClose : undefined} centered>
@@ -58,7 +63,7 @@ function AddClassModal({show, handleClose}) {
                         <select defaultValue="-Select Subject-" className={((!subjectSelected && formState.submissionAttempted) && "is-invalid") + " form-control form-select"}  onChange={e => setSubject(e.target.value)}>
                             <option disabled>-Select Subject-</option>
                             {userData.subjects && userData.subjects.map(subject => {
-                                return (<option>{subject.name}</option>)})}
+                                return (<option key={uuidv4()}>{subject.name}</option>)})}
                         </select>
                         <div className="text-left invalid-feedback  ms-2">
                             Please select a subject.
@@ -72,8 +77,8 @@ function AddClassModal({show, handleClose}) {
 
                     <div className="form-group pt-2">
                         <label>When is the class?</label>
-                        <select className={((!daySelected && formState.submissionAttempted) && "is-invalid") + " form-control form-select"}  onChange={e => setDay(e.target.value)}>
-                        <option disabled selected>-Select Day-</option>
+                        <select defaultValue="-Select Day-" className={((!daySelected && formState.submissionAttempted) && "is-invalid") + " form-control form-select"}  onChange={e => setDay(e.target.value)}>
+                        <option disabled >-Select Day-</option>
                             <option>Monday</option>
                             <option>Tuesday</option>
                             <option>Wednesday</option>
@@ -105,8 +110,8 @@ function AddClassModal({show, handleClose}) {
 
                     <div className="form-group pt-2 mt-2">
                         <label>Class Type</label>
-                        <select className="form-control form-select" onChange={e => setType(e.target.value)}>
-                        <option disabled selected>-Select a type- (Optional)</option>
+                        <select defaultValue="-Select a type- (Optional)" className="form-control form-select" onChange={e => setType(e.target.value)}>
+                            <option disabled>-Select a type- (Optional)</option>
                             <option>Class</option>
                             <option>Lab</option>
                             <option>Lecture</option>
@@ -143,15 +148,14 @@ function AddClassModal({show, handleClose}) {
 export default AddClassModal;
   
 
-function validateTimes(startTime, endTime){
+function validateTimes(start_time, end_time){
 
-    let validStartTime = /^([0-1]?\d|2[0-3])(?::([0-5]\d))$/.test(startTime);
-    let validEndTime = /^([0-1]?\d|2[0-3])(?::([0-5]\d))$/.test(endTime);
+    let validStartTime = /^([0-1]?\d|2[0-3])(?::([0-5]\d))$/.test(start_time);
+    let validEndTime = /^([0-1]?\d|2[0-3])(?::([0-5]\d))$/.test(end_time);
 
     if(validStartTime && validEndTime){
-        const diff = DateTime.fromISO(endTime).toMillis() - DateTime.fromISO(startTime).toMillis();
+        const diff = DateTime.fromISO(end_time).toMillis() - DateTime.fromISO(start_time).toMillis();
 
-        console.log(diff);
         if(diff < 1){
             validStartTime = false;
             validEndTime = false;
@@ -175,15 +179,31 @@ function handleSubmit(setFormState, inputsAreValid){
 }
 
 
-function handleClassAdd(subjectName, classObject, setFormState, userData){
+async function handleClassAdd(subjectName, classObject, setFormState, userData, dispatch){
 
     const newUserData = addClassToSubject(subjectName, classObject, userData);
-
-    console.log(newUserData);
-
-    setFormState({
+    const formState = {
         submissionAttempted: false,
         submitted: false
-    })
+    };
+    setFormState(formState);
+    
+
+    console.log(newUserData);
+    try {
+        await updateUserData(newUserData, dispatch);
+
+    } catch (error) {
+        // Actual error
+        if(error.message === 'Network Error'){
+            formState.errorMessage = "Connection to the server failed, if problem persists, restart the application.";
+        } else if (error.response.data.message){
+            formState.errorMessage = error.response.data.message;
+        } else{
+            error.message = 'An unknown error has occured.'
+        }
+        console.log({error: error});
+    }
+    
 
 }
