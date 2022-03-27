@@ -2,7 +2,7 @@ import styles from '../Home.module.css'
 import Class from './class/Class'
 import {useSelector} from 'react-redux';
 import {v4 as uuidv4} from 'uuid';
-import getClassesForWeekday from '../../../../utility/classes/getClassesForWeekday';
+import getClassesForWeekday from '../../../../utility/user_data/parsing/getClassesForWeekday';
 import {DateTime} from 'luxon';
 
 function TodaysClassesDisplay() {

@@ -6,16 +6,16 @@ import {openModal} from '../../../state/slices/modalState';
 import {DateTime} from 'luxon';
 
 function AddClassModal({show, handleClose}) {
-    const dispatch = useDispatch();
 
+    // State
+    const dispatch = useDispatch();
     const {userState, modalState} = useSelector(state => { 
             return {userState: state.userState.value, modalState: state.modalState.value}
         });
+    const userData = userState.userData;
 
     console.log(modalState);
     console.log(userState);
-
-    const userData = userState.userData;
 
     // Form inputs
     const [subject, setSubject] = useState(null);
@@ -30,24 +30,26 @@ function AddClassModal({show, handleClose}) {
 
     const [formState, setFormState] = useState({
         submissionAttempted: false,
-        submitted: false,
+        submitted: false
     });
 
-    
-
+    // Validation
     const subjectSelected = !!subject;
     const daySelected = !!day
     const {validStartTime, validEndTime} = validateTimes(startTime, endTime);
+    const inputsAreValid =  subjectSelected && daySelected && validStartTime && validEndTime;
 
-    console.log(!subjectSelected);
+
+    if(formState.submitted){
+        addClass(classObject, setFormState);
+    }
 
     return (
         <Modal show={show} onHide={!formState.submitted? handleClose : undefined} centered>
-            <Modal.Header closeButton={!formState.formSubmitted}>
+            <Modal.Header closeButton>
                 <Modal.Title>Add a Class</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                
                 <form>
                     <div className="form-group pt-2">
                         <label>What Subject is this class for?</label>
@@ -129,14 +131,14 @@ function AddClassModal({show, handleClose}) {
                 <Button variant="secondary" onClick={!formState.submitted? handleClose : undefined}>
                 Close
                 </Button>
-                <Button variant="primary" disabled={formState.submitted} onClick={() => handleSubmit(setFormState)}>
+                <Button variant="primary" disabled={formState.submitted} onClick={() => handleSubmit(setFormState, inputsAreValid)}>
                 Add Class
                 </Button>
             </Modal.Footer>
         </Modal>
     ); 
-  }
-  export default AddClassModal;
+}
+export default AddClassModal;
   
 
 function validateTimes(startTime, endTime){
@@ -160,12 +162,19 @@ function validateTimes(startTime, endTime){
     }
 }
 
-function handleSubmit(setFormState){
+
+function handleSubmit(setFormState, inputsAreValid){
     // set the formstate
 
     setFormState({
         submissionAttempted: true,
-        submitted: true,
+        submitted: inputsAreValid
     });
+}
+
+
+function addClass(classObject, setFormState){
+
+    
 
 }
