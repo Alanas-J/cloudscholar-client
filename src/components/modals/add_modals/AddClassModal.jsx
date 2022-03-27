@@ -39,6 +39,12 @@ function AddClassModal({show, handleClose}) {
     useEffect(() => {
         if(formState.submitted){
             const classObject = {day, start_time, end_time, type, location, description};
+
+            setFormState({
+                submissionAttempted: false,
+                submitted: false
+            });
+            
             handleClassAdd(subject, classObject, setFormState, userData, dispatch);
         
         }
@@ -189,7 +195,7 @@ async function handleClassAdd(subjectName, classObject, setFormState, userData, 
         submissionAttempted: false,
         submitted: false
     };
-    
+
     try {
         await updateUserData(newUserData, dispatch);
 
@@ -197,6 +203,8 @@ async function handleClassAdd(subjectName, classObject, setFormState, userData, 
         formState.errorMessage = false;
         formState.clearInputs = true;
 
+
+        setFormState(formState);
     } catch (error) {
         // Actual error
         if(error.message === 'Network Error'){
@@ -208,7 +216,8 @@ async function handleClassAdd(subjectName, classObject, setFormState, userData, 
         }
         formState.success = false;
         console.log({error: error});
+        
+        setFormState(formState);
     }
-    
-    setFormState(formState);
+  
 }
