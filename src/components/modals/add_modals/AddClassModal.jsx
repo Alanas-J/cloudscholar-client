@@ -13,10 +13,7 @@ function AddClassModal({show, handleClose}) {
 
     // State
     const dispatch = useDispatch();
-    const {userState, modalState} = useSelector(state => { 
-            return {userState: state.userState.value, modalState: state.modalState.value}
-        });
-    const userData = userState.userData;
+    const userData = useSelector(state => state.userState.value.userData);
 
 
     // Form inputs
