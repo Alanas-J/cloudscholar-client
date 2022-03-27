@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { updateUserState } from '../../state/slices/userState'
+import refreshAuthToken from './refreshAuthToken'
 
 async function fetchUserData(dispatch){
 
@@ -9,8 +10,23 @@ async function fetchUserData(dispatch){
         headers: { Authorization: `Bearer ${token}` }
     };
 
-    // Try get user data
-    const response = await axios.get('http://localhost:8086/user_data', config);
+    let response;
+    try {
+        response = await axios.get('http://localhost:8086/user_data', config);
+
+    } catch (e){
+
+        if(e.response && window.sessionStorage.getItem('refresh_token')){
+            if(e.response.status === 418){
+
+                await refreshAuthToken()
+            }
+
+        } else {
+            throw e;
+        }
+    }
+    
     
     dispatch(updateUserState({
         loggedIn: true,

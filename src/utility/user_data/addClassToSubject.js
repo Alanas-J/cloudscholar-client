@@ -8,7 +8,7 @@ function addClassToSubject(subjectName, classObject, userData){
 
     for (const subject of newUserData.subjects){
         if (subject.name === subjectName){
-            
+
             subject.classes.push(classObject);
         }
             
@@ -17,4 +17,3 @@ function addClassToSubject(subjectName, classObject, userData){
     return newUserData;
 }
 export default addClassToSubject;
-
