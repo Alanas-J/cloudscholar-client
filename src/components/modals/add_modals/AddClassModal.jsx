@@ -18,8 +18,6 @@ function AddClassModal({show, handleClose}) {
         });
     const userData = userState.userData;
 
-    console.log(modalState);
-    console.log(userState);
 
     // Form inputs
     const [subject, setSubject] = useState(null);
@@ -29,7 +27,6 @@ function AddClassModal({show, handleClose}) {
     const [type, setType] = useState(null);
     const [location, setLocation] = useState(null);
     const [description, setDescription] = useState(null);
-
 
     const [formState, setFormState] = useState({
         submissionAttempted: false,
@@ -60,7 +57,7 @@ function AddClassModal({show, handleClose}) {
                 <form>
                     <div className="form-group pt-2">
                         <label>What Subject is this class for?</label>
-                        <select defaultValue="-Select Subject-" className={((!subjectSelected && formState.submissionAttempted) && "is-invalid") + " form-control form-select"}  onChange={e => setSubject(e.target.value)}>
+                        <select defaultValue="-Select Subject-" className={((!subjectSelected && formState.submissionAttempted) && "is-invalid") + " form-control form-select"}  onChange={e => {setSubject(e.target.value); setFormState({...formState, success: false})}}>
                             <option disabled>-Select Subject-</option>
                             {userData.subjects && userData.subjects.map(subject => {
                                 return (<option key={uuidv4()}>{subject.name}</option>)})}
@@ -77,7 +74,7 @@ function AddClassModal({show, handleClose}) {
 
                     <div className="form-group pt-2">
                         <label>When is the class?</label>
-                        <select defaultValue="-Select Day-" className={((!daySelected && formState.submissionAttempted) && "is-invalid") + " form-control form-select"}  onChange={e => setDay(e.target.value)}>
+                        <select defaultValue="-Select Day-" className={((!daySelected && formState.submissionAttempted) && "is-invalid") + " form-control form-select"}  onChange={e => {setDay(e.target.value); setFormState({...formState, success: false})}}>
                         <option disabled >-Select Day-</option>
                             <option>Monday</option>
                             <option>Tuesday</option>
@@ -93,14 +90,14 @@ function AddClassModal({show, handleClose}) {
 
                         <div className="row pt-2">
                             <div className="col">
-                                <input type="text" className={((!validStartTime && formState.submissionAttempted) && "is-invalid") + " form-control"} placeholder="Start Time. eg. 12:00" onChange={e => setStartTime(e.target.value)}/>
+                                <input type="text" className={((!validStartTime && formState.submissionAttempted) && "is-invalid") + " form-control"} placeholder="Start Time. eg. 12:00" onChange={e => {setStartTime(e.target.value); setFormState({...formState, success: false})}}/>
                                 <div className="text-left invalid-feedback  ms-2">
                                     Expecting 'hh:mm'. Must be less than the end time.
                                 </div>
                             </div>
                             
                             <div className="col">
-                                <input type="text" className={((!validEndTime && formState.submissionAttempted) && "is-invalid") + " form-control"} placeholder="End Time eg. 13:00" onChange={e => setEndTime(e.target.value)}/>
+                                <input type="text" className={((!validEndTime && formState.submissionAttempted) && "is-invalid") + " form-control"} placeholder="End Time eg. 13:00" onChange={e => {setEndTime(e.target.value); setFormState({...formState, success: false})}}/>
                                 <div className="text-left invalid-feedback  ms-2">
                                     Expecting 'hh:mm'. Must be greater than the start time.
                                 </div>
@@ -110,7 +107,7 @@ function AddClassModal({show, handleClose}) {
 
                     <div className="form-group pt-2 mt-2">
                         <label>Class Type</label>
-                        <select defaultValue="-Select a type- (Optional)" className="form-control form-select" onChange={e => setType(e.target.value)}>
+                        <select defaultValue="-Select a type- (Optional)" className="form-control form-select" onChange={e => {setType(e.target.value); setFormState({...formState, success: false})}}>
                             <option disabled>-Select a type- (Optional)</option>
                             <option>Class</option>
                             <option>Lab</option>
@@ -123,22 +120,33 @@ function AddClassModal({show, handleClose}) {
 
                     <div className="form-group pt-2 mt-2">
                         <label>Location</label>
-                        <input type="text" className="form-control" placeholder="Location eg. C-201 (Optional)"  onChange={e => setLocation(e.target.value)}/>
+                        <input type="text" className="form-control" placeholder="Location eg. C-201 (Optional)"  onChange={e => {setLocation(e.target.value); setFormState({...formState, success: false})}}/>
                     </div>
 
                     <div className="form-group py-2">
                             <div className="form-group pt-4 pb-2">
                             <label>Description</label>
-                            <textarea className="form-control" rows="3" placeholder="Any additional information... (Optional)"  onChange={e => setDescription(e.target.value)}></textarea>
+                            <textarea className="form-control" rows="3" placeholder="Any additional information... (Optional)"  onChange={e => {setDescription(e.target.value); setFormState({...formState, success: false})}}></textarea>
                         </div>
                     </div>
                 </form>
             </Modal.Body>
             <Modal.Footer>
+                <div className="col-12 px-3 text center"> 
+                    {formState.errorMessage &&
+                        <div className="alert alert-danger" role="alert">
+                            Error: {formState.errorMessage}
+                        </div>
+                    }
+                    {formState.success &&
+                        <div className="alert alert-success" role="alert">
+                            Class added!
+                        </div>}    
+                </div>
                 <Button variant="secondary" onClick={!formState.submitted? handleClose : undefined}>
                 Close
                 </Button>
-                <Button variant="primary" disabled={formState.submitted} onClick={() => handleSubmit(setFormState, inputsAreValid)}>
+                <Button variant="primary" disabled={formState.submitted || formState.success} onClick={() => handleSubmit(setFormState, inputsAreValid)}>
                 Add Class
                 </Button>
             </Modal.Footer>
@@ -170,8 +178,6 @@ function validateTimes(start_time, end_time){
 
 
 function handleSubmit(setFormState, inputsAreValid){
-    // set the formstate
-
     setFormState({
         submissionAttempted: true,
         submitted: inputsAreValid
@@ -186,12 +192,13 @@ async function handleClassAdd(subjectName, classObject, setFormState, userData, 
         submissionAttempted: false,
         submitted: false
     };
-    setFormState(formState);
     
-
-    console.log(newUserData);
     try {
         await updateUserData(newUserData, dispatch);
+
+        formState.success = true;
+        formState.errorMessage = false;
+        formState.clearInputs = true;
 
     } catch (error) {
         // Actual error
@@ -200,10 +207,11 @@ async function handleClassAdd(subjectName, classObject, setFormState, userData, 
         } else if (error.response.data.message){
             formState.errorMessage = error.response.data.message;
         } else{
-            error.message = 'An unknown error has occured.'
+            formState.errorMessage = 'An unknown error has occured.'
         }
+        formState.success = false;
         console.log({error: error});
     }
     
-
+    setFormState(formState);
 }
