@@ -19,7 +19,8 @@ async function fetchUserData(dispatch){
         if(e.response && window.sessionStorage.getItem('refresh_token')){
             if(e.response.status === 418){
 
-                await refreshAuthToken()
+                await refreshAuthToken();
+                await fetchUserData(dispatch);
             }
 
         } else {

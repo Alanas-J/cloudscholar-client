@@ -117,8 +117,10 @@ async function authenticate(email, password, keepUserSigned, state, setDisplaySt
         // Store token 
         if(keepUserSigned){
             window.localStorage.setItem('token', response.data.token);
+            window.sessionStorage.setItem('refresh_token', response.data.refresh_token);
         }
         window.sessionStorage.setItem('token', response.data.token);
+        window.localStorage.setItem('refresh_token', response.data.refresh_token);
 
         await fetchUserData(dispatch);
 

@@ -18,6 +18,7 @@ function App() {
 
       } else if(window.localStorage.getItem("token")){
          window.sessionStorage.setItem('token', window.localStorage.getItem("token"));
+         window.sessionStorage.setItem('refresh_token', window.localStorage.getItem("refresh_token"));
          fetchUserData(dispatch);
 
       }
