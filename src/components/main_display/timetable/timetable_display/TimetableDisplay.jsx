@@ -146,7 +146,7 @@ function renderTimeIndicator(date, earliestHour, timeIndicatorRef){
     const offset = date.hour + date.minute/60 - earliestHour;
 
     return (
-        <div ref={timeIndicatorRef} className={styles.currentTimeIndicator+' bg-primary border-primary'} style={{top: offset*5+"rem"}}>
+        <div ref={timeIndicatorRef} className={styles.currentTimeIndicator+' bg-primary border-primary'} style={{top: offset*4.5+"rem"}}>
             <div className={styles.currentTimeIndicatorLabel+' bg-primary text-light rounded px-1'}>{date.toLocaleString(DateTime.TIME_24_SIMPLE)}</div>
         </div>
     );
