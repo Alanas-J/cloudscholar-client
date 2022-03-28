@@ -5,6 +5,8 @@ const taskDuration = .5;
 
 function getTimetableDataForWeek(userData, date) {
 
+    console.log(userData.subjects);
+
     // 7 arrays for each day.
     const dayData = [];
     for(let i = 0; i < 7; i++){
@@ -20,8 +22,7 @@ function getTimetableDataForWeek(userData, date) {
         const subjectInterval = Interval.fromDateTimes(DateTime.fromISO(subject.start_date), DateTime.fromISO(subject.end_date));
 
         if(!subjectInterval.contains(date))
-            break;
-
+            continue;
 
         for(const _class of subject.classes) {
 
