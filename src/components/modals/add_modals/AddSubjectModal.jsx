@@ -2,8 +2,9 @@ import {Modal, Button} from 'react-bootstrap';
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {DateTime} from 'luxon';
-import addClassToSubject from '../../../utility/user_data/addClassToSubject';
+import addSubject from '../../../utility/user_data/addSubject';
 import updateUserData from '../../../utility/requests/updateUserData';
+import convertIEDateToISO from '../../../utility/misc/convertIEDateToISO';
 
 
 function AddClassModal({show, handleClose}) {
@@ -100,7 +101,7 @@ function AddClassModal({show, handleClose}) {
                     }
                     {formState.success &&
                         <div className="alert alert-success" role="alert">
-                            Class added!
+                            Subject added!
                         </div>}    
                 </div>
                 <Button variant="secondary" onClick={!formState.submitted? handleClose : undefined}>
@@ -125,23 +126,16 @@ function validateDates(start_time, end_time){
 
 
     if(validStartTime){
-
-        const split = start_time.split('/');
-        startDateTime = DateTime.fromISO(`${split[2]}-${split[1]}-${split[0]}`);
+        startDateTime = DateTime.fromISO(convertIEDateToISO(start_time));
 
         if(!startDateTime.isValid)
             validStartTime = false;
-
-        console.log(split)
     }
     if(validEndTime){
-
-        const split = end_time.split('/');
-        endDateTime = DateTime.fromISO(`${split[2]}-${split[1]}-${split[0]}`);
+        endDateTime = DateTime.fromISO(convertIEDateToISO(end_time));
 
         if(!endDateTime.isValid)
             validEndTime = false;
-
     }
 
 
@@ -170,10 +164,10 @@ function handleSubmit(setFormState, inputsAreValid){
 }
 
 
-async function handleSubjectAdd(subjectName, subjectObject, setFormState, userData, dispatch){
+async function handleSubjectAdd(subjectObject, setFormState, userData, dispatch){
 
-    /*
-    const newUserData = addClassToSubject(subjectName, subjectObject, userData);
+    
+    const newUserData = addSubject(subjectObject, userData);
     const formState = {
         submissionAttempted: false,
         submitted: false
@@ -190,7 +184,7 @@ async function handleSubjectAdd(subjectName, subjectObject, setFormState, userDa
 
         if(error.message === 'Network Error'){
             formState.errorMessage = "Connection to the server failed, if problem persists, restart the application.";
-        } else if (error.response.data.message){
+        } else if (error.response){
             formState.errorMessage = error.response.data.message;
         } else{
             formState.errorMessage = 'An unknown error has occured.'
@@ -200,5 +194,5 @@ async function handleSubjectAdd(subjectName, subjectObject, setFormState, userDa
 
     }
     setFormState(formState);
-    */
+    
 }
