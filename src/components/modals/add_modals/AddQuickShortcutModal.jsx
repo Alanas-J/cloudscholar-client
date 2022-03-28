@@ -4,23 +4,23 @@ function AddQuickShortcutModal({show, handleClose}) {
     return (
         <Modal show={show} onHide={handleClose} centered>
             <Modal.Header closeButton>
-                <Modal.Title>Edit Quick Shortcut URLs</Modal.Title>
+                <Modal.Title>Edit Quick Shortcut URLs (TBD)</Modal.Title>
             </Modal.Header>
             <Modal.Body>
 
 
-                <div className="row border-bottom my-2">
+                <div className="row border-bottom my-2 py-2">
                 <form>
                     <div className="form-group">
                         <h5>Adding a new Shortcut</h5>
                     </div>
                     <div className="form-group py-2">
                         <label htmlFor="exampleFormControlInput1">Shortcut name</label>
-                        <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="eg. 1st Year Maths"/>
+                        <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="eg. Brightspace"/>
                     </div>
                     <div className="form-group py-2">
                         <label htmlFor="exampleFormControlInput1">Shortcut URL</label>
-                        <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="eg. 1st Year Maths"/>
+                        <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="eg. https://www.brightspace.com"/>
                     </div>
 
     
@@ -29,9 +29,9 @@ function AddQuickShortcutModal({show, handleClose}) {
 
 
 
-                <div className="row border-bottom my-2">
+                <div className="row border-bottom my-3">
                 <h5>Edit Shortcuts</h5>
-                Will render all quick shortcuts for editing here.
+                (TBD)
                 </div>
                 <pre>
                 </pre>
