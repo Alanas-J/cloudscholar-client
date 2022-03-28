@@ -33,12 +33,12 @@ function TimetableDisplay() {
         
         <div className={styles.timetableDisplay+" "}>
             <div className=" ms-1 mb-3 ">
-                 <div className="d-inline-flex bg-light rounded border shadow">
+                 <div className="d-inline-flex bg-light rounded border shadow p-0">
 
-                    <div className="p-0 border">
+                    <div className="p-0 m-0">
                         <button type="button border" onClick={() => setCurrentWeekOffset(currentWeekOffset-1)} className="btn btn-primary m-0">&lt;</button>
                     </div>
-                    <div className="p-0 border">
+                    <div className="p-0 ps-1 m-0">
                         <button type="button" onClick={() => setCurrentWeekOffset(currentWeekOffset+1)} className="btn btn-primary">&gt;</button>
                     </div>
 
@@ -51,7 +51,7 @@ function TimetableDisplay() {
             </div>
 
 
-            <div className="row mx-1 p-2 rounded-top text-center border bg-primary text-white shadow">
+            <div className="row mx-1 py-2 rounded-top text-center border bg-primary text-white shadow">
                 <div className={styles.timeCol+" col"}>
                 </div>
                 <div className="col">
@@ -72,9 +72,10 @@ function TimetableDisplay() {
                 <div className="col">
                     <div>Saturday</div>
                 </div>
-                <div className="col me-2">
+                <div className="col">
                     <div>Sunday</div>
                 </div>
+                <div style={{width: "10px"}}></div>
             </div>
 
             <div className={styles.display + " row mx-1 border-start border-bottom border-end bg-light shadow"}>

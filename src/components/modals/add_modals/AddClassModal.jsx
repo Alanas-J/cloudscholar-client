@@ -4,7 +4,6 @@ import styles from '../Modal.module.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {openModal} from '../../../state/slices/modalState';
 import {DateTime} from 'luxon';
-import {v4 as uuidv4} from 'uuid';
 import addClassToSubject from '../../../utility/user_data/addClassToSubject';
 import updateUserData from '../../../utility/requests/updateUserData';
 
