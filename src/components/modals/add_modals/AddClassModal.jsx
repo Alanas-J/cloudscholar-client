@@ -62,8 +62,8 @@ function AddClassModal({show, handleClose}) {
                         <label>What Subject is this class for?</label>
                         <select defaultValue="-Select Subject-" className={((!subjectSelected && formState.submissionAttempted) && "is-invalid") + " form-control form-select"}  onChange={e => {setSubject(e.target.value); setFormState({...formState, success: false})}}>
                             <option disabled>-Select Subject-</option>
-                            {userData.subjects && userData.subjects.map(subject => {
-                                return (<option key={uuidv4()}>{subject.name}</option>)})}
+                            {userData.subjects && userData.subjects.map((subject, index) => {
+                                return (<option key={index}>{subject.name}</option>)})}
                         </select>
                         <div className="text-left invalid-feedback  ms-2">
                             Please select a subject.
