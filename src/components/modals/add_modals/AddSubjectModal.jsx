@@ -49,7 +49,7 @@ function AddClassModal({show, handleClose}) {
     return (
         <Modal show={show} onHide={!formState.submitted? handleClose : undefined} centered>
             <Modal.Header closeButton>
-                <Modal.Title>Add a Class</Modal.Title>
+                <Modal.Title>Add a Subject</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <form>
@@ -108,7 +108,7 @@ function AddClassModal({show, handleClose}) {
                 Close
                 </Button>
                 <Button variant="primary" disabled={formState.submitted || formState.success} onClick={() => handleSubmit(setFormState, inputsAreValid)}>
-                Add Class
+                Add Subject
                 </Button>
             </Modal.Footer>
         </Modal>
