@@ -21,7 +21,7 @@
 .currentTimeIndicator{
     position: absolute;
     right: -5%;
-    width: 115%;
+    width: 110%;
     border: 1px solid;
 }
 .currentTimeIndicatorLabel{
