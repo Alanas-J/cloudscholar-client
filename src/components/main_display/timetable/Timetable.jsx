@@ -9,7 +9,7 @@ function Timetable() {
           <h3 className='border-bottom border-dark p-3 mx-4 pt-4'>Timetable</h3>
 
 
-			<div className="p-4 pt-2">
+			<div className="p-4 pt-2 pb-0">
 				<TimetableDisplay></TimetableDisplay>
 			</div>
           

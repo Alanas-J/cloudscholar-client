@@ -19,8 +19,6 @@ function AddClassModal({show, handleClose}) {
     const [start_date, setStartDate] = useState(null);
     const [end_date, setEndDate] = useState(null);
 
-    console.log(colour)
-
     const [formState, setFormState] = useState({
         submissionAttempted: false,
         submitted: false
@@ -28,7 +26,7 @@ function AddClassModal({show, handleClose}) {
 
     // Validation
     const subjectHasValidName = !!name;
-    const colourSelected = !!colour
+    const colourSelected = !!colour;
     const {validStartTime, validEndTime} = validateDates(start_date, end_date);
     const inputsAreValid =  subjectHasValidName && colourSelected && validStartTime && validEndTime;
 
@@ -66,7 +64,7 @@ function AddClassModal({show, handleClose}) {
 
                     <div className="form-group py-2">
                         <label>Pick a Colour for this Subject</label>
-                        <input type="color" defaultValue="#0063a5" className={((!subjectHasValidName && formState.submissionAttempted) && "is-invalid") + " form-control"} onChange={e => {setColour(e.target.value); setFormState({...formState, success: false})}}/>
+                        <input type="color" defaultValue="#0063a5" className={((!colourSelected  && formState.submissionAttempted) && "is-invalid") + " form-control"} onChange={e => {setColour(e.target.value); setFormState({...formState, success: false})}}/>
                         <div className="text-left invalid-feedback ms-2">
                             Please select a colour.
                         </div>
@@ -120,17 +118,42 @@ export default AddClassModal;
 
 function validateDates(start_time, end_time){
 
-    let validStartTime = /^([0-1]?\d|2[0-3])(?::([0-5]\d))$/.test(start_time);
-    let validEndTime = /^([0-1]?\d|2[0-3])(?::([0-5]\d))$/.test(end_time);
+    let startDateTime;
+    let endDateTime;
+    let validStartTime = /^\d{1,2}\/\d{1,2}\/\d{4}$/.test(start_time);
+    let validEndTime = /^\d{1,2}\/\d{1,2}\/\d{4}$/.test(end_time);
+
+
+    if(validStartTime){
+
+        const split = start_time.split('/');
+        startDateTime = DateTime.fromISO(`${split[2]}-${split[1]}-${split[0]}`);
+
+        if(!startDateTime.isValid)
+            validStartTime = false;
+
+        console.log(split)
+    }
+    if(validEndTime){
+
+        const split = end_time.split('/');
+        endDateTime = DateTime.fromISO(`${split[2]}-${split[1]}-${split[0]}`);
+
+        if(!endDateTime.isValid)
+            validEndTime = false;
+
+    }
+
 
     if(validStartTime && validEndTime){
-        const diff = DateTime.fromISO(end_time).toMillis() - DateTime.fromISO(start_time).toMillis();
+        const diff = endDateTime.toMillis() - startDateTime.toMillis();
 
         if(diff < 1){
             validStartTime = false;
             validEndTime = false;
         }
     }
+
 
     return {
         validStartTime: validStartTime,
