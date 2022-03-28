@@ -17,8 +17,8 @@ function Class({_class}) {
                 
                 <div className="w-100">
                     <div>
-                        <p className={styles.textOverflow + " m-0"}>
-                             {_class.duration_until.toMillis > 0 ? "In "+_class.duration_until.toHuman({listStyle: 'short', maximumFractionDigits: 0}) : "Now"} | {_class.start_time.toLocaleString(DateTime.TIME_SIMPLE)} to {_class.end_time.toLocaleString(DateTime.TIME_SIMPLE)}
+                        <p className={styles.textOverflow + " m-0 ms-1"}>
+                             {_class.duration_until.toMillis() > 0 ? "In "+_class.duration_until.toHuman({listStyle: 'long', maximumFractionDigits: 0}) : "Now"} | {_class.start_time.toLocaleString(DateTime.TIME_SIMPLE)} to {_class.end_time.toLocaleString(DateTime.TIME_SIMPLE)}
                         </p>
                     </div>
                     

@@ -19,7 +19,7 @@ function Task({task}) {
                 
                 <div className="w-100">
                     <div>
-                        <p className={styles.textOverflow + " m-0"}>
+                        <p className={styles.textOverflow + " m-0 ms-1"}>
                         Due {dueDateToString(task.due_time)} - {task.subjectName}</p>
                     </div>
                     
