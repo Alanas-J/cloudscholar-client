@@ -15,7 +15,7 @@ function TimetableDisplay() {
     const timeIndicatorRef = useRef();
     useEffect(() => {
         if(timeIndicatorRef.current)
-            timeIndicatorRef.current.scrollIntoView({block: "center"});
+            timeIndicatorRef.current.scrollIntoView({block: "center", behavior: "smooth"});
     });
     
     
