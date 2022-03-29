@@ -11,6 +11,9 @@ function addClassToSubject(subjectName, classObject, userData){
     for (let subject of newUserData.subjects){
         if (subject.name === subjectName){
 
+            if(!subject.classes)
+                subject.classes = [];
+
             subject.classes.push(classObject);
         }
             

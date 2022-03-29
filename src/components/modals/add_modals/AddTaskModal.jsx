@@ -4,10 +4,12 @@ import styles from '../Modal.module.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {openModal} from '../../../state/slices/modalState';
 import {DateTime} from 'luxon';
-import addClassToSubject from '../../../utility/user_data/addClassToSubject';
+import addTaskToSubject from '../../../utility/user_data/addTaskToSubject';
+import updateUserData from '../../../utility/requests/updateUserData';
+import convertIEDateToISO from '../../../utility/misc/convertIEDateToISO';
 
 
-function AddClassModal({show, handleClose}) {
+function AddTaskModal({show, handleClose}) {
 
     // State
     const dispatch = useDispatch();
@@ -18,8 +20,6 @@ function AddClassModal({show, handleClose}) {
     const [subject, setSubject] = useState(null);
     const [due_time, setDue_time] = useState(null);
     const [due_date, setDue_date] = useState(null);
-    const [type, setType] = useState(null);
-    const [location, setLocation] = useState(null);
     const [description, setDescription] = useState(null);
 
     const [formState, setFormState] = useState({
@@ -35,17 +35,17 @@ function AddClassModal({show, handleClose}) {
 
     useEffect(() => {
         if(formState.submitted){
-            const taskObject = { due_time, due_date, type, location, description};
+            const taskObject = { due_time, due_date, description};
 
             setFormState({
                 submissionAttempted: false,
                 submitted: false
             });
 
-            handleClassAdd(subject, taskObject, setFormState, userData, dispatch);
+            handleTaskAdd(subject, taskObject, setFormState, userData, dispatch);
         
         }
-    }, [formState.submitted, subject, due_time, due_date, type, location, description, userData, dispatch]);
+    }, [formState.submitted, subject, due_time, due_date, description, userData, dispatch]);
 
 
     return (
@@ -112,29 +112,35 @@ function AddClassModal({show, handleClose}) {
                         </div>}    
                 </div>
                 <Button variant="secondary" onClick={!formState.submitted? handleClose : undefined}>
-                Close
+                    Close
                 </Button>
                 <Button variant="primary" disabled={formState.submitted || formState.success} onClick={() => handleSubmit(setFormState, inputsAreValid)}>
-                Add Class
+                    Add Class
                 </Button>
             </Modal.Footer>
         </Modal>
     ); 
 }
-export default AddClassModal;
+export default AddTaskModal;
   
 
 function validateTime(time){
     if(/^([0-1]?\d|2[0-3])(?::([0-5]\d))$/.test(time))
-        return DateTime.fromISO(time).isValid();
+        return DateTime.fromISO(time).isValid;
 
     return false;
 }
 
-function validateDate(time){
-    return  /^([0-1]?\d|2[0-3])(?::([0-5]\d))$/.test(time);
-}
+function validateDate(date){
+    let dateIsValid = /^\d{1,2}\/\d{1,2}\/\d{4}$/.test(date);
 
+
+    if(dateIsValid){
+        dateIsValid = DateTime.fromISO(convertIEDateToISO(date)).isValid;
+    }
+
+    return dateIsValid;
+}
 
 
 function handleSubmit(setFormState, inputsAreValid){
@@ -145,17 +151,16 @@ function handleSubmit(setFormState, inputsAreValid){
 }
 
 
-async function handleClassAdd(subjectName, taskObject, setFormState, userData, dispatch){
-    /*
+async function handleTaskAdd(subjectName, taskObject, setFormState, userData, dispatch){
 
-    const newUserData = addClassToSubject(subjectName, taskObject, userData);
+    const newUserData = addTaskToSubject(subjectName, taskObject, userData);
     const formState = {
         submissionAttempted: false,
         submitted: false
     };
 
     try {
-        await updue_dateUserData(newUserData, dispatch);
+        await updateUserData(newUserData, dispatch);
 
         formState.success = true;
         formState.errorMessage = false;
@@ -175,5 +180,5 @@ async function handleClassAdd(subjectName, taskObject, setFormState, userData, d
 
     }
     setFormState(formState);
-    */
+    
 }
