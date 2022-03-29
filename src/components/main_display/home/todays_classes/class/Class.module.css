@@ -16,5 +16,6 @@
     background-color: rgba(24, 24, 24, 0.062);
 }
 .task{
+    background-color: rgb(247, 247, 247);
     cursor: pointer;
 }
