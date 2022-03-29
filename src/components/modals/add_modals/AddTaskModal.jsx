@@ -18,6 +18,7 @@ function AddTaskModal({show, handleClose}) {
 
     // Form inputs
     const [subject, setSubject] = useState(null);
+    const [name, setName] = useState(null);
     const [due_time, setDue_time] = useState(null);
     const [due_date, setDue_date] = useState(null);
     const [description, setDescription] = useState(null);
@@ -29,13 +30,14 @@ function AddTaskModal({show, handleClose}) {
 
     // Validation
     const subjectSelected = !!subject;
+    const validName = !!name
     const validTime = validateTime(due_time);
     const validDate = validateDate(due_date);
-    const inputsAreValid =  subjectSelected && validTime && validDate;
+    const inputsAreValid =  subjectSelected && validTime && validDate && validName;
 
     useEffect(() => {
         if(formState.submitted){
-            const taskObject = { due_time, due_date, description};
+            const taskObject = {name, due_time, due_date, description};
 
             setFormState({
                 submissionAttempted: false,
@@ -45,7 +47,7 @@ function AddTaskModal({show, handleClose}) {
             handleTaskAdd(subject, taskObject, setFormState, userData, dispatch);
         
         }
-    }, [formState.submitted, subject, due_time, due_date, description, userData, dispatch]);
+    }, [formState.submitted, subject, name, due_time, due_date, description, userData, dispatch]);
 
 
     return (
@@ -56,7 +58,7 @@ function AddTaskModal({show, handleClose}) {
             <Modal.Body>
                 <form>
                     <div className="form-group pt-2">
-                        <label>What Subject is this task for?</label>
+                        <label>What subject is this task for?</label>
                         <select defaultValue="-Select Subject-" className={((!subjectSelected && formState.submissionAttempted) && "is-invalid") + " form-control form-select"}  onChange={e => {setSubject(e.target.value); setFormState({...formState, success: false})}}>
                             <option disabled>-Select Subject-</option>
                             {userData.subjects && userData.subjects.map((subject, index) => {
@@ -72,11 +74,19 @@ function AddTaskModal({show, handleClose}) {
                         </div>
                     </div>
 
+                    <div className="form-group pb-2">
+                        <label>Task name</label>
+                        <input type="text" className={((!validName && formState.submissionAttempted) && "is-invalid") + " form-control"} placeholder="eg. 1st Year Maths" onChange={e => {setName(e.target.value); setFormState({...formState, success: false})}}/>
+                        <div className="text-left invalid-feedback ms-2">
+                            Please enter a valid subject name.
+                        </div>
+                    </div>
+
                     <div className="form-group pt-2">
                         <label>When is the task due?</label>
                         <div className="row pt-2">
                             <div className="col">
-                                <input type="text" className={((!validTime && formState.submissionAttempted) && "is-invalid") + " form-control"} placeholder="Time eg. 12:00" onChange={e => {setDue_time(e.target.value); setFormState({...formState, success: false})}}/>
+                                <input type="text" className={((!validTime && formState.submissionAttempted) && "is-invalid") + " form-control"} placeholder="Time eg. 17:00" onChange={e => {setDue_time(e.target.value); setFormState({...formState, success: false})}}/>
                                 <div className="text-left invalid-feedback  ms-2">
                                     Expecting 'hh:mm'.
                                 </div>
@@ -115,7 +125,7 @@ function AddTaskModal({show, handleClose}) {
                     Close
                 </Button>
                 <Button variant="primary" disabled={formState.submitted || formState.success} onClick={() => handleSubmit(setFormState, inputsAreValid)}>
-                    Add Class
+                    Add Task
                 </Button>
             </Modal.Footer>
         </Modal>
