@@ -8,25 +8,31 @@ import TimetableElement from './timetable_element/TimetableElement';
 
 function TimetableDisplay() {
     const [currentWeekOffset, setCurrentWeekOffset] = useState(0);
+    const [scrollIntoView, setScrollIntoView] = useState(true);
+
     const date = DateTime.now().plus({weeks: currentWeekOffset});
     const startOfTheWeek = date.set({hour: 0, minute: 0}).minus({days: date.weekday-1});
     const endOfTheWeek = date.set({hour: 0, minute: 0}).plus({days: 7-date.weekday});
 
     const timeIndicatorRef = useRef();
+
     useEffect(() => {
-        if(timeIndicatorRef.current)
+        if(timeIndicatorRef.current && scrollIntoView){
             timeIndicatorRef.current.scrollIntoView({block: "center", behavior: "smooth"});
-    });
-    
+            setScrollIntoView(false);
+        }
+    }, [scrollIntoView]);
+
     
     const userData = useSelector(state => state.userState.value.userData);
-    const timetableData = getTimetableDataForWeek(userData, startOfTheWeek);
 
-    const earliestHour = timetableData.earliestHour || 9;
-    const latestHour = timetableData.latestHour || 18;
+    const [timetableData, setTimetableData] = useState(getTimetableDataForWeek(userData, startOfTheWeek));
+    useEffect(() => {
+        setTimeout(() => setTimetableData(getTimetableDataForWeek(userData, startOfTheWeek)), 60000);
+    });
 
-    console.log(timetableData);
-    console.log(userData)
+    let earliestHour = timetableData.earliestHour || 9;
+    let latestHour = timetableData.latestHour || 18;
 
 
     return (
