@@ -4,20 +4,29 @@ const path = require('path');
 require('@electron/remote/main').initialize(); // used for IPC
 
 
-let mainWindow;
-let trayIcon;
+app.on('ready', applicationStart);
 
-function createWindow(){
-    mainWindow = new BrowserWindow({
+
+function applicationStart(){
+
+    // Window Init
+    const mainWindow = new BrowserWindow({
         width: 1280,
         height: 720,
         title: 'CloudScholar',
         icon: __dirname+'/cs_icon.png',
         webPreferences:{
+            devTools: true,
             enableRemoteModule: true
         }
     });
+
+    //mainWindow.setAppDetails({appId: 'CloudScholar'});
+    mainWindow.setMenu(null);
+    mainWindow.loadURL(isDev ? 'http://localhost:3000' :`file://${path.join(__dirname, '../build/index.html')}`);
     
+
+    // Hide window instead of closing.
     mainWindow.on('close', function (event) {
       if(!app.isQuiting){
           event.preventDefault();
@@ -27,45 +36,36 @@ function createWindow(){
       return false;
     });
 
-    // Where window is loaded from.
-    mainWindow.setMenu(null);
-    mainWindow.loadURL(isDev ? 'http://localhost:3000' :`file://${path.join(__dirname, '../build/index.html')}`);
 
-
-
-    var contextMenu = Menu.buildFromTemplate([
-      { label: 'Show App', click:  function(){
-          mainWindow.show();
-      } },
-      { label: 'Quit', click:  function(){
-          app.isQuiting = true;
-          app.quit();
-      } }
-    ]);
-    
-    
-    
-    trayIcon = new Tray(__dirname+'/cs_icon.png');
+    // Icon tray init
+    const trayIcon = new Tray(__dirname+'/cs_icon.png');
     trayIcon.setToolTip('CloudScholar');
-    trayIcon.setContextMenu(contextMenu);
+
+    // Icon tray options
+    const trayContextMenu = Menu.buildFromTemplate([
+            {   
+                label: 'CloudScholar', enabled: false,
+            },
+            {
+                type: 'separator'
+            },
+            { 
+                label: 'Show App', click: () => { mainWindow.show()} 
+            },
+            { 
+                label: 'Quit', click:  () => {
+                    app.isQuiting = true;
+                    app.quit();
+                } 
+            }]
+         );
+    trayIcon.setContextMenu(trayContextMenu);
+
 }
 
-app.on('ready', createWindow);
 
-// Quit when all windows are closed.
-app.on('window-all-closed', function () {
-  // On OS X it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
+app.setAppUserModelId("CloudScholar");
 
-app.on('activate', function () {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (BrowserWindow.getAllWindows().length === 0) createWindow();
-});
 
 
 
