@@ -34,7 +34,6 @@ export default Task;
 function printDueTime(time){
 
     const durationUntil = time.diffNow(['days', 'hours', 'minutes']); // time.diffNow(['hours', 'minutes']);
-    console.log(durationUntil);
 
     // Luxon is missing a strippling feature for toHuman(). This is a fix.
     if(durationUntil.days === 0){
