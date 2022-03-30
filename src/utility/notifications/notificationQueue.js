@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import getClassesForWeekday from "../user_data/parsing/getClassesForWeekday";
 import getUpcomingTasks from "../user_data/parsing/getUpcomingTasks";
-import sendNotification from "./sendNotification";
+import {sendNotification} from "./notificationController";
 
 function getNotificationQueues(userData){
 
@@ -26,21 +26,26 @@ function checkNotifications(notificationQueues){
     const classes = notificationQueues.classes.map((_class) => {
 
         if(!_class.notified){
-            if(_class.duration_until.hours === 0 && _class.duration_until.minutes <= 30){
+            console.log(_class);
+            console.log(_class.duration_until.toMillis());
+            
+            if(_class.duration_until.toMillis() < 0){
 
+                console.log('this should notify?');
+                sendNotification(`Class now - ${_class.subjectName}`, `The class is currently happening.`)
 
-                if(_class.duration_until.toMillis() < 0){
+                    updateFlag = true;
+                _class.notified = true;
 
-                    sendNotification(`Class now - ${_class.subjectName}`, `The class is currently happening.`)
-                } else {
+            } else if(_class.duration_until.hours === 0 && _class.duration_until.minutes <= 30) {
 
-                    sendNotification(`Class soon - ${_class.subjectName}`, `The class will start in ${_class.duration_until.minutes}.`);
-
-                }
+                sendNotification(`Class soon - ${_class.subjectName}`, `The class will start in ${_class.duration_until.minutes}.`);
 
                 updateFlag = true;
                 _class.notified = true;
             }
+
+            
         }
 
         return _class;
@@ -51,8 +56,6 @@ function checkNotifications(notificationQueues){
         if(!task.notifiedToday){
 
             const duration_until = task.due_time.diffNow(['hours', 'minutes']);
-
-            console.log(duration_until);
 
             if(!task.notifiedLastHour){
 

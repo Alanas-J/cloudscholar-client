@@ -3,8 +3,8 @@ import Timetable from './timetable/Timetable';
 import NavigationBar from './navigation_bar/NavigationBar';
 import './MainDisplay.css';
 import {useEffect, useState} from 'react'
-import { useSelector} from 'react-redux';
-import sendNotification from '../../utility/notifications/sendNotification';
+import {useSelector} from 'react-redux';
+import {sendNotification} from '../../utility/notifications/notificationController';
 import getClassesForWeekday from '../../utility/user_data/parsing/getClassesForWeekday';
 import { DateTime } from 'luxon';
 import getUpcomingTasks from '../../utility/user_data/parsing/getUpcomingTasks';
@@ -15,21 +15,23 @@ function MainDisplay() {
     const userData = useSelector(state => state.userState.value.userData);
     const [notificationQueues, setNotificationQueues] = useState(null);
 
-    if(!notificationQueues){
-        sendNotification('Hello!', `You have ${getClassesForWeekday((userData), DateTime.now().weekday).length} classes left today and ${getUpcomingTasks(userData).length} upcoming tasks.`);
-        
-        setNotificationQueues(getNotificationQueues(userData));
-    }
-
     useEffect(() => {
-        const notifications = checkNotifications(notificationQueues);
+        if(!notificationQueues){
+            sendNotification('Hello!', `You have ${getClassesForWeekday((userData), DateTime.now().weekday).length} classes left today and ${getUpcomingTasks(userData).length} upcoming tasks.`);
+            
+            setNotificationQueues(getNotificationQueues(userData));
+        } else{
+            const notifications = checkNotifications(notificationQueues);
 
-        if(notifications.updateState){
-            notifications.updateState = false;
-            setNotificationQueues(notifications);
-
+            if(notifications.updateState){
+                notifications.updateState = false;
+                setNotificationQueues(notifications);
+    
+            }
         }
-    }, [notificationQueues]);
+
+       
+    }, [userData, notificationQueues]);
 
     return (
         <div className='mainDisplay d-flex' >
@@ -55,10 +57,6 @@ function renderSwitch(display){
             return <Home/>;
     }
   
-}
-
-function initalizeNotificationQueues(userData, setNotificationQueues){
-    
 }
 
 
