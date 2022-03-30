@@ -3,16 +3,22 @@ import Task from './task/Task'
 import {useSelector} from 'react-redux';
 import {v4 as uuidv4} from 'uuid';
 import getUpcomingTasks from '../../../../utility/user_data/parsing/getUpcomingTasks';
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 function UpcomingTasksDisplay() {
 
     const userData = useSelector(state => state.userState.value.userData);
     const [tasks, setTasks] = useState(getUpcomingTasks(userData));
+    const componentMounted = useRef(true);
+
 
     useEffect(() => {
-        setTimeout(() => setTasks(getUpcomingTasks(userData)), 60000);
+        setTimeout(() => {
+            if(componentMounted.current)
+                setTasks(getUpcomingTasks(userData));
+            }, 1000);
 
+        return () => { componentMounted.current = false; };
     });
 
     return (
