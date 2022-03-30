@@ -5,8 +5,6 @@ const taskDuration = .5;
 
 function getTimetableDataForWeek(userData, date) {
 
-    console.log(userData.subjects);
-
     // 7 arrays for each day.
     const dayData = [];
     for(let i = 0; i < 7; i++){

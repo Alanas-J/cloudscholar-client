@@ -2,7 +2,7 @@ import Home from './home/Home';
 import Timetable from './timetable/Timetable';
 import NavigationBar from './navigation_bar/NavigationBar';
 import './MainDisplay.css';
-import {useEffect, useState} from 'react'
+import {useState} from 'react'
 import {useSelector} from 'react-redux';
 import {sendNotification} from '../../utility/notifications/notificationController';
 import getClassesForWeekday from '../../utility/user_data/parsing/getClassesForWeekday';
@@ -15,18 +15,14 @@ function MainDisplay() {
     const userData = useSelector(state => state.userState.value.userData);
     const [loggingIn, setLoggingIn] = useState(true);
 
-    useEffect(() => {
-        if(loggingIn){
-            sendNotification('Hello!', `You have ${getClassesForWeekday((userData), DateTime.now().weekday).length} classes left today and ${getUpcomingTasks(userData).length} upcoming tasks.`);
+    if(loggingIn){
+        sendNotification('Hello!', `You have ${getClassesForWeekday((userData), DateTime.now().weekday).length} classes left today and ${getUpcomingTasks(userData).length} upcoming tasks.`);
 
-            startNotificationService(userData);
-            setLoggingIn(false);
-        } else{
-            updateNotificationService(userData);
-        }
-
-       
-    }, [loggingIn, userData]);
+        startNotificationService(userData);
+        setLoggingIn(false);
+    } else{
+        updateNotificationService(userData);
+    }
 
     return (
         <div className='mainDisplay d-flex' >
