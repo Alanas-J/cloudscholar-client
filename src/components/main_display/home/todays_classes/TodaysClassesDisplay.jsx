@@ -4,11 +4,17 @@ import {useSelector} from 'react-redux';
 import {v4 as uuidv4} from 'uuid';
 import getClassesForWeekday from '../../../../utility/user_data/parsing/getClassesForWeekday';
 import {DateTime} from 'luxon';
+import { useEffect, useState } from 'react';
 
 function TodaysClassesDisplay() {
 
     const userData = useSelector(state => state.userState.value.userData);
-    const classes = getClassesForWeekday(userData, DateTime.now().weekday); 
+    const [classes, setClasses] = useState(getClassesForWeekday(userData, DateTime.now().weekday));
+
+    useEffect(() => {
+        setTimeout(() => setClasses(getClassesForWeekday(userData, DateTime.now().weekday)), 60000);
+
+    });
 
     return (
         <div className={styles.display + " mt-4 border bg-light rounded shadow p-1"}>
