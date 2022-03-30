@@ -1,24 +1,15 @@
 let notificationInterval;
-const notificationQueue = [];
+const notificationBuffer = [];
 
 
 function sendNotification(title, message){
 
     if(!notificationInterval){
 
-        startInterval();
-
-        if(typeof(Worker) !== "undefined"){
-            
-            
-        } else {
-            console.log("Web worker not supported, no notifications.")
-            return;
-        }
-        
+        startInterval();     
     }
 
-    notificationQueue.push({title, message});
+    notificationBuffer.push({title, message});
 
 }
 export {sendNotification};
@@ -31,8 +22,8 @@ function startInterval(){
 
 function manageNotifications(){
 
-    if(notificationQueue.length > 0){
-        const notificationData = notificationQueue.shift();
+    if(notificationBuffer.length > 0){
+        const notificationData = notificationBuffer.shift();
 
         console.log('worker dealing with que.')
 
@@ -65,6 +56,6 @@ function manageNotifications(){
 
 /*
 function stopInterval(){
-    stopInterval(notificationInterval);
+    clearInterval(notificationInterval);
 }
 */

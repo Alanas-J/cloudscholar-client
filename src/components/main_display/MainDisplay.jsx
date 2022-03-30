@@ -8,30 +8,25 @@ import {sendNotification} from '../../utility/notifications/notificationControll
 import getClassesForWeekday from '../../utility/user_data/parsing/getClassesForWeekday';
 import { DateTime } from 'luxon';
 import getUpcomingTasks from '../../utility/user_data/parsing/getUpcomingTasks';
-import { getNotificationQueues, checkNotifications } from '../../utility/notifications/notificationQueue';
+import { startNotificationService, updateNotificationService } from '../../utility/notifications/notificationQueue';
 
 function MainDisplay() {
     const display = useSelector(state => state.appDisplay.value);
     const userData = useSelector(state => state.userState.value.userData);
-    const [notificationQueues, setNotificationQueues] = useState(null);
+    const [loggingIn, setLoggingIn] = useState(true);
 
     useEffect(() => {
-        if(!notificationQueues){
+        if(loggingIn){
             sendNotification('Hello!', `You have ${getClassesForWeekday((userData), DateTime.now().weekday).length} classes left today and ${getUpcomingTasks(userData).length} upcoming tasks.`);
-            
-            setNotificationQueues(getNotificationQueues(userData));
-        } else{
-            const notifications = checkNotifications(notificationQueues);
 
-            if(notifications.updateState){
-                notifications.updateState = false;
-                setNotificationQueues(notifications);
-    
-            }
+            startNotificationService(userData);
+            setLoggingIn(false);
+        } else{
+            updateNotificationService(userData);
         }
 
        
-    }, [userData, notificationQueues]);
+    }, [loggingIn, userData]);
 
     return (
         <div className='mainDisplay d-flex' >
