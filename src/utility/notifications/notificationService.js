@@ -5,7 +5,6 @@ import {sendNotification} from "./notificationController";
 
 let checkingInterval;
 let notificationQueues;
-let updateLock = false;
 
 function startNotificationService(userData){
 
@@ -19,7 +18,7 @@ function startNotificationService(userData){
         startCheckingInterval();
         
     } else {
-        console.log('Notification service is already running.')
+        console.log('error: Notification service is already running.');
     }
 
 }
@@ -27,14 +26,44 @@ export {startNotificationService};
 
 function updateNotificationService(userData){
 
-    if(!updateLock){
-        updateLock = true;
+    const upcomingClasses = getClassesForWeekday(userData, DateTime.now().weekday);
+    const upcomingTasks = getUpcomingTasks(userData);
+
+    // safety close
+    if(!checkingInterval)
+        return;
 
 
+    for(let _class of upcomingClasses){
 
+        for(let oldClass of notificationQueues.classes){
 
-        updateLock = false;
+            if(_class.subjectName === oldClass.subjectName && _class.type === oldClass.type && _class.start_time.toMillis() === oldClass.start_time.toMillis()){
+
+                if(oldClass.notified){
+                    _class.notified = true;
+                }
+            }
+        }
     }
+    for(let task of upcomingTasks){
+
+        for(let oldTask of notificationQueues.tasks){
+
+            if(task.subjectName === oldTask.subjectName && task.name === oldTask.name && task.due_time.toMillis() === oldTask.due_time.toMillis()){
+
+                if(oldTask.notifiedToday){
+                    task.notifiedToday = true;
+                }
+                if(oldTask.notifiedLastHour){
+                    task.notifiedLastHour = true;
+                }
+            }
+        }
+    }
+
+
+    notificationQueues = {tasks: upcomingTasks, classes: upcomingClasses}
 }
 export {updateNotificationService};
 
@@ -44,12 +73,9 @@ function checkNotifications(){
     notificationQueues.classes = notificationQueues.classes.map((_class) => {
 
         if(!_class.notified){
-            console.log(_class);
-            console.log(_class.duration_until.toMillis());
             
             if(_class.duration_until.toMillis() < 0){
 
-                console.log('this should notify?');
                 sendNotification(`Class now - ${_class.subjectName}`, `The class is currently happening.`)
 
                 _class.notified = true;
@@ -66,7 +92,6 @@ function checkNotifications(){
 
         return _class;
     });
-
 
     notificationQueues.tasks = notificationQueues.tasks.map((task) => {
 
@@ -113,5 +138,6 @@ function startCheckingInterval(){
 
 function clearCheckingInterval(){
     clearInterval(checkingInterval);
+    checkingInterval = null;
 }
 export {clearCheckingInterval};

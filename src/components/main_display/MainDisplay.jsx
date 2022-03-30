@@ -8,7 +8,7 @@ import {sendNotification} from '../../utility/notifications/notificationControll
 import getClassesForWeekday from '../../utility/user_data/parsing/getClassesForWeekday';
 import { DateTime } from 'luxon';
 import getUpcomingTasks from '../../utility/user_data/parsing/getUpcomingTasks';
-import { startNotificationService, updateNotificationService } from '../../utility/notifications/notificationQueue';
+import { startNotificationService, updateNotificationService } from '../../utility/notifications/notificationService';
 
 function MainDisplay() {
     const display = useSelector(state => state.appDisplay.value);

@@ -25,8 +25,6 @@ function manageNotifications(){
     if(notificationBuffer.length > 0){
         const notificationData = notificationBuffer.shift();
 
-        console.log('worker dealing with que.')
-
         if (Notification.permission === "granted") {
             return new Notification(notificationData.title, {
                 body: notificationData.message,

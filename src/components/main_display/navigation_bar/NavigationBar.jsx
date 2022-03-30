@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setDisplay } from '../../../state/slices/appDisplay';
 import { updateUserState } from '../../../state/slices/userState';
+import { clearCheckingInterval } from '../../../utility/notifications/notificationService';
 
 function NavigationBar() {
     const appDisplay = useSelector(state => state.appDisplay.value);
@@ -70,6 +71,7 @@ function dropdownClick(showSettingsDropdown, setShowSettingsDropdown){
 function signout(dispatch){
     window.sessionStorage.clear();
     window.localStorage.clear();
+    clearCheckingInterval();
     dispatch(updateUserState({loggedIn: false}));
 }
   
