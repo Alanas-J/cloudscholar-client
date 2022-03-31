@@ -7,6 +7,7 @@ import ViewClassModal from './view_modals/ViewClassModal';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { closeModal } from '../../state/slices/modalState';
+import ViewTaskModal from './view_modals/ViewTaskModal';
 
 
 
