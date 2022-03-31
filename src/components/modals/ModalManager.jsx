@@ -6,6 +6,7 @@ import RegisterUserModal from './add_modals/RegisterUserModal';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { closeModal } from '../../state/slices/modalState';
+import ViewClassModal from './view_modals/ViewClass';
 
 
 
@@ -22,9 +23,9 @@ function ModalManager() {
 
 
 // Used to pick what to display.
-function modalSwitch(display, closeModal){
-    switch(display) {
-      
+function modalSwitch(modal, closeModal){
+    switch(modal.name) {
+        
         case 'AddClass':
             return <AddClassModal show={true} handleClose={closeModal}/>;
 
@@ -39,6 +40,17 @@ function modalSwitch(display, closeModal){
 
         case 'RegisterUser':
             return <RegisterUserModal show={true} handleClose={closeModal}/>
+
+        case 'ViewClass':
+            return <ViewClassModal data={modal.data} show={true} handleClose={closeModal}/>
+        
+        case 'ViewTask':
+            return <RegisterUserModal show={true} handleClose={closeModal}/>
+
+        case 'ViewSubject':
+            return <RegisterUserModal show={true} handleClose={closeModal}/>
+    
+            
             
         default:
             return null;

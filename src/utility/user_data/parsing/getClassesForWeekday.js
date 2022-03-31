@@ -22,6 +22,7 @@ function getClassesForWeekday(userData, intWeekday) {
                         start_time: DateTime.fromISO(_class.start_time),
                         end_time: DateTime.fromISO(_class.end_time),
                         colour: subject.colour,
+                        day: _class.day,
                         subjectName: subject.name,
                         description: _class.description,
                         location: _class.location,

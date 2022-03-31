@@ -30,6 +30,7 @@ function getTimetableDataForWeek(userData, date) {
                 colour: subject.colour,
                 type: _class.type,
                 location: _class.location,
+                day: _class.day,
                 start_time: DateTime.fromISO(_class.start_time),
                 end_time: DateTime.fromISO(_class.end_time),
                 durationInH: DateTime.fromISO(_class.end_time).diff(DateTime.fromISO(_class.start_time), 'hours').hours,

@@ -6,25 +6,25 @@ export const modalState = createSlice({
   name: 'modalState',
   initialState: {
     value: { 
-      currState: null,
-      prevState: null
+      currState:  {name: null},
+      prevState:  {name: null}
     }
   },
   reducers: {
     openModal: (state, action) => {
 
-      // If any modal is already open.
       if(state.value.currState){
         state.value.prevState = state.value.currState;
       }
 
       state.value.currState = action.payload;
     },
+
     closeModal: (state) => {
       state.value.currState = state.value.prevState;
-      state.value.prevState = null;
+      state.value.prevState = {name: null};
     }
-  } // TODO: Add a open viewmodal 
+  } 
 })
 
 // Action creators are generated for each case reducer function

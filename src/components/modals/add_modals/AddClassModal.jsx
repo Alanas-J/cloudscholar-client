@@ -68,7 +68,7 @@ function AddClassModal({show, handleClose}) {
                             Please select a subject.
                         </div>
                         <div className="row px-3">
-                            <p className={styles.pointable +" link-primary"} onClick={() => dispatch(openModal('AddSubject'))}>
+                            <p className={styles.pointable +" link-primary"} onClick={() => dispatch(openModal({name:'AddSubject'}))}>
                                 Add new subjects here +
                             </p>
                         </div>

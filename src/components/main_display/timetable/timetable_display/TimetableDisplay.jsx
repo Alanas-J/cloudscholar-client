@@ -34,7 +34,7 @@ function TimetableDisplay() {
         setTimeout(() => {
             if(componentMounted.current)
                 setTimetableData(getTimetableDataForWeek(userData, startOfTheWeek));
-        }, 1000);
+        }, 30000);
 
         return () => { componentMounted.current = false; };
     });

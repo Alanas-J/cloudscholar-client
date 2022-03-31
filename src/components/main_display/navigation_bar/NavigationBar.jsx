@@ -55,6 +55,7 @@ function NavigationBar() {
                 <ul  className={styles.dropdownList+" dropdown-menu text-small shadow d-block"}>
                     <li><button className="dropdown-item">Import Timetable (TBD)</button></li>
                     <li><button className="dropdown-item">Export Timetable (TBD)</button></li>
+                    <li><button className="dropdown-item">View Subjects</button></li>
                     <li><hr className="dropdown-divider"/></li>
                     <li><button className="dropdown-item" onClick={() => signout(dispatch)}>Sign out</button></li>
                 </ul>}

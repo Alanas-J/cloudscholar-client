@@ -28,7 +28,7 @@ function Home() {
                   <div className="row border-bottom border-secondary mb-2">
                     <div className="col-12 d-flex justify-content-between pb-1">
                       <h3 className='p-1 '>Today's Classes</h3>
-                      <button type="button" className="btn btn-primary" onClick={() => dispatch(openModal('AddClass'))}>+</button>
+                      <button type="button" className="btn btn-primary" onClick={() => dispatch(openModal({name:'AddClass'}))}>+</button>
                     </div>
                   </div>
 
@@ -44,7 +44,7 @@ function Home() {
                   <div className="row border-bottom border-secondary mb-2">
                     <div className="col-12 d-flex justify-content-between pb-1">
                       <h3 className='p-1 '>Upcoming Tasks</h3>
-                      <button type="button" className="btn btn-primary" onClick={() => dispatch(openModal('AddTask'))}>+</button>
+                      <button type="button" className="btn btn-primary" onClick={() => dispatch(openModal({name: 'AddTask'}))}>+</button>
                     </div>
                   </div>
 
@@ -65,7 +65,7 @@ function Home() {
 
                 <div className="d-flex border-bottom border-secondary mb-2 justify-content-start pb-1 mb-2">
                   <h5 className='col'>Quick Shortcut URLs</h5>
-                  <button type="button" className="col-1 p-1 btn btn-secondary" onClick={() => dispatch(openModal('AddQuickShortcut'))}>+</button>
+                  <button type="button" className="col-1 p-1 btn btn-secondary" onClick={() => dispatch(openModal({name:'AddQuickShortcut'}))}>+</button>
                 </div>
                 
                 <p className='link-secondary'>Add new url...</p>
