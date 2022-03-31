@@ -10,9 +10,11 @@ function TodaysClassesDisplay() {
 
     const userData = useSelector(state => state.userState.value.userData);
     const [classes, setClasses] = useState(getClassesForWeekday(userData, DateTime.now().weekday));
-    const componentMounted = useRef(true);
+    const componentMounted = useRef(false);
 
     useEffect(() => {
+        componentMounted.current = true;
+        
         setTimeout(() => {
             if(componentMounted.current)
                 setClasses(getClassesForWeekday(userData, DateTime.now().weekday));

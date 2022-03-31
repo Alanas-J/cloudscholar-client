@@ -2,13 +2,15 @@ import { useState } from 'react';
 import axios from 'axios';
 import styles from  './LoginDisplay.module.css';
 import {useDispatch} from 'react-redux';
-import fetchUserData from '../../utility/requests/fetchUserData';
+import fetchUserData from '../../utility/requests/fetchUserData'
+import {openModal} from '../../state/slices/modalState';
 
 function LoginDisplay({setLoggedIn}) {
     const [displayState, setDisplayState] = useState({
         formSubmitted: false,
         error: false,
         invalidEmail: false,
+        invalidPassword: false,
         errorMessage: "Auth failure error goes here.",
         submitted: false,
     });
@@ -16,14 +18,29 @@ function LoginDisplay({setLoggedIn}) {
     const [email, setEmail] = useState("");
     const [keepUserSigned, setKeepUserSigned] = useState(false);
 
+    
     // Redux State
     const dispatch = useDispatch();
     
-    // Component State    
-    if(displayState.invalidEmail && validateEmail(email)){
-        displayState.invalidEmail = false;
-        setDisplayState(displayState);
+
+    // Validation state update
+    if(displayState.invalidEmail || displayState.invalidPassword){
+
+        let setStateFlag = false;
+
+        if( displayState.invalidEmail && validateEmail(email)){
+            displayState.invalidEmail = false;
+            setStateFlag = true;
+        }   
+        if(displayState.invalidPassword && password !== ""){
+            displayState.invalidPassword = false;
+            setStateFlag = true;
+        }   
+
+        if(setStateFlag)
+            setDisplayState(displayState);
     }
+
 
     function handleSubmit(event){
         event.preventDefault();
@@ -31,8 +48,9 @@ function LoginDisplay({setLoggedIn}) {
 
         state.error = false;
         state.invalidEmail = !validateEmail(email);
+        state.invalidPassword = (password === "");
 
-        if(!state.invalidEmail){
+        if(!state.invalidEmail && !state.invalidPassword){
             state.formSubmitted = true;
             authenticate(email, password, keepUserSigned, displayState, setDisplayState, dispatch);
         }
@@ -65,18 +83,19 @@ function LoginDisplay({setLoggedIn}) {
                         <div className="form-floating my-1">
                             <input disabled={displayState.formSubmitted} type="email" className={(displayState.invalidEmail && 'is-invalid')+' form-control'} id="floatingInput" placeholder="name@example.com" onChange={e => setEmail(e.target.value)}/>
                             <label htmlFor="floatingInput">Email address</label>
-                            
-                            {displayState.invalidEmail &&
-                                <div id="validationServerUsernameFeedback" className="text-left invalid-feedback mb-2 ms-2">
-                                    Please enter valid email. Eg. 'person@mail.com'.
-                                </div>
-                            }  
+                            <div id="validationServerUsernameFeedback" className="text-left invalid-feedback mb-2 ms-2">
+                                Please enter valid email. Eg. 'person@mail.com'.
+                            </div>
+     
                         </div>
 
                         
                         <div className="form-floating my-1">
-                            <input disabled={displayState.formSubmitted} type="password" className="form-control" id="floatingPassword" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
+                            <input disabled={displayState.formSubmitted} type="password" className={(displayState.invalidPassword && 'is-invalid')+' form-control'} id="floatingPassword" placeholder="Password" onChange={e => setPassword(e.target.value)}/>
                             <label htmlFor="floatingPassword">Password</label>
+                            <div className="text-left invalid-feedback mb-2 ms-2">
+                                Password cannot be empty.
+                            </div>
                         </div>
                         <div className="checkbox mb-3 text-center">
                         <label >
@@ -88,7 +107,7 @@ function LoginDisplay({setLoggedIn}) {
                             {!displayState.formSubmitted? "Sign in" : "Signing in..."}
                         </button>
                         <div className='text-center'>
-                            <p className={styles.link} onClick={() => openRegistration()}>Don't have an account? Register Here</p>
+                            <p className={styles.link} onClick={() => dispatch(openModal('RegisterUser'))}>Don't have an account? Register Here</p>
                         </div>
                         
                     </div>
@@ -143,8 +162,4 @@ async function authenticate(email, password, keepUserSigned, state, setDisplaySt
     }
     state.formSubmitted = false;
     setDisplayState(state);
-}
-
-function openRegistration(){
-
 }
