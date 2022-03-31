@@ -1,14 +1,16 @@
 import styles from './TimetableDisplay.module.css'
 import getTimetableDataForWeek from '../../../../utility/user_data/parsing/getTimetableDataForWeek';
-import {useState, useRef, useEffect} from 'react';
+import {useState, useRef, useEffect, useReducer} from 'react';
 import {DateTime} from 'luxon';
 import {useSelector} from 'react-redux';
 import {v4 as uuidv4} from 'uuid';
 import TimetableElement from './timetable_element/TimetableElement';
 
 function TimetableDisplay() {
+    const [, forceUpdate] = useReducer(count => count + 1, 0);
     const [currentWeekOffset, setCurrentWeekOffset] = useState(0);
     const [scrollIntoView, setScrollIntoView] = useState(true);
+
 
     const date = DateTime.now().plus({weeks: currentWeekOffset});
     const startOfTheWeek = date.set({hour: 0, minute: 0}).minus({days: date.weekday-1});
@@ -17,31 +19,33 @@ function TimetableDisplay() {
     const timeIndicatorRef = useRef();
     const componentMounted = useRef(false);
 
+    
+    const userData = useSelector(state => state.userState.value.userData);
+    const timetableData = getTimetableDataForWeek(userData, startOfTheWeek);
+
+
+    const earliestHour = timetableData.earliestHour || 9;
+    const latestHour = timetableData.latestHour || 18;
+
+
+
+    useEffect(() => {
+        componentMounted.current = true;
+        
+        setTimeout(() => {
+            if(componentMounted.current)
+                forceUpdate();
+        }, 30000);
+
+        return () => { componentMounted.current = false; };
+    });
     useEffect(() => {
         if(timeIndicatorRef.current && scrollIntoView){
             timeIndicatorRef.current.scrollIntoView({block: "center", behavior: "smooth"});
             setScrollIntoView(false);
         }
     }, [scrollIntoView]);
-
     
-    const userData = useSelector(state => state.userState.value.userData);
-
-    const [timetableData, setTimetableData] = useState(getTimetableDataForWeek(userData, startOfTheWeek));
-    useEffect(() => {
-        componentMounted.current = true;
-        
-        setTimeout(() => {
-            if(componentMounted.current)
-                setTimetableData(getTimetableDataForWeek(userData, startOfTheWeek));
-        }, 30000);
-
-        return () => { componentMounted.current = false; };
-    });
-
-    let earliestHour = timetableData.earliestHour || 9;
-    let latestHour = timetableData.latestHour || 18;
-
 
     return (
         
