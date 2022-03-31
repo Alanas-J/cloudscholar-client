@@ -3,11 +3,12 @@ import Timetable from './timetable/Timetable';
 import NavigationBar from './navigation_bar/NavigationBar';
 import './MainDisplay.css';
 import {useState} from 'react'
-import { useSelector} from 'react-redux';
-import sendNotification from '../../utility/notifications/sendNotification';
+import {useSelector} from 'react-redux';
+import {sendNotification} from '../../utility/notifications/notificationController';
 import getClassesForWeekday from '../../utility/user_data/parsing/getClassesForWeekday';
 import { DateTime } from 'luxon';
 import getUpcomingTasks from '../../utility/user_data/parsing/getUpcomingTasks';
+import { startNotificationService, updateNotificationService } from '../../utility/notifications/notificationService';
 
 function MainDisplay() {
     const display = useSelector(state => state.appDisplay.value);
@@ -16,7 +17,11 @@ function MainDisplay() {
 
     if(loggingIn){
         sendNotification('Hello!', `You have ${getClassesForWeekday((userData), DateTime.now().weekday).length} classes left today and ${getUpcomingTasks(userData).length} upcoming tasks.`);
+
+        startNotificationService(userData);
         setLoggingIn(false);
+    } else{
+        updateNotificationService(userData);
     }
 
     return (
@@ -43,4 +48,6 @@ function renderSwitch(display){
             return <Home/>;
     }
   
-  }
+}
+
+
