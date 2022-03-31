@@ -1,11 +1,17 @@
 import styles from './Task.module.css';
 import { DateTime } from "luxon";
+import { useDispatch, useSelector } from 'react-redux';
+import findTask from '../../../../../utility/user_data/findTask';
+import { openModal } from '../../../../../state/slices/modalState';
 
 
 function Task({task}) {
+    const userData = useSelector(state => state.userState.value.userData);
+    const dispatch = useDispatch()
+
 
     return (
-        <div className={ styles.task+" m-1 rounded d-flex shadow"} style={{border: ".08rem solid " +task.colour+"33"}}>
+        <div onClick={() => handleOpenViewModal(task, userData, dispatch)} className={ styles.task+" m-1 rounded d-flex shadow"} style={{border: ".08rem solid " +task.colour+"33"}}>
             <div className={"rounded-start me-2"} style={{width:'.25rem', backgroundColor:task.colour}}></div>
 
             <div className={styles.taskContent}>
@@ -30,6 +36,15 @@ function Task({task}) {
     );
 }   
 export default Task;
+
+function handleOpenViewModal(task, userData, dispatch){
+
+    const foundTask = findTask(task, userData);
+        
+    if(foundTask) 
+        dispatch(openModal({name: 'ViewTask', data: foundTask }));
+}
+
 
 function printDueTime(time){
 

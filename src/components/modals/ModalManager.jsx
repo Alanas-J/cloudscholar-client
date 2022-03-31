@@ -3,10 +3,10 @@ import AddSubjectModal from './add_modals/AddSubjectModal';
 import AddTaskModal from './add_modals/AddTaskModal';
 import AddQuickShortcutModal from './add_modals/AddQuickShortcutModal';
 import RegisterUserModal from './add_modals/RegisterUserModal';
+import ViewClassModal from './view_modals/ViewClassModal';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { closeModal } from '../../state/slices/modalState';
-import ViewClassModal from './view_modals/ViewClass';
 
 
 
@@ -45,12 +45,10 @@ function modalSwitch(modal, closeModal){
             return <ViewClassModal data={modal.data} show={true} handleClose={closeModal}/>
         
         case 'ViewTask':
-            return <RegisterUserModal show={true} handleClose={closeModal}/>
+            return <ViewTaskModal data={modal.data} show={true} handleClose={closeModal}/>
 
-        case 'ViewSubject':
+        case 'ViewSubjects':
             return <RegisterUserModal show={true} handleClose={closeModal}/>
-    
-            
             
         default:
             return null;

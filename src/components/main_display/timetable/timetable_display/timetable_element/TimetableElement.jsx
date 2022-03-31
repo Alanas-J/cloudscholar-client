@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { openModal } from '../../../../../state/slices/modalState';
 import styles from './TimetableElement.module.css'
 import findClass from '../../../../../utility/user_data/findClass'
+import findTask from '../../../../../utility/user_data/findTask';
 
 function TimetableElement({timetableElement, earliestHour}) {
 
@@ -66,6 +67,9 @@ function handleOpenViewModal(timetableElement, userData, dispatch){
 
     } else if (timetableElement.objectType === 'task'){
 
-        dispatch(openModal({name: 'ViewTask', data: timetableElement}));
+        const task = findTask(timetableElement, userData);
+
+        if(task)
+            dispatch(openModal({name: 'ViewTask', data: task}));
     }
 }
