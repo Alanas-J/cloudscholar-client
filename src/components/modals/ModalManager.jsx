@@ -4,11 +4,10 @@ import AddTaskModal from './add_modals/AddTaskModal';
 import AddQuickShortcutModal from './add_modals/AddQuickShortcutModal';
 import RegisterUserModal from './add_modals/RegisterUserModal';
 import ViewClassModal from './view_modals/ViewClassModal';
-
+import ViewTaskModal from './view_modals/ViewTaskModal';
+import ViewSubjectsModal from './view_modals/ViewSubjectsModal';
 import { useSelector, useDispatch } from 'react-redux';
 import { closeModal } from '../../state/slices/modalState';
-import ViewTaskModal from './view_modals/ViewTaskModal';
-
 
 
 function ModalManager() {
@@ -22,8 +21,6 @@ function ModalManager() {
   export default ModalManager;
 
 
-
-// Used to pick what to display.
 function modalSwitch(modal, closeModal){
     switch(modal.name) {
         
@@ -49,7 +46,7 @@ function modalSwitch(modal, closeModal){
             return <ViewTaskModal data={modal.data} show={true} handleClose={closeModal}/>
 
         case 'ViewSubjects':
-            return <RegisterUserModal show={true} handleClose={closeModal}/>
+            return <ViewSubjectsModal show={true} handleClose={closeModal}/>
             
         default:
             return null;
