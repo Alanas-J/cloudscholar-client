@@ -40,7 +40,7 @@ function getClassesForWeekday(userData, intWeekday) {
 
         }, []);
 
-        return classList.sort((class_a, class_b) => class_a.start_time.toMillis() > class_b.start_time.toMillis());
+        return classList.sort((class_a, class_b) =>  class_a.start_time - class_b.start_time);
 
 
     } else {
