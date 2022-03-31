@@ -13,9 +13,9 @@ function TodaysClassesDisplay() {
     const componentMounted = useRef(false);
 
     useEffect(() => {
+        componentMounted.current = true;
+        
         setTimeout(() => {
-            componentMounted.current = true;
-
             if(componentMounted.current)
                 setClasses(getClassesForWeekday(userData, DateTime.now().weekday));
             }, 1000);

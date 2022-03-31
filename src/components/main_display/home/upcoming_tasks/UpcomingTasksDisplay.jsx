@@ -14,7 +14,7 @@ function UpcomingTasksDisplay() {
 
     useEffect(() => {
         componentMounted.current = true;
-        
+
         setTimeout(() => {
             if(componentMounted.current)
                 setTasks(getUpcomingTasks(userData));
@@ -25,7 +25,7 @@ function UpcomingTasksDisplay() {
 
     return (
         <div className={styles.display + " mt-4 border bg-light rounded shadow p-1"}>
-                {tasks.length !== 0? tasks.map(task => {return <Task key={uuidv4()} task={task}/>}) : <div className='h5 h-100 p-3 m-0 '> You're currently clear of any tasks! Do you have any to add? </div>}
+                {tasks.length !== 0? tasks.map(task => {return <Task key={uuidv4()} task={task}/>}) : <div className='h5 h-100 p-3 m-0 text-center'> You're currently clear of any tasks! Do you have any to add? </div>}
         </div>
     );
 }   
