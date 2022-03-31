@@ -15,7 +15,7 @@ function TimetableDisplay() {
     const endOfTheWeek = date.set({hour: 0, minute: 0}).plus({days: 7-date.weekday});
 
     const timeIndicatorRef = useRef();
-    const componentMounted = useRef(true);
+    const componentMounted = useRef(false);
 
     useEffect(() => {
         if(timeIndicatorRef.current && scrollIntoView){
@@ -29,6 +29,8 @@ function TimetableDisplay() {
 
     const [timetableData, setTimetableData] = useState(getTimetableDataForWeek(userData, startOfTheWeek));
     useEffect(() => {
+        componentMounted.current = true;
+        
         setTimeout(() => {
             if(componentMounted.current)
                 setTimetableData(getTimetableDataForWeek(userData, startOfTheWeek));

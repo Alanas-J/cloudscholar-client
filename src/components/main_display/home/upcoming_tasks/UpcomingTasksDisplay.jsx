@@ -9,10 +9,12 @@ function UpcomingTasksDisplay() {
 
     const userData = useSelector(state => state.userState.value.userData);
     const [tasks, setTasks] = useState(getUpcomingTasks(userData));
-    const componentMounted = useRef(true);
+    const componentMounted = useRef(false);
 
 
     useEffect(() => {
+        componentMounted.current = true;
+        
         setTimeout(() => {
             if(componentMounted.current)
                 setTasks(getUpcomingTasks(userData));
