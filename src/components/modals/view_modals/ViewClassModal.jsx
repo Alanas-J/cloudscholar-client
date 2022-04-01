@@ -113,11 +113,11 @@ async function handleDelete(_class, userData, setModalState, dispatch){
 
     } catch (error) {
         if(error.message === 'Network Error'){
-            modalState.errorMessage = "Connection to the server failed, if problem persists, restart the application.";
+            modalState.error = "Connection to the server failed, if problem persists, restart the application.";
         } else if (error.response.data.message){
-            modalState.errorMessage = error.response.data.message;
+            modalState.error = error.response.data.message;
         } else {
-            modalState.errorMessage = 'An unknown error has occured.'
+            modalState.error = 'An unknown error has occured.'
         }
         console.log({error: error});
 

@@ -25,7 +25,7 @@ function MainDisplay() {
         } else{
             updateNotificationService(userData);
         }
-    });
+    }, [loggingIn, userData]);
 
     
     return (

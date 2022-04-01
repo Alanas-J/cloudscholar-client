@@ -55,7 +55,13 @@ function ViewTaskModal({show, data, handleClose}) {
             </Modal.Body>
 
             <Modal.Footer className='border-top-0 px-4 mx-54'>
-
+                <div className="col-12 px-3 text center"> 
+                    {modalState.error &&
+                        <div className="alert alert-danger" role="alert">
+                            Error: {modalState.error}
+                        </div>
+                    }
+                </div>
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
@@ -111,11 +117,11 @@ async function handleDelete(task, userData, setModalState, dispatch){
 
     } catch (error) {
         if(error.message === 'Network Error'){
-            modalState.errorMessage = "Connection to the server failed, if problem persists, restart the application.";
+            modalState.error = "Connection to the server failed, if problem persists, restart the application.";
         } else if (error.response.data.message){
-            modalState.errorMessage = error.response.data.message;
+            modalState.error = error.response.data.message;
         } else {
-            modalState.errorMessage = 'An unknown error has occured.'
+            modalState.error = 'An unknown error has occured.'
         }
         console.log({error: error});
 
