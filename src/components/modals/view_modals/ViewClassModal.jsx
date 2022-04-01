@@ -2,6 +2,7 @@ import {Modal, Button} from 'react-bootstrap';
 import styles from '../Modal.module.css'
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import deleteClass from '../../../utility/user_data/deleteClass';
 
 
 function ViewClassModal({show, data, handleClose}) {
@@ -60,7 +61,7 @@ function ViewClassModal({show, data, handleClose}) {
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button disable={(modalState.deleted || modalState.deleting)} onClick={() => handleDeleteClick(modalState, setModalState)} variant="danger" >
+                <Button disabled={(modalState.deleted || modalState.deleting)} onClick={() => handleDeleteClick(modalState, setModalState)} variant="danger" >
                     {!modalState.deleteClicked && 'Delete Class'} 
                     {modalState.deleteClicked && 'Warning! Click to confirm deletion'}
                     {modalState.deleting && 'Deleting class...'}
@@ -96,7 +97,7 @@ function handleDeleteClick(modalState, setModalState){
 
 async function handleDelete(_class, userData, setModalState, dispatch){
 
-    // get userdata with deleted class
+    const userDataPayload = deleteClass(_class, userData);
     // set a modalstate payload.
 
     try {
