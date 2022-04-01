@@ -3,6 +3,7 @@ import styles from '../Modal.module.css'
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import deleteClass from '../../../utility/user_data/deleteClass';
+import updateUserData from '../../../utility/requests/updateUserData';
 
 
 function ViewClassModal({show, data, handleClose}) {
@@ -21,7 +22,7 @@ function ViewClassModal({show, data, handleClose}) {
         if(modalState.deleting){
             handleDelete(data, userData, setModalState, dispatch);
         }
-    })
+    }, [userData, dispatch, modalState.deleting, data])
 
     
     return (
@@ -98,17 +99,30 @@ function handleDeleteClick(modalState, setModalState){
 async function handleDelete(_class, userData, setModalState, dispatch){
 
     const userDataPayload = deleteClass(_class, userData);
-    // set a modalstate payload.
+    const modalState = {
+        deleteClicked: false,
+        deleting: false,
+        deleted: false,
+        error: null
+    }
+
 
     try {
-        // try update userdata
+        await updateUserData(userDataPayload, dispatch);
+        modalState.deleted = true;
 
-        // dispatch new userData
-        // set modal state
     } catch (error) {
-        
-        // set error state
+        if(error.message === 'Network Error'){
+            modalState.errorMessage = "Connection to the server failed, if problem persists, restart the application.";
+        } else if (error.response.data.message){
+            modalState.errorMessage = error.response.data.message;
+        } else {
+            modalState.errorMessage = 'An unknown error has occured.'
+        }
+        console.log({error: error});
+
     }
+    setModalState(modalState);
 }
 
 
@@ -133,6 +147,4 @@ function dayIntToString(int){
             return 'n/a'
 
     }
-
-
 }

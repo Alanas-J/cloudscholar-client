@@ -17,11 +17,10 @@ function deleteClass(_class, userData){
                     
                     newUserData.subjects[subjIndex].classes.splice(classIndex, 1);
 
-                    console.log(newUserData);
-                    return newUserData;
                 }
             }
         }
     }
+    return newUserData;
 }
 export default deleteClass;
