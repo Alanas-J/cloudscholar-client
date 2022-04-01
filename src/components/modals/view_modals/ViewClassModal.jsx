@@ -63,7 +63,7 @@ function ViewClassModal({show, data, handleClose}) {
                     Close
                 </Button>
                 <Button disabled={(modalState.deleted || modalState.deleting)} onClick={() => handleDeleteClick(modalState, setModalState)} variant="danger" >
-                    {!modalState.deleteClicked && 'Delete Class'} 
+                    {(!modalState.deleteClicked && !(modalState.deleting || modalState.deleted)) && 'Delete Class'} 
                     {modalState.deleteClicked && 'Warning! Click to confirm deletion'}
                     {modalState.deleting && 'Deleting class...'}
                     {modalState.deleted && 'Class deleted'}
