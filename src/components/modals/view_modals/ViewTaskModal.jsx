@@ -1,10 +1,30 @@
 import {Modal, Button} from 'react-bootstrap';
 import styles from '../Modal.module.css'
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import { DateTime } from 'luxon';
+import deleteTask from '../../../utility/user_data/deleteTask';
+import updateUserData from '../../../utility/requests/updateUserData';
 
 
 function ViewTaskModal({show, data, handleClose}) {
+
+    const dispatch = useDispatch();
+    const userData = useSelector(state => state.userState.value.userData);
+    const [modalState, setModalState] = useState({
+        deleteClicked: false,
+        deleting: false,
+        deleted: false,
+        error: null
+    });
+
+    useEffect(() => {
+        if(modalState.deleting){
+            handleDelete(data, userData, setModalState, dispatch);
+        }
+    }, [userData, dispatch, modalState.deleting, data])
+
+
 
     return (
         <Modal show={show} onHide={handleClose} centered>
@@ -39,8 +59,11 @@ function ViewTaskModal({show, data, handleClose}) {
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button variant="danger" onClick={() => handleDelete()} >
-                    Delete Task
+                <Button disabled={(modalState.deleted || modalState.deleting)} onClick={() => handleDeleteClick(modalState, setModalState)} variant="danger" >
+                    {(!modalState.deleteClicked && !(modalState.deleting || modalState.deleted)) && 'Delete Task'} 
+                    {modalState.deleteClicked && 'Warning! Click to confirm deletion'}
+                    {modalState.deleting && 'Deleting task...'}
+                    {modalState.deleted && 'Task deleted'}
                 </Button>
             </Modal.Footer>
         </Modal>
@@ -48,6 +71,55 @@ function ViewTaskModal({show, data, handleClose}) {
 }
 export default ViewTaskModal;
 
-function handleDelete(){
 
+function handleDeleteClick(modalState, setModalState){
+
+    if(!modalState.deleteClicked){
+        setModalState({
+            deleteClicked: true,
+            deleting: false,
+            deleted: false,
+            error: null
+        });
+
+    } else if(modalState.deleteClicked){
+        setModalState({
+            deleteClicked: false,
+            deleting: true,
+            deleted: false,
+            error: null
+        });
+    }
+}
+
+
+async function handleDelete(task, userData, setModalState, dispatch){
+
+    const userDataPayload = deleteTask(task, userData);
+
+    console.log(userDataPayload)
+    const modalState = {
+        deleteClicked: false,
+        deleting: false,
+        deleted: false,
+        error: null
+    }
+
+    try {
+        await updateUserData(userDataPayload, dispatch);
+        modalState.deleted = true;
+
+    } catch (error) {
+        if(error.message === 'Network Error'){
+            modalState.errorMessage = "Connection to the server failed, if problem persists, restart the application.";
+        } else if (error.response.data.message){
+            modalState.errorMessage = error.response.data.message;
+        } else {
+            modalState.errorMessage = 'An unknown error has occured.'
+        }
+        console.log({error: error});
+
+    }
+    setModalState(modalState);
+    
 }
