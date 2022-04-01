@@ -19,7 +19,7 @@ function getTimetableDataForWeek(userData, date) {
         // See if subject's interval is valid.
         const subjectInterval = Interval.fromDateTimes(DateTime.fromISO(subject.start_date), DateTime.fromISO(subject.end_date));
 
-        if(!subjectInterval.contains(date))
+        if(!subjectInterval.isValid)
             continue;
 
         for(const _class of subject.classes) {
@@ -30,8 +30,9 @@ function getTimetableDataForWeek(userData, date) {
                 colour: subject.colour,
                 type: _class.type,
                 location: _class.location,
-                start_time: DateTime.fromISO(_class.start_time),
-                end_time: DateTime.fromISO(_class.end_time),
+                day: _class.day,
+                start_time: DateTime.fromISO(_class.start_time).set({weekday: _class.day}),
+                end_time: DateTime.fromISO(_class.end_time).set({weekday: _class.day}),
                 durationInH: DateTime.fromISO(_class.end_time).diff(DateTime.fromISO(_class.start_time), 'hours').hours,
                 subjectName: subject.name,
                 description: _class.description

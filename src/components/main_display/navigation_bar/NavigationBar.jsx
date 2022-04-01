@@ -4,13 +4,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setDisplay } from '../../../state/slices/appDisplay';
 import { updateUserState } from '../../../state/slices/userState';
 import { clearCheckingInterval } from '../../../utility/notifications/notificationService';
+import { openModal } from '../../../state/slices/modalState'
+
 
 function NavigationBar() {
     const appDisplay = useSelector(state => state.appDisplay.value);
     const dispatch = useDispatch();
-
-
     const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
+
 
     if(showSettingsDropdown){
         document.getElementById("root").onclick = () => dropdownClick(showSettingsDropdown, setShowSettingsDropdown);
@@ -18,8 +19,8 @@ function NavigationBar() {
         document.getElementById("root").onclick = null;
     }
 
-    const navButtonStyle = "nav-link my-2 border-bottom rounded-0";
 
+    const navButtonStyle = "nav-link my-2 border-bottom rounded-0";
     return (
         <div className={styles.navigationBar+' d-flex flex-column flex-shrink-0  bg-light shadow'}>
             <ul className="nav nav-pills nav-flush flex-column mb-auto text-center ">
@@ -55,6 +56,7 @@ function NavigationBar() {
                 <ul  className={styles.dropdownList+" dropdown-menu text-small shadow d-block"}>
                     <li><button className="dropdown-item">Import Timetable (TBD)</button></li>
                     <li><button className="dropdown-item">Export Timetable (TBD)</button></li>
+                    <li><button className="dropdown-item" onClick={() =>    dispatch(openModal({name: 'ViewSubjects'}))}>View Subjects</button></li>
                     <li><hr className="dropdown-divider"/></li>
                     <li><button className="dropdown-item" onClick={() => signout(dispatch)}>Sign out</button></li>
                 </ul>}

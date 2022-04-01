@@ -22,6 +22,7 @@ function getClassesForWeekday(userData, intWeekday) {
                         start_time: DateTime.fromISO(_class.start_time),
                         end_time: DateTime.fromISO(_class.end_time),
                         colour: subject.colour,
+                        day: _class.day,
                         subjectName: subject.name,
                         description: _class.description,
                         location: _class.location,
@@ -39,7 +40,7 @@ function getClassesForWeekday(userData, intWeekday) {
 
         }, []);
 
-        return classList.sort((class_a, class_b) => class_a.start_time.toMillis() > class_b.start_time.toMillis());
+        return classList.sort((class_a, class_b) =>  class_a.start_time - class_b.start_time);
 
 
     } else {

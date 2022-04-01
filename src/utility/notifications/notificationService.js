@@ -135,7 +135,7 @@ function checkNotifications(){
 
 function startCheckingInterval(){
     checkNotifications();
-    checkingInterval = setInterval(checkNotifications, 60000);
+    checkingInterval = setInterval(checkNotifications, 10000);
 } 
 
 

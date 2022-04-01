@@ -29,10 +29,11 @@ function getUpcomingTasks(userData) {
 
         }, []);
 
-        return taskList.sort((task_a, task_b) => task_a.due_time.toMillis() > task_b.due_time.toMillis());
+        return taskList.sort((task_a, task_b) => task_a.due_time - task_b.due_time);
 
     } else {
         return [];
     }
 }
 export default getUpcomingTasks;
+

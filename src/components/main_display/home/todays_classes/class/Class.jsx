@@ -1,10 +1,16 @@
 import styles from './Class.module.css'
 import {DateTime} from 'luxon';
+import { useDispatch, useSelector } from 'react-redux';
+import findClass from '../../../../../utility/user_data/findClass';
+import { openModal } from '../../../../../state/slices/modalState';
+
 
 function Class({_class}) {
+    const userData = useSelector(state => state.userState.value.userData);
+    const dispatch = useDispatch()
 
     return (
-        <div className={ styles.task+" m-1 rounded d-flex shadow"} style={{border: ".08rem solid " +_class.colour+"33"}}>
+        <div onClick={() => handleOpenViewModal(_class, userData, dispatch)} className={ styles.task+" m-1 rounded d-flex shadow"} style={{border: ".08rem solid " +_class.colour+"33"}}>
             <div className={"rounded-start me-2"} style={{width:'.25rem', backgroundColor:_class.colour}}></div>
 
             <div className={styles.taskContent}>
@@ -28,5 +34,12 @@ function Class({_class}) {
         </div>
     );
 }   
-
 export default Class;
+
+function handleOpenViewModal(_class, userData, dispatch){
+
+    const foundClass = findClass(_class, userData);
+        
+    if(foundClass) 
+        dispatch(openModal({name: 'ViewClass', data: foundClass }));
+}

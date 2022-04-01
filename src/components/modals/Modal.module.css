@@ -1,3 +1,27 @@
 .pointable{
     cursor: pointer
 }
+
+.colourDiv{
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.subjectContainer{
+    overflow-x: hidden;
+    max-height: calc(70vh - 10rem);
+}
+
+.subjectContainer::-webkit-scrollbar {
+    width: 10px;
+    padding-top: 10px;
+}
+  
+.subjectContainer::-webkit-scrollbar-thumb{
+    transition: color 2s !important;
+    background-color: rgb(99, 99, 99); 
+}
+.subjectContainer:hover::-webkit-scrollbar-thumb {
+    transition: color 2s ;
+    background-color: rgb(99, 99, 99); 
+}
