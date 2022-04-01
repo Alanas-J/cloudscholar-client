@@ -107,7 +107,7 @@ function LoginDisplay({setLoggedIn}) {
                             {!displayState.formSubmitted? "Sign in" : "Signing in..."}
                         </button>
                         <div className='text-center'>
-                            <p className={styles.link} onClick={() => dispatch(openModal('RegisterUser'))}>Don't have an account? Register Here</p>
+                            <p className={styles.link} onClick={() => dispatch(openModal({name: 'RegisterUser'}))}>Don't have an account? Register Here</p>
                         </div>
                         
                     </div>
