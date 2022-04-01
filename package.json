@@ -1,5 +1,7 @@
 {
   "name": "cloudscholar-client",
+  "author": "Alanas Jakubauskas C18473312",
+  "description": "My dissertation project's frontend for DT228/TU856/4",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -14,7 +16,6 @@
     "cross-env": "^7.0.3",
     "electron-is-dev": "^2.0.0",
     "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.21",
     "luxon": "^2.3.1",
     "node-sass": "^7.0.1",
     "react": "^17.0.2",
