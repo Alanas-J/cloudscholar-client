@@ -29,8 +29,8 @@ function manageNotifications(){
             return new Notification(notificationData.title, {
                 body: notificationData.message,
                 tag: notificationData.title,
-                badge: 'cs_icon.png',
-                icon: 'cs_icon.png',
+                badge: 'icon.png',
+                icon: 'icon.png',
                 requireInteraction: true
             });
         }
@@ -42,8 +42,8 @@ function manageNotifications(){
                     return new Notification(notificationData.title, {
                         body: notificationData.message,
                         tag: notificationData.title,
-                        badge: 'cs_icon.png',
-                        icon: 'cs_icon.png',
+                        badge: 'icon.png',
+                        icon: 'icon.png',
                     });
                 }
             });

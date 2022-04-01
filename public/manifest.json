@@ -3,7 +3,7 @@
   "name": "CloudScholar - Student Helper App",
   "icons": [
     {
-      "src": "cs_icon.png",
+      "src": "icon.png",
       "sizes": "48x48",
       "type": "image/png"
     }

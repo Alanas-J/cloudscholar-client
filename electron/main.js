@@ -56,7 +56,7 @@ function applicationStart(){
          );
 
     // Icon tray init
-    trayIcon = new Tray(__dirname+'/cs_icon.png');
+    trayIcon = new Tray(__dirname+'/icon.png');
     trayIcon.setToolTip('CloudScholar');     
     trayIcon.setContextMenu(trayContextMenu);
 
