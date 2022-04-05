@@ -9,7 +9,7 @@ async function loginUser(email, password, keepUserSigned){
 
     if(keepUserSigned){
         window.localStorage.setItem('token', response.data.token);
-        window.sessionStorage.setItem('refresh_token', response.data.refresh_token);
+        window.localStorage.setItem('refresh_token', response.data.refresh_token);
     }
 
     window.sessionStorage.setItem('token', response.data.token);
