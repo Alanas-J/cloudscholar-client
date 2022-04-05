@@ -35,13 +35,13 @@ function ViewSubjectsModal({show, handleClose}) {
                     <input className="form-control" type="search" placeholder="Filter Subjects" onChange={e => setSearchString(e.target.value)}/>
                     <label >Subject search..</label>
                 </div>
-                <div className={styles.subjectContainer+' mx-3 mb-2 border rounded-bottom '}>
+                <div className={styles.subjectContainer+' mx-3 border rounded-bottom '}>
                     {subjects? subjects.map((subject) => {return <Subject key={uuidv4()} subject={subject} userData={userData}/>})  : <div className='h6 text-center py-4'>No subjects found.</div>}
                 </div>
                 
             </Modal.Body>
 
-            <Modal.Footer className='border-top-0 px-4 mx-54'>
+            <Modal.Footer className='border-top-0 pt-0 px-4 mx-1'>
 
                 <Button variant="secondary" onClick={handleClose}>
                     Close
