@@ -1,11 +1,9 @@
 const {app, BrowserWindow, Tray, Menu} = require('electron');
 const isDev = require('electron-is-dev');
 const path = require('path');
-require('@electron/remote/main').initialize(); // used for IPC
 
 app.setAppUserModelId("CloudScholar");
 app.on('ready', applicationStart);
-
 let trayIcon; // Tray icon gets garbage collected if not stored.
 
 function applicationStart(){
@@ -24,8 +22,6 @@ function applicationStart(){
     mainWindow.setMenu(null);
     mainWindow.loadURL(isDev ? 'http://localhost:3000' :`file://${path.join(__dirname, '../build/index.html')}`);
     
-
-    // Hide window instead of closing.
     mainWindow.on('close', (event) => {
       if(!app.isQuiting){
           event.preventDefault();
@@ -35,8 +31,6 @@ function applicationStart(){
       return false;
     });
 
-    
-    // Icon tray options
     const trayContextMenu = Menu.buildFromTemplate([
             {   
                 label: 'CloudScholar', enabled: false,
@@ -55,16 +49,7 @@ function applicationStart(){
             }]
          );
 
-    // Icon tray init
     trayIcon = new Tray(__dirname+'/icon.png');
     trayIcon.setToolTip('CloudScholar');     
     trayIcon.setContextMenu(trayContextMenu);
-
 }
-
-
-
-
-
-
-
