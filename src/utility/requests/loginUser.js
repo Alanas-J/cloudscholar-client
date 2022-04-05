@@ -13,7 +13,7 @@ async function loginUser(email, password, keepUserSigned){
     }
 
     window.sessionStorage.setItem('token', response.data.token);
-    window.localStorage.setItem('refresh_token', response.data.refresh_token);
+    window.sessionStorage.setItem('refresh_token', response.data.refresh_token);
 
 }
 export default loginUser;
