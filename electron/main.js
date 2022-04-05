@@ -14,7 +14,7 @@ function applicationStart(){
         width: 1280,
         height: 720,
         title: 'CloudScholar',
-        icon: __dirname+'/cs_icon.png',
+        icon: __dirname+'/icon.png',
         webPreferences:{
             devTools: true,
             enableRemoteModule: true
