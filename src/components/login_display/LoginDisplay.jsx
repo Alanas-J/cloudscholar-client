@@ -5,7 +5,7 @@ import fetchUserData from '../../utility/requests/fetchUserData'
 import {openModal} from '../../state/slices/modalState';
 import loginUser from '../../utility/requests/loginUser';
 
-function LoginDisplay({setLoggedIn}) {
+function LoginDisplay() {
     const [displayState, setDisplayState] = useState({
         formSubmitted: false,
         error: false,
@@ -17,13 +17,9 @@ function LoginDisplay({setLoggedIn}) {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [keepUserSigned, setKeepUserSigned] = useState(false);
-
-    
-    // Redux State
     const dispatch = useDispatch();
     
 
-    // Validation state update
     if(displayState.invalidEmail || displayState.invalidPassword){
 
         let setStateFlag = false;
@@ -76,17 +72,15 @@ function LoginDisplay({setLoggedIn}) {
                             <div className="alert alert-danger mb-1 py-2" role="alert">
                                 {displayState.errorMessage}
                             </div>
-                        </div>
-                    }
+                        </div>}
 
                     <div className="login-inputs">
                         <div className="form-floating my-1">
                             <input disabled={displayState.formSubmitted} type="email" className={(displayState.invalidEmail && 'is-invalid')+' form-control'} id="floatingInput" placeholder="name@example.com" onChange={e => setEmail(e.target.value)}/>
                             <label htmlFor="floatingInput">Email address</label>
-                            <div id="validationServerUsernameFeedback" className="text-left invalid-feedback mb-2 ms-2">
+                            <div className="text-left invalid-feedback mb-2 ms-2">
                                 Please enter valid email. Eg. 'person@mail.com'.
                             </div>
-     
                         </div>
 
                         
@@ -97,11 +91,13 @@ function LoginDisplay({setLoggedIn}) {
                                 Password cannot be empty.
                             </div>
                         </div>
+
                         <div className="checkbox mb-3 text-center">
                         <label >
                             <input disabled={displayState.formSubmitted} className='form-check-input' role="button" type="checkbox" onChange={e => setKeepUserSigned(e.target.checked)}/> Keep me signed in
                         </label>
                         </div>
+
                         <button disabled={displayState.formSubmitted} className="w-100 btn btn-lg btn-primary" 
                             onClick={handleSubmit}>
                             {!displayState.formSubmitted? "Sign in" : "Signing in..."}
@@ -109,9 +105,7 @@ function LoginDisplay({setLoggedIn}) {
                         <div className='text-center'>
                             <p className={styles.link} onClick={() => dispatch(openModal({name: 'RegisterUser'}))}>Don't have an account? Register Here</p>
                         </div>
-                        
                     </div>
-                    
                 </form>
             </main>
         </div>); 
