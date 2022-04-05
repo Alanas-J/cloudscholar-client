@@ -12,7 +12,7 @@ async function fetchUserData(dispatch){
 
     let response;
     try {
-        response = await axios.get('http://localhost:8086/user_data', config);
+        response = await axios.get(process.env.REACT_APP_API_URL+'/user_data', config);
 
     } catch (e){
 

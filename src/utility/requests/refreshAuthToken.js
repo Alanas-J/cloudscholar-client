@@ -9,7 +9,7 @@ async function refreshAuthToken(){
         headers: { Authorization: `Bearer ${token}` }
     };
 
-    const response = await axios.post('http://localhost:8086/refresh_token', 
+    const response = await axios.post(process.env.REACT_APP_API_URL+'/refresh_token', 
         {refresh_token: refresh_token},
         config);
 

@@ -15,7 +15,7 @@ async function updateUserData(newUserData, dispatch){
 
     let response;
     try {
-        response = await axios.post('http://localhost:8086/user_data', newUserData, config);
+        response = await axios.post(process.env.REACT_APP_API_URL+'/user_data', newUserData, config);
 
     } catch (e){
 

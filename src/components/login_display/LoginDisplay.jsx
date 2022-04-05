@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import axios from 'axios';
 import styles from  './LoginDisplay.module.css';
 import {useDispatch} from 'react-redux';
 import fetchUserData from '../../utility/requests/fetchUserData'
 import {openModal} from '../../state/slices/modalState';
+import loginUser from '../../utility/requests/loginUser';
 
 function LoginDisplay({setLoggedIn}) {
     const [displayState, setDisplayState] = useState({
@@ -11,7 +11,7 @@ function LoginDisplay({setLoggedIn}) {
         error: false,
         invalidEmail: false,
         invalidPassword: false,
-        errorMessage: "Auth failure error goes here.",
+        errorMessage: "Error.",
         submitted: false,
     });
     const [password, setPassword] = useState("");
@@ -131,33 +131,25 @@ function validateEmail(email){
 async function authenticate(email, password, keepUserSigned, state, setDisplayState, dispatch){
  
     try {
-        const response = await axios.post('http://localhost:8086/login', {
-            email: email,
-            password: password,
-        });
-
-        // Store token 
-        if(keepUserSigned){
-            window.localStorage.setItem('token', response.data.token);
-            window.sessionStorage.setItem('refresh_token', response.data.refresh_token);
-        }
-        window.sessionStorage.setItem('token', response.data.token);
-        window.localStorage.setItem('refresh_token', response.data.refresh_token);
+        await loginUser(email, password, keepUserSigned);
 
         await fetchUserData(dispatch);
 
         return;
+
     } catch (error) {
         state.error = true;
 
-        // Actual error
         if(error.message === 'Network Error'){
             state.errorMessage = "Connection to the login server failed...";
+
         } else if (error.response.data.message){
             state.errorMessage = error.response.data.message;
-        } else{
-            error.message = 'An unknown error has occured.'
+
+        } else {
+            state.error.message = 'An unknown error has occured.'
         }
+
         console.log({error: error});
     }
     state.formSubmitted = false;
