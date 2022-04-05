@@ -3,9 +3,7 @@ import { updateUserState } from '../../state/slices/userState'
 import refreshAuthToken from './refreshAuthToken'
 
 async function fetchUserData(dispatch){
-
     const token = window.sessionStorage.getItem('token');
-
     const config = {
         headers: { Authorization: `Bearer ${token}` }
     };
@@ -21,6 +19,7 @@ async function fetchUserData(dispatch){
 
                 await refreshAuthToken();
                 await fetchUserData(dispatch);
+                return;
             }
 
         } else {
@@ -32,8 +31,6 @@ async function fetchUserData(dispatch){
         loggedIn: true,
         userData: response.data
     }));
-    
-    // console.log(response);
 }
 
 export default fetchUserData;
