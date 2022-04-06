@@ -15,7 +15,7 @@ function getTimetableDataForWeek(userData, date) {
 
         const subjectInterval = Interval.fromDateTimes(DateTime.fromISO(subject.start_date), DateTime.fromISO(subject.end_date));
 
-        if(!subjectInterval.isValid)
+        if(!subjectInterval.contains(date))
             continue;
 
         for(const _class of subject.classes) {
