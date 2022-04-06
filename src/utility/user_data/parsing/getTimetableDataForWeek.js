@@ -1,11 +1,8 @@
 import {DateTime, Interval} from 'luxon';
-
-// TODO: Hardcoded duration in hours (Tasks dont came with a duration) so a pseudo is given.
 const taskDuration = .5;
 
 function getTimetableDataForWeek(userData, date) {
 
-    // 7 arrays for each day.
     const dayData = [];
     for(let i = 0; i < 7; i++){
         dayData[i] = [];
@@ -16,15 +13,12 @@ function getTimetableDataForWeek(userData, date) {
 
     for(const subject of userData.subjects){
 
-        // See if subject's interval is valid.
         const subjectInterval = Interval.fromDateTimes(DateTime.fromISO(subject.start_date), DateTime.fromISO(subject.end_date));
 
         if(!subjectInterval.isValid)
             continue;
 
         for(const _class of subject.classes) {
-
-            // Add and parse class to the correct day bin
             dayData[_class.day-1].push({
                 objectType: "class",
                 colour: subject.colour,
@@ -39,15 +33,13 @@ function getTimetableDataForWeek(userData, date) {
             });
         }
     
-        // Task parsing
         const weekInterval = Interval.fromDateTimes(date, date.plus({days: 7}));
 
         for(const task of subject.tasks) {
             const taskTime = DateTime.fromISO(task.due_datetime);
 
             if(weekInterval.contains(taskTime)){
-              
-                 // Add and parse class to the correct day bin
+
                 dayData[taskTime.weekday-1].push({
                     objectType: "task",
                     colour: subject.colour,
@@ -66,15 +58,9 @@ function getTimetableDataForWeek(userData, date) {
 export default getTimetableDataForWeek;
 
 
-// function for resolving timetable data collisions/ allocating timeblock spaces (adding attributes).
-// future @TODO: Implement a timetable element type to group remaining collision elements and display eg. a '+5' timetable block that can be clicked on.
-
-// FIXME: for some edge cases collision detection may not work, will need future implementation
 function processTimetableData(dayData){
-    // Timetable boundary calculation variables.
     let earliestHour = 9;
     let latestHour = 18;
-
 
     for(const day of dayData){
 
@@ -82,7 +68,7 @@ function processTimetableData(dayData){
             const objectInterval = getScheduleObjectInterval(scheduleObject);
             const collisionList = [];
 
-            // Timetable boundary calc
+
             if(earliestHour > objectInterval.start.hour){
                 earliestHour = objectInterval.start.hour;
             }
@@ -95,13 +81,11 @@ function processTimetableData(dayData){
             for(const peerScheduleObject of day){
                 const peerObjectInterval = getScheduleObjectInterval(peerScheduleObject);
                 
-                // Purposely overlaps with itself to add it to this list.
                 if(objectInterval.overlaps(peerObjectInterval)){
                     collisionList.push(peerScheduleObject);
                 }
             } 
 
-            // Using advantage of pass by reference to adjust objects in the daydata array. // FIXME: the location where to fix.
             for(const [index] of collisionList.entries()){
                 collisionList[index].position = index;
                 collisionList[index].noOfPositions = collisionList.length;

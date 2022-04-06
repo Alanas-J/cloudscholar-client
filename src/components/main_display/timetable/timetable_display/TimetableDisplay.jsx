@@ -160,8 +160,6 @@ function TimetableDisplay() {
   
 
 function renderTimeIndicator(date, earliestHour, timeIndicatorRef){
-
-
     const offset = date.hour + date.minute/60 - earliestHour;
 
     return (
