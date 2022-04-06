@@ -35,10 +35,9 @@ function MainDisplay() {
         </div>
     
     ); 
-  }
-  export default MainDisplay;
+}
+export default MainDisplay;
   
-// Used to pick what to display.
 function renderSwitch(display){
     switch(display) {
       

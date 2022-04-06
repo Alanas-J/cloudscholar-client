@@ -19,7 +19,6 @@ function NavigationBar() {
         document.getElementById("root").onclick = null;
     }
 
-    const navButtonStyle = "nav-link my-2 border-bottom rounded-0";
     return (
         <div className={styles.navigationBar+' d-flex flex-column flex-shrink-0  bg-light shadow'}>
             <ul className="nav nav-pills nav-flush flex-column mb-auto text-center ">
