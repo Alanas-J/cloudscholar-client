@@ -88,6 +88,8 @@ function processTimetableData(dayData){
             }
             if(latestHour < objectInterval.end.hour){
                 latestHour = objectInterval.end.hour;
+            } else if (objectInterval.end.hour < 9){
+                latestHour = 24 + objectInterval.end.hour;
             }
            
             for(const peerScheduleObject of day){
