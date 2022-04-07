@@ -1,0 +1,86 @@
+{
+    "subjects": [
+        {
+            "name": "Environmental Analytics",
+            "colour": "#ab6ddf",
+            "start_date": "2022-01-01",
+            "end_date": "2022-05-01",
+            "classes": [
+                {
+                    "day": 4,
+                    "type": "Lab",
+                    "location": "CQ-240",
+                    "start_time": "11:00:00",
+                    "end_time": "13:00:00",
+                    "description": null
+                },
+                {
+                    "day": 4,
+                    "type": "Lecture",
+                    "location": "CQ-204",
+                    "start_time": "14:00:00",
+                    "end_time": "15:00:00",
+                    "description": null
+                }
+            ],
+            "tasks": []
+        },
+        {
+            "name": "Final Year Project",
+            "colour": "#7491a4",
+            "start_date": "2022-01-01",
+            "end_date": "2022-05-01",
+            "classes": [
+                {
+                    "day": 3,
+                    "type": "Lecture",
+                    "location": "CQ-010",
+                    "start_time": "15:00:00",
+                    "end_time": "16:00:00",
+                    "description": null
+                }
+            ],
+            "tasks": [
+                {
+                    "name": "FYP Final Submisison",
+                    "due_datetime": "2022-04-08T22:59:00.000Z",
+                    "description": null,
+                    "completed": false
+                }
+            ]
+        },
+        {
+            "name": "Enterprise Application Development",
+            "colour": "#e05252",
+            "start_date": "2022-01-01",
+            "end_date": "2022-05-01",
+            "classes": [
+                {
+                    "day": 1,
+                    "type": "Lecture",
+                    "location": "CQ-008",
+                    "start_time": "16:00:00",
+                    "end_time": "18:00:00",
+                    "description": null
+                },
+                {
+                    "day": 1,
+                    "type": "Lab",
+                    "location": "CQ-236/237",
+                    "start_time": "09:00:00",
+                    "end_time": "11:00:00",
+                    "description": null
+                }
+            ],
+            "tasks": [
+                {
+                    "name": "Lab 3",
+                    "due_datetime": "2022-04-25T22:00:00.000Z",
+                    "description": "Worth 25% of 50% CA.",
+                    "completed": true
+                }
+            ]
+        }
+    ],
+    "shortcut_links": []
+}
