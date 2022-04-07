@@ -3,7 +3,7 @@ import axios from 'axios';
 async function refreshAuthToken(){
 
     const token = window.sessionStorage.getItem('token');
-    const refresh_token = window.sessionStorage.getItem('token');
+    const refresh_token = window.sessionStorage.getItem('refresh_token');
 
     const config = {
         headers: { Authorization: `Bearer ${token}` }
