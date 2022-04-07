@@ -14,8 +14,6 @@ function startNotificationService(userData){
         const upcomingTasks = getUpcomingTasks(userData);
 
         notificationQueues = {tasks: upcomingTasks, classes: upcomingClasses}
-
-        
         startCheckingInterval();
         
     } else {
@@ -26,10 +24,8 @@ function startNotificationService(userData){
 export {startNotificationService};
 
 function updateNotificationService(userData){
-
     const upcomingClasses = getClassesForWeekday(userData, DateTime.now().weekday);
     const upcomingTasks = getUpcomingTasks(userData);
-
 
     if(!checkingInterval)
         return;
@@ -70,34 +66,26 @@ export {updateNotificationService};
 
 
 function checkNotifications(){
-
     notificationQueues.classes = notificationQueues.classes.map((_class) => {
 
         if(!_class.notified){
-            
             if(_class.duration_until.toMillis() < 0){
 
                 sendNotification(`Class now - ${_class.subjectName}`, `The class is currently happening`);
-
                 _class.notified = true;
 
             } else if(_class.duration_until.hours === 0 && _class.duration_until.minutes <= 30) {
 
                 sendNotification(`Class soon - ${_class.subjectName}`, `The class will start in ${_class.duration_until.toHuman({listStyle: 'long', maximumFractionDigits: 0})}`);
-
                 _class.notified = true;
             }
-
-        
         }
-
         return _class;
     });
 
     notificationQueues.tasks = notificationQueues.tasks.map((task) => {
 
         if(!task.notifiedLastHour){
-
             const duration_until = task.due_time.diffNow(['minutes']);
 
             if(duration_until.toMillis() < 0){
@@ -109,7 +97,6 @@ function checkNotifications(){
             }  else if(duration_until.minutes < 60){
 
                 sendNotification(`Task due soon - ${task.name} | ${task.subjectName}`, `Due in `+ duration_until.toHuman({listStyle: 'long', maximumFractionDigits: 0}));
-                    
                 task.notifiedLastHour = true;
                 task.notifiedToday = true;
             } 
@@ -120,12 +107,9 @@ function checkNotifications(){
             if(duration_until.hours < 24){
 
                 sendNotification(`Task due today - ${task.name} | ${task.subjectName}`, `Due in `+ duration_until.toHuman({listStyle: 'long', maximumFractionDigits: 0}));
-                
                 task.notifiedToday = true;
             } 
-
         }
-
         return task;
     });
 

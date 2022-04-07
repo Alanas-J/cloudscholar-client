@@ -15,7 +15,7 @@ function ViewSubjectsModal({show, handleClose}) {
 
     let subjects;
     if(userData.subjects){
-        subjects = userData.subjects.filter(subject => subject.name.includes(searchString))
+        subjects = userData.subjects.filter(subject => subject.name.includes(searchString));
 
     } else {
         subjects = null;

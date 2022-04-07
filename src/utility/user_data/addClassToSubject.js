@@ -3,8 +3,6 @@ import weekdayStringToInt from "../misc/weekdayStringToInt";
 function addClassToSubject(subjectName, classObject, userData){
 
     const newUserData = JSON.parse(JSON.stringify(userData));
-    console.log('pre update')
-    console.log(newUserData);
 
     classObject.day = weekdayStringToInt(classObject.day);
 
@@ -18,9 +16,6 @@ function addClassToSubject(subjectName, classObject, userData){
         }
             
     }
-
-    console.log('after update');
-    console.log(newUserData);
 
     return newUserData;
 }

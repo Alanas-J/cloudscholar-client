@@ -1,14 +1,12 @@
 let notificationInterval;
 const notificationBuffer = [];
 
-
 function sendNotification(title, message){
 
     if(!notificationInterval){
 
         startInterval();     
     }
-
     notificationBuffer.push({title, message});
 
 }
@@ -18,7 +16,6 @@ export {sendNotification};
 function startInterval(){
     notificationInterval = setInterval(manageNotifications, 1000);
 } 
-
 
 function manageNotifications(){
 
