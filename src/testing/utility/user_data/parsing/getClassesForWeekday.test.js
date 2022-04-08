@@ -6,19 +6,19 @@ import { Settings} from "luxon";
 Settings.now = () => new Date(2022, 3, 25, 6).valueOf();
 
 
-test("An empty array is returned for sunday from the testing data", () => {
+test("An empty array is returned for sunday from the testing data, using test_user_data", () => {
 
     expect(getClassesForWeekday(test_user_data, 7)).toStrictEqual([]);
 });
 
 
-test("Monday has two classes", () => {
+test("Monday has two classes, using test_user_data", () => {
 
     expect(getClassesForWeekday(test_user_data, 1).length).toBe(2);
 });
 
 
-test("First Class on Monday is a lab", () => {
+test("First Class on Monday is a lab, using test_user_data", () => {
 
 
     expect(getClassesForWeekday(test_user_data, 1)[0].type).toBe('Lab');

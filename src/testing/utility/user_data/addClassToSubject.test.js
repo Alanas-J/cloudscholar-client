@@ -1,7 +1,7 @@
 import test_user_data from './test_user_data.json';
 import addClassToSubject from '../../../utility/user_data/addClassToSubject';
 
-test("Can add a 'monday lab 12-13' class to environmental analytics", () => {
+test("Can add a 'Monday Lab 12-13' class to 'Environmental Analytics' using test_user_data", () => {
 
     const classPayload = {
         day: 'Monday',

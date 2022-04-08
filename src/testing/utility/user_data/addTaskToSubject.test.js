@@ -1,7 +1,7 @@
 import test_user_data from './test_user_data.json';
 import addTaskToSubject from '../../../utility/user_data/addTaskToSubject';
 
-test("Can add a '12:00 22/04/2022' task to environmental analytics", () => {
+test("Can add a '12:00 22/04/2022' task to 'Environmental Analytics', using test_user_data", () => {
 
     const taskPayload = {
         name: 'Test task',

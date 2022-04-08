@@ -1,7 +1,7 @@
 import test_user_data from './test_user_data.json';
 import deleteClass from '../../../utility/user_data/deleteClass';
 
-test("Can delete the 'Wednesday lecture' from the 'Final Year Project' subject.", () => {
+test("Can delete the 'Wednesday lecture' from the 'Final Year Project' subject, using test_user_data", () => {
 
     const classPayload =  {
         day: 3,

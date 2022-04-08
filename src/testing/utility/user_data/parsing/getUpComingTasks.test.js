@@ -6,7 +6,7 @@ import getUpcomingTasks from '../../../../utility/user_data/parsing/getUpcomingT
 // All tests assume April 25, 6:00:00
 Settings.now = () => new Date(2022, 3, 25, 6).valueOf();
 
-test("Completed tasks are filtered and all tasks are received", () => {
+test("Completed tasks are filtered and all tasks are received using test_user_data", () => {
 
     expect(getUpcomingTasks(test_user_data).length).toBe(1);
 });

@@ -5,8 +5,7 @@ import getTimetableDataForWeek from '../../../../utility/user_data/parsing/getTi
 // All tests assume April 25, 0:00:00, a start of the week time
 Settings.now = () => new Date(2022, 3, 25).valueOf();
 
-
-test("Each weekday bin has the correct ammount of timetable elements", () => {
+test("Each weekday bin has the correct ammount of timetable elements using test_user_data", () => {
 
     const weekdayBins = getTimetableDataForWeek(test_user_data, DateTime.now()).dayData;
 
@@ -19,5 +18,10 @@ test("Each weekday bin has the correct ammount of timetable elements", () => {
     expect(weekdayBins[6].length).toStrictEqual(0);
 });
 
+test("The start and end times are correctly calculated", () => {
 
-// Add a correct earliest hour and correct latest hour test
+    const weekdayData = getTimetableDataForWeek(test_user_data, DateTime.now());
+
+    expect(weekdayData.earliestHour).toStrictEqual(9);
+    expect(weekdayData.latestHour).toStrictEqual(23);
+});
