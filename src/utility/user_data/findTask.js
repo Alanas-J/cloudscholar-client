@@ -7,8 +7,7 @@ function findTask(taskData, userData){
 
             for(const task of subject.tasks){
 
-                if(task.name === taskData.name &&
-                    task.due_datetime === taskData.due_datetime.toISO());
+                if(task.name === taskData.name);
                 {
                     const taskObj = {...task, subject: subject}
                     return taskObj;
