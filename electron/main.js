@@ -1,5 +1,4 @@
 const {app, BrowserWindow, Tray, Menu} = require('electron');
-const isDev = require('electron-is-dev');
 const path = require('path');
 
 app.setAppUserModelId("CloudScholar");
@@ -11,6 +10,7 @@ function applicationStart(){
     const mainWindow = new BrowserWindow({
         width: 1280,
         height: 720,
+        show: false,
         title: 'CloudScholar',
         icon: __dirname+'/icon.png',
         webPreferences:{
@@ -20,7 +20,7 @@ function applicationStart(){
     });
 
     mainWindow.setMenu(null);
-    mainWindow.loadURL(isDev ? 'http://localhost:3000' :`file://${path.join(__dirname, '../build/index.html')}`);
+    mainWindow.loadURL(!app.isPackaged? 'http://localhost:3000' :`file://${path.join(__dirname, '../build/index.html')}`);
     
     mainWindow.on('close', (event) => {
       if(!app.isQuiting){
@@ -29,6 +29,9 @@ function applicationStart(){
       }
     
       return false;
+    });
+    mainWindow.webContents.on('did-finish-load', function() {
+        mainWindow.show();
     });
 
     const trayContextMenu = Menu.buildFromTemplate([

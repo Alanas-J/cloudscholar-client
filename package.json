@@ -2,34 +2,27 @@
   "name": "cloudscholar-client",
   "author": "Alanas Jakubauskas C18473312",
   "description": "My dissertation project's frontend for DT228/TU856/4",
-  "version": "0.1.0",
+  "version": "0.5.0",
   "private": true,
   "dependencies": {
-    "@electron/remote": "^2.0.1",
     "@reduxjs/toolkit": "^1.7.1",
-    "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.5.0",
     "axios": "^0.26.0",
-    "bootstrap": "^5.1.3",
-    "concurrently": "^6.5.1",
-    "cross-env": "^7.0.3",
     "dotenv": "^16.0.0",
-    "electron-is-dev": "^2.0.0",
-    "jsonwebtoken": "^8.5.1",
     "luxon": "^2.3.1",
-    "node-sass": "^7.0.1",
     "react": "^17.0.2",
     "react-bootstrap": "^2.1.1",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.6",
-    "react-scripts": "5.0.0",
-    "sass": "^1.49.0",
-    "uuid": "^8.3.2",
-    "wait-on": "^6.0.0",
-    "web-vitals": "^2.1.2"
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "react-scripts": "5.0.0",
+    "node-sass": "^7.0.1",
+    "wait-on": "^6.0.0",
+    "sass": "^1.49.0",
+    "bootstrap": "^5.1.3",
+    "concurrently": "^6.5.1",
+    "cross-env": "^7.0.3",
     "electron": "^16.0.5",
     "electron-builder": "^22.14.5"
   },
@@ -46,7 +39,8 @@
   },
   "build": {
     "extends": null,
-    "appId": "com.example.electron-cra",
+    "productName": "CloudScholar",
+    "appId": "com.clouscholar.client",
     "files": [
       "dist/**/*",
       "build/**/*",
@@ -56,6 +50,9 @@
     ],
     "directories": {
       "buildResources": "assets"
+    },
+    "win": {
+      "icon": "build/icon256x256.png"
     }
   },
   "eslintConfig": {
