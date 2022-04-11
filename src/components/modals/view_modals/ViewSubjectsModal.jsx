@@ -133,7 +133,7 @@ async function handleDelete(subject, userData, setComponentState, dispatch){
     } catch (error) {
         if(error.message === 'Network Error'){
             componentState.error = "Connection to the server failed, if problem persists, restart the application.";
-        } else if (error.response.data.message){
+        } else if (error.response){
             componentState.error = error.response.data.message;
         } else {
             componentState.error = 'An unknown error has occured.'

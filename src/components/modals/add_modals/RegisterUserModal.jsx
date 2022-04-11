@@ -121,10 +121,10 @@ async function handleRegistration(registrationObject, setFormState){
 
         if(error.message === 'Network Error'){
             formState.errorMessage = "Connection to the server failed, if problem persists, restart the application.";
-        } else if (error.response.data.message){
+        } else if (error.response){
             formState.errorMessage = error.response.data.message;
         } else{
-            formState.errorMessage = 'An unknown error has occured.'
+            formState.errorMessage = 'An unknown error has occured.';
         }
         formState.success = false;
         console.log({error: error});

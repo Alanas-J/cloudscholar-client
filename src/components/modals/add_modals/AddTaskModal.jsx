@@ -180,7 +180,7 @@ async function handleTaskAdd(subjectName, taskObject, setFormState, userData, di
 
         if(error.message === 'Network Error'){
             formState.errorMessage = "Connection to the server failed, if problem persists, restart the application.";
-        } else if (error.response.data.message){
+        } else if (error.response){
             formState.errorMessage = error.response.data.message;
         } else{
             formState.errorMessage = 'An unknown error has occured.'
