@@ -1,13 +1,35 @@
 const {app, BrowserWindow, Tray, Menu} = require('electron');
 const path = require('path');
+const mainInstance = app.requestSingleInstanceLock();
+let trayIcon;
+let mainWindow;
 
-app.setAppUserModelId("CloudScholar");
-app.on('ready', applicationStart);
-let trayIcon; // Tray icon gets garbage collected if not stored.
+if (!mainInstance) {
+    app.quit()
+
+} else {
+    app.on('second-instance', (event, commandLine, workingDirectory) => {
+
+      if (mainWindow) {
+        if(!mainWindow.isVisible())
+            mainWindow.show();
+
+        if (mainWindow.isMinimized())
+            mainWindow.restore();
+        
+        mainWindow.focus();
+
+      }
+    });
+      
+    app.setAppUserModelId("CloudScholar");
+    app.on('ready', applicationStart);
+}
+
 
 function applicationStart(){
 
-    const mainWindow = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: 1280,
         height: 720,
         show: false,
@@ -42,7 +64,7 @@ function applicationStart(){
                 type: 'separator'
             },
             { 
-                label: 'Show App', click: () => { mainWindow.show()} 
+                label: 'Show App', click: () => {mainWindow.show()} 
             },
             { 
                 label: 'Quit', click:  () => {
@@ -56,3 +78,4 @@ function applicationStart(){
     trayIcon.setToolTip('CloudScholar');     
     trayIcon.setContextMenu(trayContextMenu);
 }
+
