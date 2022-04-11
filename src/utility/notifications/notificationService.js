@@ -90,7 +90,7 @@ function checkNotifications(){
 
             if(duration_until.toMillis() < 0){
 
-                sendNotification(`Task overdue - ${task.name} | ${task.subjectName}`, 'This task is overdue.');
+                sendNotification(`Task overdue - ${task.name} | ${task.subjectName}`, 'This task is overdue');
                 task.notifiedLastHour = true;
                 task.notifiedToday = true;
 

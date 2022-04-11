@@ -18,7 +18,7 @@ function MainDisplay() {
 
     useEffect(() => {
         if(loggingIn){
-            sendNotification('Hello!', `You have ${getClassesForWeekday((userData), DateTime.now().weekday).length} classes left today and ${getUpcomingTasks(userData).length} upcoming tasks.`);
+            sendNotification('Hello!', `You have ${getClassesForWeekday((userData), DateTime.now().weekday).length} classes left today and ${getUpcomingTasks(userData).length} upcoming tasks`);
     
             startNotificationService(userData);
             setLoggingIn(false);
