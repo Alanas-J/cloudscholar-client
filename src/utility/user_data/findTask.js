@@ -7,8 +7,7 @@ function findTask(taskData, userData){
 
             for(const task of subject.tasks){
 
-                if(task.name === taskData.name);
-                {
+                if(task.name === taskData.name){
                     const taskObj = {...task, subject: subject}
                     return taskObj;
                 }
