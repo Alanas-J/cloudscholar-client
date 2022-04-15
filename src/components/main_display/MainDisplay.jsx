@@ -1,7 +1,7 @@
 import Home from './home/Home';
 import Timetable from './timetable/Timetable';
 import NavigationBar from './navigation_bar/NavigationBar';
-import './MainDisplay.css';
+import './maindisplay.css';
 import {useEffect, useState} from 'react'
 import {useSelector} from 'react-redux';
 import {sendNotification} from '../../utility/notifications/notificationController';

@@ -2,7 +2,7 @@ import MainDisplay from './main_display/MainDisplay';
 import LoginDisplay from './login_display/LoginDisplay';
 import ModalManager from './modals/ModalManager';
 import fetchUserData from '../utility/requests/fetchUserData';
-import './App.css';
+import './app.css';
 
 import {useSelector, useDispatch} from 'react-redux';
 import { useEffect } from 'react';
