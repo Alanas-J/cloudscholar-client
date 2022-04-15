@@ -66,7 +66,7 @@ function processTimetableData(dayData){
     for(const day of dayData){
 
         for(const scheduleObject of day){
-            const objectInterval = getScheduleObjectInterval(scheduleObject);
+            let objectInterval = getScheduleObjectInterval(scheduleObject);
             const collisionList = [];
 
 
@@ -78,11 +78,19 @@ function processTimetableData(dayData){
             } else if (objectInterval.end.hour < 9){
                 latestHour = 24 + objectInterval.end.hour;
             }
-           
+            if(scheduleObject.noOfPositions)
+                continue;
+            
             for(const peerScheduleObject of day){
                 const peerObjectInterval = getScheduleObjectInterval(peerScheduleObject);
                 
                 if(objectInterval.overlaps(peerObjectInterval)){
+                    if(objectInterval.start > peerObjectInterval.start)
+                        objectInterval = objectInterval.set({start: peerObjectInterval.start});
+
+                    if(objectInterval.end > peerObjectInterval.end)
+                        objectInterval = objectInterval.set({end: peerObjectInterval.end});
+
                     collisionList.push(peerScheduleObject);
                 }
             } 
